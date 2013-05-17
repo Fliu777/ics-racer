@@ -1,0 +1,6 @@
+Notes:
+well, im thinking that we should get the client/server thing done this weekend, so that we can move shapes on different computers using lan based methods. the structure of the thing is prty much done, and all that is left is to create the specific objects
+for the server thing, im thinking that we would have a host process, a choice in menu and a room based idea waiting for new players, once game starts, no new players can be added, player(car) object is sent completely to the host. host checks for issues eg collisions and sends it stuff back
+so this allows the thingie to be syncronized and lag issues should smooth out. oh and there should probs be a time out issue of like 30 ms if a player is too slow.
+map creator?
+:)

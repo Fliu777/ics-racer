@@ -1,35 +1,27 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.BitSet;
+import java.awt.event.*;
+import java.util.*;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
-
-
 
 public class GamePanel extends JPanel implements   ActionListener, KeyListener, MouseListener, MouseMotionListener{
-	private Timer myTimer;
 	public boolean dir=true;
 	public boolean running;
 	private BitSet keyBits = new BitSet(256);
 	
+	/*Keybits here is a bitset that takes into account the various input keys that can be
+	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
+	 * false. Allows for checking if multiple keys are held at same time
+	 * */
+	
 	public GamePanel() {
 		this.addMouseListener(this);
-
 		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
 
 	    Thread myrunnable = new Thread(new starthere());
 	    myrunnable.start();
-	    //(int type, int bullettype, int xpos, int ypos,int speed, int angle,boolean friendly){
 	    
 	}
 
@@ -124,7 +116,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			while(true){
 				try {
 					Thread.sleep(150);
-					System.out.println("started");
+					//System.out.println("started");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -1,8 +1,15 @@
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 
 public abstract class GameObject {
+	
+	/*
+	 * General Abstract Class with many components that would be common to nearly any object
+	 * in the game. Variable names are more or less self explanatory
+	 * */
+	
 	protected double xpos;
 	protected double ypos;
 	protected int velocity;
@@ -24,10 +31,17 @@ public abstract class GameObject {
 		if (obj1.intersects(obj2))return true;
 		return false;
 	}
+	
+	public void draw(Graphics g){
+		g.drawImage(picture,(int)xpos,(int)ypos,null);
+		g.drawRect( (int)xpos, (int)ypos, 50, 50);
+	}
+	
 	public void kill(){
 		active=false;
 	}
-	public boolean dead(){
-		return !active;
+	public boolean alive(){
+		return active;
 	}
+	
 }
