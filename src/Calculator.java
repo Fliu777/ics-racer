@@ -1,8 +1,5 @@
 /*
-Michael Zhang
-Calculator
-ICS4U
-2013/04/16
+SWAGASDGASGASDFG
 */
 
 import java.awt.*;
