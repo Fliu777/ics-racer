@@ -10,6 +10,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	public boolean running;
 	private BitSet keyBits = new BitSet(256);
 	
+	PlayerCar Test=new PlayerCar();
+	
 	/*Keybits here is a bitset that takes into account the various input keys that can be
 	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
 	 * false. Allows for checking if multiple keys are held at same time
@@ -76,23 +78,12 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	public void keyPressed(KeyEvent e) {
 		int key=e.getKeyCode();
 		//System.out.println("why u no print");
-		if (key == KeyEvent.VK_UP) {
-			keyBits.set(KeyEvent.VK_UP);
-			
-		}
-		if (key == KeyEvent.VK_DOWN) {
-			keyBits.set(KeyEvent.VK_DOWN);
-
-		}
-		if (key == KeyEvent.VK_SPACE) {
-			keyBits.set(KeyEvent.VK_SPACE);
-
-		}
+		keyBits.set(key);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		keyBits.flip(e.getKeyCode());
+		keyBits.clear(e.getKeyCode());
 	}
 
 	@Override
@@ -104,9 +95,46 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	     return keyBits.get(keyCode);
 	}
 	
+	public void keyinput(){
+		for (int i=0;i<255;i++){
+			if (isKeyPressed(i)){
+				if (i==KeyEvent.VK_W){
+					Test.moveup();
+				}
+				else if (i==KeyEvent.VK_S){
+					Test.movedown();
+				}
+				
+				else if (i==KeyEvent.VK_A){
+					Test.moveleft();
+				}					
+				else if (i==KeyEvent.VK_D){
+					Test.moveright();
+				}
+				else if (i==KeyEvent.VK_UP){
+					Test.moveforward();
+				}
+				else if (i==KeyEvent.VK_RIGHT){
+					Test.turnclock();
+				}
+				else if (i==KeyEvent.VK_LEFT){
+					Test.turncounterclock();
+				}
+
+
+			}
+		}
+	}
+	
 
 	public void paintComponent(Graphics g) {
-
+		keyinput();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+		g.setColor(Color.black);
+		Test.draw(g);
+		
+		
 		repaint();
 
 	//	System.out.println("hi");
