@@ -73,11 +73,12 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		int key=arg0.getKeyCode();
+	public void keyPressed(KeyEvent e) {
+		int key=e.getKeyCode();
 		//System.out.println("why u no print");
 		if (key == KeyEvent.VK_UP) {
 			keyBits.set(KeyEvent.VK_UP);
+			
 		}
 		if (key == KeyEvent.VK_DOWN) {
 			keyBits.set(KeyEvent.VK_DOWN);
@@ -90,17 +91,18 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		keyBits.flip(arg0.getKeyCode());
+	public void keyReleased(KeyEvent e) {
+		keyBits.flip(e.getKeyCode());
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 
 	}
+	
 	public boolean isKeyPressed(final int keyCode) {
 	     return keyBits.get(keyCode);
- }
+	}
 	
 
 	public void paintComponent(Graphics g) {
