@@ -12,8 +12,8 @@ public abstract class GameObject {
 	
 	protected double xpos;
 	protected double ypos;
-	protected int velocity;
-	protected int acceleration;
+	protected double velocity;
+	protected double acceleration;
 	protected double angle;
 	protected final int IMAGESIZE;
 	protected BufferedImage picture=null; 

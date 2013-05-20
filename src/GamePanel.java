@@ -104,7 +104,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				else if (i==KeyEvent.VK_S){
 					Test.movedown();
 				}
-				
 				else if (i==KeyEvent.VK_A){
 					Test.moveleft();
 				}					
@@ -145,7 +144,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		public void run() {
 			while(true){
 				try {
-					Thread.sleep(150);
+					Thread.sleep(450);
 					//System.out.println("started");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
