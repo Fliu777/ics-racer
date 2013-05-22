@@ -132,6 +132,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 		g.setColor(Color.black);
 		Test.draw(g);
+		Test.move();
 		
 		
 		repaint();
