@@ -119,9 +119,14 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				else if (i==KeyEvent.VK_LEFT){
 					Test.turncounterclock();
 				}
-
+			}
+			else{
+				if (i==KeyEvent.VK_UP ){
+					Test.restart();	
+				}
 
 			}
+			
 		}
 	}
 	

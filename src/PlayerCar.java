@@ -1,4 +1,14 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.Transparency;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 
 public class PlayerCar extends GameObject {
@@ -14,6 +24,8 @@ public class PlayerCar extends GameObject {
 	
 	public PlayerCar(){
 		super();
+		
+		
 		velocity=0;
 		angle=0;
 		pcap=2.5;
@@ -24,13 +36,21 @@ public class PlayerCar extends GameObject {
 		power=0.75;
 		vx= cos(angle)*velocity;
 		vy= sin(angle)*velocity;
+		try {
+			orig= ImageIO.read(new File("src/ghetto.gif"));
+			picture=orig;
+			System.out.println("brah");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	public void draw(Graphics g){
 
 		
 		super.draw(g);
-		g.drawLine((int)xpos, (int)ypos, (int)(xpos+Math.cos(Math.toRadians(angle))*25), (int)(ypos+Math.sin(Math.toRadians(angle))*25));
+		g.drawImage(picture, (int)xpos, (int)ypos, null);
+		g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
 	}
 	public void move(){
 		vx *= fric;
@@ -51,8 +71,7 @@ public class PlayerCar extends GameObject {
 		
 		xpos += vx;
 		ypos += vy;
-		
-		System.out.println(vx+ " "+ vy);
+		//System.out.println(vx+ " "+ vy);
 	}
 	
 	public void moveforward(){
@@ -74,18 +93,30 @@ public class PlayerCar extends GameObject {
 	
 	public void stop(){
 		velocity=0.5;
-		vx= Math.cos(Math.toRadians(angle))*velocity;
-		vy= Math.sin(Math.toRadians(angle))*velocity;
+		vx= cos(angle)*velocity;
+		vy= sin(angle)*velocity;
 		power=1;
+	}
+	
+	public void restart(){
+		power=0.75;
 	}
 	
 	public void turnclock(){
 		angle+=turnSpeed;
+		rotate();
 	}
 	public void turncounterclock(){
 		angle-=turnSpeed;
+		rotate();
 	}
-	
+	public void rotate(){
+		AffineTransform tx = new AffineTransform();
+		tx.rotate(Math.toRadians(angle), orig.getWidth()/2, orig.getHeight()/2);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		picture = op.filter(orig, null);
+	}
+
 	public void moveright(){
 		xpos+=velocity;
 	}
