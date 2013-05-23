@@ -44,5 +44,17 @@ public abstract class GameObject {
 	public boolean alive(){
 		return active;
 	}
+	public double getX(){
+		return xpos;
+	}
+	public double getY(){
+		return ypos;
+	}
+	public double getAngle(){
+		return angle;
+	}
+	public boolean dead(){
+		return !active;
+	}
 	
 }

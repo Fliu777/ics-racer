@@ -32,6 +32,7 @@ public class PlayerCar extends GameObject {
 		
 		turnSpeed=0.45;
 		fric=0.989;
+		//fric=1;
 		power=0.75;
 		vx= cos(angle)*velocity;
 		vy= sin(angle)*velocity;

@@ -14,6 +14,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	AICar Test2=new AICar();
 	
+	ArrayList<Bullets> BulletList;
+	
 	/*Keybits here is a bitset that takes into account the various input keys that can be
 	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
 	 * false. Allows for checking if multiple keys are held at same time
@@ -23,7 +25,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
-
+	    BulletList=new ArrayList<Bullets>();
 	    Thread myrunnable = new Thread(new starthere());
 	    myrunnable.start();
 	    
@@ -100,19 +102,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	public void keyinput(){
 		for (int i=0;i<255;i++){
 			if (isKeyPressed(i)){
-				if (i==KeyEvent.VK_W){
-					Test.moveup();
-				}
-				else if (i==KeyEvent.VK_S){
-					Test.movedown();
-				}
-				else if (i==KeyEvent.VK_A){
-					Test.moveleft();
-				}					
-				else if (i==KeyEvent.VK_D){
-					Test.moveright();
-				}
-				else if (i==KeyEvent.VK_UP){
+				if (i==KeyEvent.VK_UP){
 					Test.moveforward();
 				}
 				else if (i==KeyEvent.VK_RIGHT){
@@ -120,6 +110,11 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				}
 				else if (i==KeyEvent.VK_LEFT){
 					Test.turncounterclock();
+				}
+				else if (i==KeyEvent.VK_SPACE){
+					System.out.println("wut>?");
+					Bullets temp=new Bullets(Test.getX(), Test.getY() , Test.getAngle());
+					BulletList.add(temp);
 				}
 			}
 			else{
@@ -144,6 +139,17 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		Test2.draw(g);
 		Test2.update();
 		Test2.move();
+		
+		for (int i=0;i<BulletList.size();i++){
+			if (BulletList.get(i).dead()){
+				BulletList.remove(i);
+			}
+		}
+		for (int i=0;i<BulletList.size();i++){
+			BulletList.get(i).check();
+			BulletList.get(i).move();
+			BulletList.get(i).draw(g);
+		}
 		
 		repaint();
 
