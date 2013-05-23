@@ -12,6 +12,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	PlayerCar Test=new PlayerCar();
 	
+	AICar Test2=new AICar();
+	
 	/*Keybits here is a bitset that takes into account the various input keys that can be
 	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
 	 * false. Allows for checking if multiple keys are held at same time
@@ -139,6 +141,9 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		Test.draw(g);
 		Test.move();
 		
+		Test2.draw(g);
+		Test2.update();
+		Test2.move();
 		
 		repaint();
 

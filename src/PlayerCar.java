@@ -13,14 +13,14 @@ import javax.imageio.ImageIO;
 
 public class PlayerCar extends GameObject {
 	private String ign;
-	private double vx;
-	private double vy;
-	private double fric;
-	private double turnSpeed;
-	private double power;
+	protected double vx;
+	protected double vy;
+	protected double fric;
+	protected double turnSpeed;
+	protected double power;
 	
-	private double pcap;
-	double curvx, curvy;
+	protected double pcap;
+	protected double curvx, curvy;
 	
 	public PlayerCar(){
 		super();
@@ -30,7 +30,6 @@ public class PlayerCar extends GameObject {
 		angle=0;
 		pcap=2.5;
 		
-		
 		turnSpeed=0.45;
 		fric=0.989;
 		power=0.75;
@@ -39,7 +38,6 @@ public class PlayerCar extends GameObject {
 		try {
 			orig= ImageIO.read(new File("src/ghetto.gif"));
 			picture=orig;
-			System.out.println("brah");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -75,7 +73,7 @@ public class PlayerCar extends GameObject {
 	}
 	
 	public void moveforward(){
-		power+=0.005;
+		power+=0.007;
 		curvx = vx;
 		curvy = vy;
 		vx = cos(angle) * power;

@@ -35,7 +35,7 @@ public abstract class GameObject {
 	
 	public void draw(Graphics g){
 		g.drawImage(picture,(int)xpos,(int)ypos,null);
-		g.drawRect( (int)xpos, (int)ypos, 50, 50);
+		//g.drawRect( (int)xpos, (int)ypos, 50, 50);
 	}
 	
 	public void kill(){
