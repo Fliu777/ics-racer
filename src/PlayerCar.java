@@ -74,7 +74,7 @@ public class PlayerCar extends GameObject {
 	}
 	
 	public void moveforward(){
-		power+=0.007;
+		power+=0.004;
 		curvx = vx;
 		curvy = vy;
 		vx = cos(angle) * power;
