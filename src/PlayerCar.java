@@ -52,6 +52,7 @@ public class PlayerCar extends GameObject {
 		g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
 	}
 	public void move(){
+	//	rotate();
 		vx *= fric;
 		vy *= fric;
 	
@@ -74,6 +75,7 @@ public class PlayerCar extends GameObject {
 	}
 	
 	public void moveforward(){
+		rotate();
 		power+=0.004;
 		curvx = vx;
 		curvy = vy;
@@ -103,11 +105,9 @@ public class PlayerCar extends GameObject {
 	
 	public void turnclock(){
 		angle+=turnSpeed;
-		rotate();
 	}
 	public void turncounterclock(){
 		angle-=turnSpeed;
-		rotate();
 	}
 	public void rotate(){
 		AffineTransform tx = new AffineTransform();
