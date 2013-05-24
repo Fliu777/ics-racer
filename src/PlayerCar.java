@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -48,11 +49,13 @@ public class PlayerCar extends GameObject {
 
 		
 		super.draw(g);
+		g.setColor(Color.black);
+		g.drawString(Double.toString(Math.sqrt(vx*vx+vy*vy)), 200, 200);
 		g.drawImage(picture, (int)xpos, (int)ypos, null);
 		g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
 	}
 	public void move(){
-	//	rotate();
+		rotate();
 		vx *= fric;
 		vy *= fric;
 	
@@ -75,7 +78,6 @@ public class PlayerCar extends GameObject {
 	}
 	
 	public void moveforward(){
-		rotate();
 		power+=0.004;
 		curvx = vx;
 		curvy = vy;
