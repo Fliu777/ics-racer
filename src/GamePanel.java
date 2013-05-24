@@ -11,6 +11,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	private BitSet keysPressed = new BitSet(256);
 	private BitSet keysReleased = new BitSet(256);
 	
+	GameMap map = new GameMap();
+	
 	PlayerCar Test=new PlayerCar();
 	
 	AICar Test2=new AICar();
@@ -143,7 +145,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	public void paintComponent(Graphics g) {
 		keyinput();
 		g.setColor(Color.white);
-		g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+		//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+		map.draw(g);
 		g.setColor(Color.black);
 		Test.draw(g);
 		Test.move();
