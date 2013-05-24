@@ -23,11 +23,16 @@ public class MainLoop extends JFrame{
 		/* Initialize Frame here
 		 * 
 		 */
+		
 		GameFrame=new JFrame();
 		GameFrame.setSize(ScreenWidth, ScreenHeight);
 		GameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		GamePanel game=new GamePanel();
+		/*GamePanel game=new GamePanel();
+		game.setFocusable(true);
+		GameFrame.add(game);*/
+		
+		MenuScreen game=new MenuScreen();
 		game.setFocusable(true);
 		GameFrame.add(game);
 		
