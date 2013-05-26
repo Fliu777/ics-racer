@@ -22,14 +22,14 @@ public class PlayerCar extends GameObject {
 	
 	protected double pcap;
 	protected double curvx, curvy;
+	protected double accelrate;
 	
 	public PlayerCar(){
 		super();
-		
-		
 		velocity=0;
 		angle=0;
 		pcap=2.5;
+		accelrate=0.001;
 		
 		turnSpeed=0.45;
 		fric=0.989;
@@ -50,7 +50,9 @@ public class PlayerCar extends GameObject {
 		
 		super.draw(g);
 		g.setColor(Color.black);
-		g.drawString(Double.toString(Math.sqrt(vx*vx+vy*vy)), 200, 200);
+		g.drawString( Double.toString(Math.sqrt(vx*vx+vy*vy)) , 200, 200);
+		double temp=Math.sqrt(vx*vx+vy*vy);
+		//System.out.println(" uwt "+temp);
 		g.drawImage(picture, (int)xpos, (int)ypos, null);
 		g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
 	}
@@ -78,7 +80,7 @@ public class PlayerCar extends GameObject {
 	}
 	
 	public void moveforward(){
-		power+=0.004;
+		power+=accelrate;
 		curvx = vx;
 		curvy = vy;
 		vx = cos(angle) * power;

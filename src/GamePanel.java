@@ -119,7 +119,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 					Test.turncounterclock();
 				}
 				if (i==KeyEvent.VK_SPACE){
-					System.out.println("wut>?");
+					//System.out.println("wut>?");
 					Bullets temp=new Bullets(Test.getX(), Test.getY() , Test.getAngle());
 					BulletList.add(temp);
 				}
@@ -129,10 +129,9 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		for (int i=0;i<255;i++){
 			if (isKeyReleased(i)){
 				if (i==KeyEvent.VK_UP){
+					System.out.println("released");
 					Test.restart();
 					keysReleased.clear(i);
-					
-					
 				}
 			}
 		}
@@ -143,29 +142,32 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 
 	public void paintComponent(Graphics g) {
-		keyinput();
-		g.setColor(Color.white);
-		//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
-		map.draw(g);
-		g.setColor(Color.black);
-		Test.draw(g);
-		Test.move();
-		
-		Test2.draw(g);
-		Test2.update();
-		Test2.move();
-		
-		for (int i=0;i<BulletList.size();i++){
-			if (BulletList.get(i).dead()){
-				BulletList.remove(i);
+		if (running){
+			keyinput();
+			g.setColor(Color.white);
+			//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+			map.draw(g);
+			g.setColor(Color.black);
+			Test.draw(g);
+			Test.move();
+			
+			Test2.draw(g);
+			Test2.update();
+			Test2.move();
+			
+			for (int i=0;i<BulletList.size();i++){
+				if (BulletList.get(i).dead()){
+					BulletList.remove(i);
+				}
 			}
+			for (int i=0;i<BulletList.size();i++){
+				BulletList.get(i).check();
+				BulletList.get(i).move();
+				BulletList.get(i).draw(g);
+			}
+			running=false;
+
 		}
-		for (int i=0;i<BulletList.size();i++){
-			BulletList.get(i).check();
-			BulletList.get(i).move();
-			BulletList.get(i).draw(g);
-		}
-		
 		repaint();
 
 	//	System.out.println("hi");
@@ -176,8 +178,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		public void run() {
 			while(true){
 				try {
-					Thread.sleep(450);
-					//System.out.println("started");
+					Thread.sleep(5);
+					System.out.println("started");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

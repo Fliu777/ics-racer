@@ -1,107 +1,67 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class MenuScreen  extends JPanel implements   ActionListener, KeyListener, MouseListener, MouseMotionListener{
-	boolean running=false;
-	public MenuScreen() {
-		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
-		this.addKeyListener(this);
-	    Thread myrunnable = new Thread(new starthere());
-	    myrunnable.start();
-	    
-	}
-	
-
-	class starthere implements Runnable{
-		public void run() {
-			while(true){
-				try {
-					Thread.sleep(450);
-					//System.out.println("started");
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				running=true;
-			}
-
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
+public class MenuScreen extends Frame implements ActionListener {
+    static void renderSplashFrame(Graphics2D g, int frame) {
+        final String[] comps = {"foo", "bar", "baz"};
+        g.setComposite(AlphaComposite.Clear);
+        g.fillRect(120,140,200,40);
+        g.setPaintMode();
+        g.setColor(Color.BLACK);
+        g.drawString("Loading "+comps[(frame/5)%3]+"...", 120, 150);
+    }
+    public MenuScreen() {
+        super("SplashScreen demo");
+        setSize(300, 200);
+        setLayout(new BorderLayout());
+        Menu m1 = new Menu("File");
+        MenuItem mi1 = new MenuItem("Exit");
+        m1.add(mi1);
+        mi1.addActionListener(this);
+        this.addWindowListener(closeWindow);
+ 
+        MenuBar mb = new MenuBar();
+        setMenuBar(mb);
+        mb.add(m1);
+        final SplashScreen splash = SplashScreen.getSplashScreen();
+        if (splash == null) {
+            System.out.println("SplashScreen.getSplashScreen() returned null");
+            return;
+        }
+        Graphics2D g = splash.createGraphics();
+        if (g == null) {
+            System.out.println("g is null");
+            return;
+        }
+        for(int i=0; i<100; i++) {
+            renderSplashFrame(g, i);
+            splash.update();
+            try {
+                Thread.sleep(90);
+            }
+            catch(InterruptedException e) {
+            }
+        }
+        splash.close();
+        setVisible(true);
+        toFront();
+    }
+    public void actionPerformed(ActionEvent ae) {
+        System.exit(0);
+    }
+     
+    private static WindowListener closeWindow = new WindowAdapter(){
+        public void windowClosing(WindowEvent e){
+            e.getWindow().dispose();
+        }
+    };
+     
+    public static void main (String args[]) {
+    	MenuScreen test = new MenuScreen();
+    }
 }
