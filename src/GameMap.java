@@ -9,6 +9,7 @@ public class GameMap {
 	private BufferedReader mapData;
 	private ArrayList<String> textMap;
 	private double width, height;
+	private int tempHeight;
 	
 	public GameMap() {
 		
@@ -32,22 +33,20 @@ public class GameMap {
 			System.err.println("IOException: " + e.getMessage());
 		}
 		width = MainLoop.ScreenWidth;
-		height = MainLoop.ScreenHeight;
+		height = MainLoop.ScreenHeight-30;
+		tempHeight = textMap.size();
 	}
 	
 	public void draw(Graphics g) {
-		int tempHeight = textMap.size();
+		g.setColor(Color.gray);
+		g.fillArc(100, 100, 700, 700, 0, 90);
 		for (int i = 0; i<textMap.size(); i++) {
 			String temp = textMap.get(i);
 			int tempWidth = textMap.get(i).length();
 			for (int j = 0; j<textMap.get(i).length(); j++) {
 				if (temp.substring(j,j+1).equals("X")) {
 					g.setColor(Color.gray);
-					g.fillRect((int)Math.round(width/tempWidth*j),(int)Math.round(height/tempHeight*i), (int)Math.round(width/tempWidth)+1, (int)Math.round(height/tempHeight)+1); 
-				}
-				else if (temp.substring(j,j+1).equals(".")) {
-					g.setColor(Color.green);
-					g.fillRect((int)Math.round(width/tempWidth*j),(int)Math.round(height/tempHeight*i), (int)Math.round(width/tempWidth)+1, (int)Math.round(height/tempHeight)+1);
+					//g.fillRect((int)Math.round(width/tempWidth*j),(int)Math.round(height/tempHeight*i), (int)Math.round(width/tempWidth)+1, (int)Math.round(height/tempHeight)+1); 
 				}
 			}
 		}
