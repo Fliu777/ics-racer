@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
 	 * false. Allows for checking if multiple keys are held at same time
 	 * */
-	private int fps=60;
+	private int fps=170;
 	
 	public GamePanel() {
 		this.addMouseListener(this);
