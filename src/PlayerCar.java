@@ -31,7 +31,7 @@ public class PlayerCar extends GameObject {
 		
 		velocity=0;
 		angle=0;
-		pcap=3.0;
+		pcap=2.5;
 		accelrate=0.001;
 		
 		turnSpeed=0.45;
@@ -78,6 +78,16 @@ public class PlayerCar extends GameObject {
 		
 		xpos += vx;
 		ypos += vy;
+		
+		//temp fix to make the map not small while waiting for scroll
+		//disable when scroll done
+		if (xpos>MainLoop.ScreenWidth || xpos<0 ||  ypos>MainLoop.ScreenHeight || ypos<0){
+			vx=-vx;
+			vy=-vy;
+			angle=180+angle;
+		}
+		
+		
 		//System.out.println(vx+ " "+ vy);
 	}
 	

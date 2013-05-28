@@ -19,11 +19,13 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	ArrayList<Bullets> BulletList;
 	
 	private int counter=0;
+    private long start = 0;
 	
 	/*Keybits here is a bitset that takes into account the various input keys that can be
 	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
 	 * false. Allows for checking if multiple keys are held at same time
 	 * */
+	private int fps=60;
 	
 	public GamePanel() {
 		this.addMouseListener(this);
@@ -138,12 +140,31 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		
 	}
 	
+	public void fpscap() {
+	    double wait=1000/fps;
+	    double used = System.currentTimeMillis() - start;
+	    System.out.println(used);
+	    if (used < wait) {
+	        try{
+	        	Thread.sleep((long) (wait-used));
+	        	System.out.println("waiting");
+	        }
+	        catch(Exception e){}
+	    }
+	    start = System.currentTimeMillis();
+	}
+
 
 	public void paintComponent(Graphics g) {
+		
+		
+		
 		if (running){
+			
+
 			keyinput();
-			//g.setColor(Color.green);
-			//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+			g.setColor(Color.green);
+			g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 			map.draw(g);
 			g.setColor(Color.black);
 			Test.draw(g);
@@ -157,7 +178,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			for (int i=0;i<AI.size();i++){
 				((AICar)(AI.get(i))).update();
 				((AICar)(AI.get(i))).draw(g);
-				System.out.println("doing");
 			}
 			
 			
@@ -182,8 +202,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				BulletList.get(i).draw(g);
 			}
 			running=false;
-
 		}
+		fpscap();
 		repaint();
 
 	//	System.out.println("hi");
@@ -193,13 +213,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	class starthere implements Runnable{
 		public void run() {
 			while(true){
-				/*try {
-					Thread.sleep(5);
-					//System.out.println("started");
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
 				running=true;
 			}
 		}
