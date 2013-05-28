@@ -4,7 +4,7 @@ public class AICar extends PlayerCar{
 	public AICar(){
 		super();
 	}
-	public void move(){
+	public void update(){
 		counter++;
 
 		if (xpos>MainLoop.ScreenWidth-150 || xpos<150 ||  ypos>MainLoop.ScreenHeight-150 || ypos<150){
@@ -14,6 +14,7 @@ public class AICar extends PlayerCar{
 			turnclock();
 		}
 		moveforward();
+		move();
 	}
 	
 	public void follow(PlayerCar temp){

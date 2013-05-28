@@ -29,9 +29,12 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
-		AI=new ArrayList<PlayerCar>();
+
 		BulletList=new ArrayList<Bullets>();
-		AI.add(new AICar());
+		
+		AI=new ArrayList<PlayerCar>();
+		AICar temp=new AICar();
+		AI.add((AICar)temp);
 	   
 	    Thread myrunnable = new Thread(new starthere());
 	    myrunnable.start();
@@ -152,8 +155,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				}
 			}
 			for (int i=0;i<AI.size();i++){
-				AI.get(i).move();
-				AI.get(i).draw(g);
+				((AICar)(AI.get(i))).update();
+				((AICar)(AI.get(i))).draw(g);
 				System.out.println("doing");
 			}
 			

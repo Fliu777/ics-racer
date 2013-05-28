@@ -29,7 +29,6 @@ public class PlayerCar extends GameObject {
 		
 		life=10;
 		
-		
 		velocity=0;
 		angle=0;
 		pcap=3.0;
