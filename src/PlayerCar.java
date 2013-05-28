@@ -24,6 +24,8 @@ public class PlayerCar extends GameObject {
 	protected double curvx, curvy;
 	protected double accelrate;
 	protected int life;
+	private final double startpow=0.75;
+	
 	public PlayerCar(){
 		super();
 		
@@ -31,13 +33,13 @@ public class PlayerCar extends GameObject {
 		
 		velocity=0;
 		angle=0;
-		pcap=2.5;
-		accelrate=0.01;
+		pcap=5.5;
+		accelrate=0.005;
 		
 		turnSpeed=0.45;
 		fric=0.989;
 		//fric=1;
-		power=1;
+		power=startpow;
 		vx= cos(angle)*velocity;
 		vy= sin(angle)*velocity;
 		try {
@@ -52,11 +54,10 @@ public class PlayerCar extends GameObject {
 
 		
 		super.draw(g);
-		g.setColor(Color.black);
-		//g.drawString( Double.toString(Math.sqrt(vx*vx+vy*vy)) , 200, 200);
-		double temp=Math.sqrt(vx*vx+vy*vy);
+		g.drawString( Double.toString(Math.sqrt(vx*vx+vy*vy)) , 200, 200);
+		//double temp=Math.sqrt(vx*vx+vy*vy);
 		//g.drawImage(picture, (int)xpos, (int)ypos, null);
-		//g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
+		////g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
 	}
 	public void move(){
 		rotate();
@@ -64,16 +65,14 @@ public class PlayerCar extends GameObject {
 		vy *= fric;
 	
 		//Velocity cap
-		if (Math.sqrt(vx*vx+vy*vy)>2.82){
+		if (Math.sqrt(vx*vx+vy*vy)>pcap*Math.sqrt(2)){
 			vx = curvx;
 			vy = curvy;
 		}
 		
 		//has stopped
 		if (Math.abs(vx)<0.1 && Math.abs(vy)<0.1) {
-			power=0.75;
-			vx=0;
-			vy=0;
+			restart();
 		}
 		
 		xpos += vx;
@@ -116,7 +115,9 @@ public class PlayerCar extends GameObject {
 	}
 	
 	public void restart(){
-		power=0.75;
+		power=startpow;
+		vx=0;
+		vy=0;
 	}
 	
 	public void loselife(){
