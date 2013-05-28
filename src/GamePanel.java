@@ -141,7 +141,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	}
 	
 	public void fpscap() {
-	    double wait=1000/fps;
+	    double wait=1000.0/fps;
 	    double used = System.currentTimeMillis() - start;
 	    System.out.println(used);
 	    if (used < wait) {
