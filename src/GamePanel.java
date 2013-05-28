@@ -14,8 +14,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	GameMap map = new GameMap();
 	
 	PlayerCar Test=new PlayerCar();
-	
-	AICar Test2=new AICar();
+	ArrayList<PlayerCar> AI;
 	
 	ArrayList<Bullets> BulletList;
 	
@@ -30,7 +29,10 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
-	    BulletList=new ArrayList<Bullets>();
+		AI=new ArrayList<PlayerCar>();
+		BulletList=new ArrayList<Bullets>();
+		AI.add(new AICar());
+	   
 	    Thread myrunnable = new Thread(new starthere());
 	    myrunnable.start();
 	    
@@ -49,8 +51,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		System.out.println(arg0);
+
 	}
 
 	@Override
@@ -67,7 +68,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		Bullets temp=new Bullets(Test.getX(), Test.getY() , Math.toDegrees( Math.atan2(arg0.getY()-Test.getY(),arg0.getX() -Test.getX())));
+		BulletList.add(temp);
 		
 	}
 
@@ -105,11 +107,9 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	}
 	
 	public void keyinput(){
-		counter++;
 		for (int i=0;i<255;i++){
 			if (isKeyPressed(i)){
 				if (i==KeyEvent.VK_UP){
-					counter=0;
 					Test.moveforward();
 				}
 				if (i==KeyEvent.VK_RIGHT){
@@ -117,11 +117,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				}
 				if (i==KeyEvent.VK_LEFT){
 					Test.turncounterclock();
-				}
-				if (i==KeyEvent.VK_SPACE){
-					//System.out.println("wut>?");
-					Bullets temp=new Bullets(Test.getX(), Test.getY() , Test.getAngle());
-					BulletList.add(temp);
 				}
 			}
 		}
@@ -145,22 +140,38 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		if (running){
 			keyinput();
 			g.setColor(Color.green);
-			g.fillRect(0,0,MainLoop.ScreenWidth,MainLoop.ScreenHeight);
-			//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+			g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 			map.draw(g);
 			g.setColor(Color.black);
 			Test.draw(g);
 			Test.move();
-			
-			Test2.draw(g);
-			Test2.update();
-			Test2.move();
 			
 			for (int i=0;i<BulletList.size();i++){
 				if (BulletList.get(i).dead()){
 					BulletList.remove(i);
 				}
 			}
+			for (int i=0;i<AI.size();i++){
+				AI.get(i).move();
+				AI.get(i).draw(g);
+			}
+			
+			
+			for (int i=0;i<AI.size();i++){
+				if (AI.get(i).dead()){
+					AI.remove(i);
+				}
+			}
+			
+			for (int i=0;i<AI.size();i++){
+				for (int j=0;j<BulletList.size();j++){
+					if (AI.get(i).collision(BulletList.get(j)) ){
+						AI.get(i).loselife();
+						BulletList.get(j).kill();
+					}
+				}
+			}
+			
 			for (int i=0;i<BulletList.size();i++){
 				BulletList.get(i).check();
 				BulletList.get(i).move();
@@ -178,16 +189,15 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	class starthere implements Runnable{
 		public void run() {
 			while(true){
-				try {
+				/*try {
 					Thread.sleep(5);
-					System.out.println("started");
+					//System.out.println("started");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				running=true;
 			}
-
 		}
 	}
 

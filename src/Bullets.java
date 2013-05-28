@@ -7,12 +7,13 @@ public class Bullets extends GameObject{
 	private boolean alive;
 	private int damage;
 	private int type;
+	private int speed=5;
 	public Bullets(double startx, double starty, double angle){
 		super();
-		xpos=startx+50;
-		ypos=starty+50;
+		xpos=startx+10;
+		ypos=starty+10;
 		this.angle=angle;
-		velocity=15;
+		velocity=5;
 		active=true;
 	}
 	

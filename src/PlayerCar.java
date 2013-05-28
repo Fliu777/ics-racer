@@ -23,9 +23,13 @@ public class PlayerCar extends GameObject {
 	protected double pcap;
 	protected double curvx, curvy;
 	protected double accelrate;
-	
+	protected int life;
 	public PlayerCar(){
 		super();
+		
+		life=100;
+		
+		
 		velocity=0;
 		angle=0;
 		pcap=2.5;
@@ -38,7 +42,7 @@ public class PlayerCar extends GameObject {
 		vx= cos(angle)*velocity;
 		vy= sin(angle)*velocity;
 		try {
-			orig= ImageIO.read(new File("src/ghetto.gif"));
+			orig= ImageIO.read(new File("src/Images/car1.png"));
 			picture=orig;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -50,11 +54,10 @@ public class PlayerCar extends GameObject {
 		
 		super.draw(g);
 		g.setColor(Color.black);
-		g.drawString( Double.toString(Math.sqrt(vx*vx+vy*vy)) , 200, 200);
+		//g.drawString( Double.toString(Math.sqrt(vx*vx+vy*vy)) , 200, 200);
 		double temp=Math.sqrt(vx*vx+vy*vy);
-		//System.out.println(" uwt "+temp);
-		g.drawImage(picture, (int)xpos, (int)ypos, null);
-		g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
+		//g.drawImage(picture, (int)xpos, (int)ypos, null);
+		//g.drawLine((int)xpos, (int)ypos, (int)(xpos+cos(angle)*25), (int)(ypos+sin(angle)*25));
 	}
 	public void move(){
 		rotate();
@@ -105,6 +108,16 @@ public class PlayerCar extends GameObject {
 	
 	public void restart(){
 		power=0.75;
+	}
+	
+	public void loselife(){
+		life--;
+		if (life<=0){
+			active=false;
+		}
+	}
+	public int getlife(){
+		return life;
 	}
 	
 	public void turnclock(){
