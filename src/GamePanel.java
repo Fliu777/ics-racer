@@ -139,8 +139,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	public void paintComponent(Graphics g) {
 		if (running){
 			keyinput();
-			g.setColor(Color.green);
-			g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+			//g.setColor(Color.green);
+			//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 			map.draw(g);
 			g.setColor(Color.black);
 			Test.draw(g);
@@ -154,6 +154,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			for (int i=0;i<AI.size();i++){
 				AI.get(i).move();
 				AI.get(i).draw(g);
+				System.out.println("doing");
 			}
 			
 			

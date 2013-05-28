@@ -4,7 +4,7 @@ public class AICar extends PlayerCar{
 	public AICar(){
 		super();
 	}
-	public void update(){
+	public void move(){
 		counter++;
 
 		if (xpos>MainLoop.ScreenWidth-150 || xpos<150 ||  ypos>MainLoop.ScreenHeight-150 || ypos<150){

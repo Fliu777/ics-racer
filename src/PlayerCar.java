@@ -27,12 +27,12 @@ public class PlayerCar extends GameObject {
 	public PlayerCar(){
 		super();
 		
-		life=100;
+		life=10;
 		
 		
 		velocity=0;
 		angle=0;
-		pcap=2.5;
+		pcap=3.0;
 		accelrate=0.001;
 		
 		turnSpeed=0.45;
