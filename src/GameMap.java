@@ -13,6 +13,7 @@ public class GameMap {
 	private double width, height;
 	private int tempHeight;
 	private BufferedImage mapNS, mapEW, mapNE, mapSE, mapSW, mapNW, mapOR, map4Way;
+	private BufferedImage[] roadArray;
 	
 	public GameMap() {
 		
@@ -29,6 +30,11 @@ public class GameMap {
 		} catch (IOException e) {
 			System.err.println("IOException: " + e.getMessage());
 		}
+		
+		//Road image array
+		BufferedImage[] roadArrayTemp = {mapNS, mapEW, mapNE, mapSE, mapSW, mapNW, map4Way, mapOR};
+		roadArray = new BufferedImage[8];
+		for (int i = 0; i<8; i++) roadArray[i] = roadArrayTemp[i];
 		
 		//Adding new Levels
 		fileMapArray = new ArrayList<File>();
@@ -54,23 +60,27 @@ public class GameMap {
 		tempHeight = textMap.size();
 	}
 	
-	/*public void showVisibleMap(int x, int y, ) {
-		
+	public String[][] currentMap(int x, int y) {
+		String[][] newMap = new String[7][7];
+		for (int i = 0; i<7; i++) {
+			for (int j = 0; j<7; j++) {
+				newMap[i][j] = textMap.get(x+i).substring(y+j,y+j+1);
+			}
+		}
+		return newMap;
 	}
-	*/
 	
 	
 	
 	public void draw(Graphics g) {
-		g.setColor(Color.gray);
-		g.drawImage(mapNW,0,0,null); 
-		for (int i = 0; i<textMap.size(); i++) {
-			String temp = textMap.get(i);
-			int tempWidth = textMap.get(i).length();
-			for (int j = 0; j<textMap.get(i).length(); j++) {
-				if (temp.substring(j,j+1).equals("X")) {
-					g.setColor(Color.gray);
-					//g.drawImage(mapNS,(int)Math.round(width/tempWidth*j),(int)Math.round(height/tempHeight*i),null); 
+		String[][] map = currentMap(0,0);
+		for (int i = 0; i<7; i++) {
+			for (int j = 0; j<7; j++) {
+				if (map[i][j].equals(".")) {
+					g.drawImage(roadArray[7],i*200, j*200, null);
+				}
+				else {
+					g.drawImage(roadArray[3], i*200, j*200, null);
 				}
 			}
 		}

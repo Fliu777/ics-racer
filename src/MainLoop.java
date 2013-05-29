@@ -19,7 +19,6 @@ public class MainLoop extends JFrame{
 	public static void main(String [] args){
 		ScreenWidth= java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 		ScreenHeight= java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
-		System.out.println("hi");
 		/* Initialize Frame here
 		 * 
 		 */

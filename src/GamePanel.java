@@ -203,7 +203,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			}
 			running=false;
 		}
-		fpscap();
+		//fpscap();
 		repaint();
 
 	//	System.out.println("hi");
