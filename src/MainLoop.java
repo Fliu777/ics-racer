@@ -33,7 +33,16 @@ public class MainLoop extends JFrame{
 		
 		/*MenuScreen game=new MenuScreen();
 		game.setFocusable(true);
-		GameFrame.add(game);*/
+		GameFrame.ad
+		
+		
+		
+		
+		
+		
+		
+		
+		d(game);*/
 		
 		
 		GameFrame.setVisible(true);

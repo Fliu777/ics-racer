@@ -1,30 +1,146 @@
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 
+
 public class PlayerCar extends GameObject {
-	private String ign;
-	protected double vx;
-	protected double vy;
-	protected double fric;
-	protected double turnSpeed;
-	protected double power;
-	
-	protected double pcap;
-	protected double curvx, curvy;
-	protected double accelrate;
-	protected int life;
-	private final double startpow=0.75;
-	
+        private String ign;
+        private double vx;
+        private double vy;
+        private double fric;
+        private double turnSpeed;
+        private double power;
+        private int life=10;
+        private double pcap;
+        double curvx, curvy;
+        
+        public PlayerCar(){
+                super();
+                velocity=0;
+                angle=0;
+                pcap=2.5;
+                
+                
+                turnSpeed=0.45;
+                fric=0.989;
+                power=0.75;
+                vx= cos(angle)*velocity;
+                vy= sin(angle)*velocity;
+        		try {
+        			orig= ImageIO.read(new File("src/Images/car1.png"));
+        			picture=orig;
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
+                
+        }
+        public void draw(Graphics g){
+
+                
+                super.draw(g);
+                g.drawLine((int)xpos, (int)ypos, (int)(xpos+Math.cos(Math.toRadians(angle))*25), (int)(ypos+Math.sin(Math.toRadians(angle))*25));
+        }
+        public void move(){
+        	rotate();
+                vx *= fric;
+                vy *= fric;
+        
+                //Velocity cap
+                if (Math.sqrt(vx*vx+vy*vy)>2.82){
+                        vx = curvx;
+                        vy = curvy;
+                }
+                
+                //has stopped
+                if (Math.abs(vx)<0.1 && Math.abs(vy)<0.1) {
+                        power=0.75;
+                        vx=0;
+                        vy=0;
+                }
+                
+                xpos += vx;
+                ypos += vy;
+                
+        		//temp fix to make the map not small while waiting for scroll
+        		//disable when scroll done
+        		if (xpos>MainLoop.ScreenWidth || xpos<0 ||  ypos>MainLoop.ScreenHeight || ypos<0){
+        			vx=-vx;
+        			vy=-vy;
+        			angle=180+angle;
+        		}
+                
+                System.out.println(vx+ " "+ vy);
+        }
+        
+        public void moveforward(){
+                power+=0.005;
+                curvx = vx;
+                curvy = vy;
+                vx = cos(angle) * power;
+                vy = sin(angle) * power;
+                if (power>pcap)power=pcap;
+                
+        }
+        
+        public double sin(double deg){
+                return Math.sin(Math.toRadians(deg));
+        }
+        public double cos(double deg){
+                return Math.cos(Math.toRadians(deg));
+        }
+        
+        public void stop(){
+        	vx=vy=0;
+            power=1;
+        }
+        
+        public void turnclock(){
+                angle+=turnSpeed;
+        }
+        public void turncounterclock(){
+                angle-=turnSpeed;
+        }
+    	public void restart(){
+    		power=0.75;
+    	}
+    	public void loselife(){
+    		life--;
+    		if (life<=0){
+    			active=false;
+    		}
+    	}
+    	public int getlife(){
+    		return life;
+    	}
+    	
+    	public void rotate(){
+    		AffineTransform tx = new AffineTransform();
+    		tx.rotate(Math.toRadians(angle), orig.getWidth()/2, orig.getHeight()/2);
+    		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+    		picture = op.filter(orig, null);
+    	}
+        
+        public void moveright(){
+                xpos+=velocity;
+        }
+        public void moveleft(){
+                xpos-=velocity;
+        }
+        public void moveup(){
+                ypos-=velocity;
+        }
+        public void movedown(){
+                ypos+=velocity;
+        }
+}
+/*
+
+
 	public PlayerCar(){
 		super();
 		
@@ -98,6 +214,13 @@ public class PlayerCar extends GameObject {
 		if (power>pcap)power=pcap;
 		
 	}
+	public void movebackward(){
+		curvx = -vx;
+		curvy = -vy;
+		vx = cos(angle) * power;
+		vy = sin(angle) * power;
+		if (power>pcap)power=pcap;
+	}
 	
 	public double sin(double deg){
 		return Math.sin(Math.toRadians(deg));
@@ -158,4 +281,4 @@ public class PlayerCar extends GameObject {
 
 
 
-
+*/
