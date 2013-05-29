@@ -54,9 +54,16 @@ public class GameMap {
 		tempHeight = textMap.size();
 	}
 	
+	/*public void showVisibleMap(int x, int y, ) {
+		
+	}
+	*/
+	
+	
+	
 	public void draw(Graphics g) {
 		g.setColor(Color.gray);
-		g.fillArc(100, 100, 700, 700, 0, 90);
+		g.drawImage(mapNW,0,0,null); 
 		for (int i = 0; i<textMap.size(); i++) {
 			String temp = textMap.get(i);
 			int tempWidth = textMap.get(i).length();
