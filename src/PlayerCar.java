@@ -18,14 +18,15 @@ public class PlayerCar extends GameObject {
         private int life=10;
         private double pcap;
         double curvx, curvy;
+        double accel;
         
         public PlayerCar(){
                 super();
                 velocity=0;
                 angle=0;
-                pcap=2.5;
+                pcap=8.5;
                 
-                
+                accel=0.01;
                 turnSpeed=0.45;
                 fric=0.989;
                 power=0.75;
@@ -51,7 +52,7 @@ public class PlayerCar extends GameObject {
                 vy *= fric;
         
                 //Velocity cap
-                if (Math.sqrt(vx*vx+vy*vy)>2.82){
+                if (Math.sqrt(vx*vx+vy*vy)>pcap){
                         vx = curvx;
                         vy = curvy;
                 }
@@ -78,7 +79,7 @@ public class PlayerCar extends GameObject {
         }
         
         public void moveforward(){
-                power+=0.005;
+                power+=accel;
                 curvx = vx;
                 curvy = vy;
                 vx = cos(angle) * power;

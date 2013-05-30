@@ -161,11 +161,13 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		
 		if (running){
 			
-
+			long temp=System.currentTimeMillis();
 			keyinput();
 			g.setColor(Color.green);
 			g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+
 			map.draw(g);
+
 			g.setColor(Color.black);
 			Test.draw(g);
 			Test.move();
@@ -202,9 +204,11 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				BulletList.get(i).draw(g);
 			}
 			running=false;
+			System.out.println(System.currentTimeMillis()-temp);
+			repaint();
 		}
 		//fpscap();
-		repaint();
+
 
 	//	System.out.println("hi");
 
