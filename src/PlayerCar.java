@@ -10,12 +10,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 
 
-public class PlayerCar extends GameObject {
+public class PlayerCar extends GameObject implements Serializable {
         private String ign;
         private double vx;
         private double vy;
@@ -145,6 +146,28 @@ public class PlayerCar extends GameObject {
         public void movedown(){
                 ypos+=velocity;
         }
+        
+        public String toString(){
+        	return "The velocity "+ vx+ vy+ "the angle"+angle;
+        }
+
+        class other implements Serializable {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+	        private double vx;
+	        private double vy;
+	        private double power;
+	        private int life;
+	        double accel;
+	        
+	        public other(){
+	        	this.vx=vx;
+	        }
+        }
+
 }
 /*
 

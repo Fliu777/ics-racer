@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	static PlayerCar Test=new PlayerCar();
 	
-	PlayerCar Opponent=new PlayerCar();
+	static PlayerCar Opponent;
 	
 	ArrayList<PlayerCar> AI;
 	
@@ -180,12 +180,13 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			g.setColor(Color.black);
 			Test.draw(g);
 			Test.move();
-			Opponent=GameServer.getcar();
+			/*Opponent=GameServer.getcar();
+			System.out.println(Opponent);
 			if (Opponent!=null){
 				Opponent.draw(g);
 				Opponent.move();
 			}
-			
+			*/
 
 			
 			
@@ -231,9 +232,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 	}
 	
-	public static PlayerCar curcar(){
-		return Test;
-	}
 	
 	class starthere implements Runnable{
 		public void run() {
