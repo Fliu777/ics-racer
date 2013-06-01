@@ -36,33 +36,25 @@ public class MainLoop extends JFrame{
 		GameFrame.setSize(ScreenWidth,ScreenHeight);
 		GameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		addWindowListener(new WindowAdapter() {
-		    public void windowClosing(WindowEvent e) {
+		/*GameFrame.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
 		    	System.out.println("FINAL CLOSING OPERATIONS");
 		       if (GameServer.isserver()==true){
-		    	   try {
-		    		   GameServer.SERVERreader.close();
-		    		   GameServer.SERVERwriter.close();
-		    		   GameServer.server.close();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-		    	   
+		    	   if (GameServer.active)
+		    		   GameServer.servercleanup();
 		       }
 		       else{
-		    	   try {
-		    		   GameServer.CLIENTreader.close();
-		    		   GameServer.CLIENTwriter.close();
-		    		   GameServer.client.close();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+		    	   if (GameServer.active)
+		    		   GameServer.clientcleanup();
 		       }
+		       GameFrame.dispose();
+		       System.out.println("donenasdfolajsodlfj");
+		       System.exit(0);
 		    }
 		});
-
+*/
 		
 		GamePanel game=new GamePanel();
 		game.setFocusable(true);

@@ -136,20 +136,37 @@ public class GameServer {
 
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			active = false;
-			System.out.println("closed by peer");
-			try {
-				CLIENTreader.close();
-				CLIENTwriter.close();
-				client.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			clientcleanup();
+
 		}
 
+	}
+	public static void clientcleanup(){
+		active = false;
+		System.out.println("closed by");
+		try {
+			CLIENTreader.close();
+			CLIENTwriter.close();
+			client.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	
+	public static void servercleanup() {
+		System.out.println("closed by peer");
+		active = false;
+		try {
+			SERVERwriter.close();
+			SERVERreader.close();
+			
+			server.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static PlayerCar getcar() {
@@ -165,18 +182,8 @@ public class GameServer {
 			SERVERwriter.writeObject(GamePanel.Test);
 
 		} catch (Exception e1) {
-			// e1.printStackTrace();
-			System.out.println("closed by peer");
-			active = false;
-			try {
-				SERVERwriter.close();
-				SERVERreader.close();
-				
-				server.close();
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				servercleanup();
+			
 		}
 
 	}
