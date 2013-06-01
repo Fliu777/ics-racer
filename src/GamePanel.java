@@ -1,3 +1,10 @@
+/*
+Frank Liu & Michael Zhang
+Main Game Panel
+Physics Racing Game
+ICS4U
+*/
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;

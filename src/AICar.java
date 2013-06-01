@@ -1,3 +1,10 @@
+/*
+Frank Liu & Michael Zhang
+AI
+Physics Racing Game
+ICS4U
+*/
+
 
 public class AICar extends PlayerCar{
 	private int counter=500;

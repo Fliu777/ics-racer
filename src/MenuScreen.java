@@ -1,3 +1,10 @@
+/*
+Frank Liu & Michael Zhang
+Main Menu
+Physics Racing Game
+ICS4U
+*/
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.*;

@@ -1,7 +1,13 @@
+/*
+Frank Liu & Michael Zhang
+Abstract Game Objects (player and environment)
+Physics Racing Game
+ICS4U
+*/
+
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
 
 public abstract class GameObject {
 	

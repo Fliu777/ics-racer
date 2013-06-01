@@ -1,6 +1,12 @@
+/*
+Frank Liu & Michael Zhang
+Projectiles
+Physics Racing Game
+ICS4U
+*/
+
 import java.awt.Color;
 import java.awt.Graphics;
-
 
 public class Bullets extends GameObject{
 	

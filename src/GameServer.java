@@ -1,3 +1,10 @@
+/*
+Frank Liu & Michael Zhang
+Multiplayer Server handling
+Physics Racing Game
+ICS4U
+*/
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
