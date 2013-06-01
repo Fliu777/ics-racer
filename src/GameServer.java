@@ -6,6 +6,7 @@ ICS4U
 */
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -109,11 +110,13 @@ public class GameServer {
 	}	
 	
 	public static String detectserver(){
-		for (int i=0;i<255;i++){
+		for (int i=1;i<255;i++){
 			try {
 				String temp="192.168.1."+Integer.toString(i);
 				System.out.println("trying"+temp);
-				Socket c1=new Socket(temp,12345);
+				//Socket c1=new Socket(temp,12345);
+				Socket c1=new Socket();   
+				c1.connect(new InetSocketAddress(temp,12345),50); 
 				c1.close();
 				return temp;
 				
