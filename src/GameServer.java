@@ -42,15 +42,9 @@ public class GameServer {
 		MainLoop menu=new MainLoop();
 		menu.setFocusable(true);
 		
+		//port has not been used, and therefore port must be created
 		if (portuse){
-			client=server.accept();
-			reader = new ObjectInputStream(client.getInputStream());
-			writer= new ObjectOutputStream(client.getOutputStream());  
-			while (active)servertoclient();
 			
-		}
-
-		else{
 			try {
 				ready=true;
 				client=new Socket("localhost",12345);
@@ -67,8 +61,20 @@ public class GameServer {
 			} 
 			
 			while (active){
-				clienttoserver();
+				servertoclient();
 			}
+			
+		}
+		
+		
+		//port is already used, we assume the server did it
+
+		else{
+			client=server.accept();
+			reader = new ObjectInputStream(client.getInputStream());
+			writer= new ObjectOutputStream(client.getOutputStream());  
+			while (active)clienttoserver();
+			
 		}
 
 	}	
