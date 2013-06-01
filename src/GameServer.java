@@ -18,9 +18,11 @@ public class GameServer {
 	 */
 	
 	static boolean active=true;
-	
-	static ObjectOutputStream writer;
-	static ObjectInputStream reader;
+
+	static ObjectInputStream  SERVERreader;
+	static ObjectOutputStream  SERVERwriter;
+	static ObjectInputStream  CLIENTreader;
+	static ObjectOutputStream  CLIENTwriter;
 	
 	static Socket client;
 	static ServerSocket server;
@@ -45,20 +47,26 @@ public class GameServer {
 
 		//port has not been used, just make streams for server
 		if (portuse){
-			while (active){
+			//while (active){
 				System.out.println("i am server---------------------");
 				client=server.accept();
 				//hang until client is found.
-				System.out.println("streams are being made");			
-				writer= new ObjectOutputStream(client.getOutputStream());  
-				reader = new ObjectInputStream(client.getInputStream());
+				System.out.println("streams are being made");		
+				
+				
+				SERVERwriter= new ObjectOutputStream(client.getOutputStream());  
+				SERVERwriter.flush();
+				
+				SERVERreader = new ObjectInputStream(client.getInputStream());
+				
+				
+				
 				System.out.println("streams done");
 				
-				Thread comm=new Thread(new Communication());
-			    comm.start();
-			    
-				//servertoclient();
-			}
+				Thread comma=new Thread(new CommunicationServer());
+			    comma.start();
+
+			//}
 			
 			
 		}
@@ -72,10 +80,13 @@ public class GameServer {
 			try {
 				ready=true;
 				client=new Socket("localhost",12345);
+				
 				System.out.println("It be alive");
 				
-				reader = new ObjectInputStream(client.getInputStream());
-				writer= new ObjectOutputStream(client.getOutputStream());  
+				CLIENTwriter= new ObjectOutputStream(client.getOutputStream());  
+				CLIENTwriter.flush();
+				CLIENTreader = new ObjectInputStream(client.getInputStream());
+
 				
 				System.out.println("finished?");
 			} catch (Exception e) {
@@ -84,9 +95,8 @@ public class GameServer {
 				System.out.println("PLEASE--");
 			} 
 			
-			//while (active){
-		///		clienttoserver();
-			//}
+				Thread comm=new Thread(new CommunicationClient());
+			    comm.start();
 		}
 
 	}	
@@ -102,33 +112,31 @@ public class GameServer {
 		return ready;
 	}
 	
-	public static void clienttoserver() throws IOException{
+	public static void clienttoserver() {
             try{
             	//System.out.println("---READDDD c to s");
-    				writer.writeObject(GamePanel.Test);
+            	CLIENTwriter.writeObject(GamePanel.Test);
     				//System.out.println("MY CAR IS "+GamePanel.Test);
-    				//othercar = (PlayerCar) reader.readObject();
+    			othercar = (PlayerCar) CLIENTreader.readObject();
     				//System.out.println("im done");
-    				System.out.println("here?");
+				System.out.println("here?");
 
     			
             }
             catch (Exception e) {
     			// TODO Auto-generated catch block
-    			e.printStackTrace();
-				System.out.println("PasLEASE");
-    		}
-            finally{
+    			//e.printStackTrace();
+            	active=false;
+				System.out.println("closed by peer");
     			try {
-    				reader.close();
-    				writer.close();
+    				CLIENTreader.close();
+    				CLIENTwriter.close();
     				client.close();
-    				server.close();
-    			} catch (IOException e) {
+    			} catch (IOException e1) {
     				// TODO Auto-generated catch block
-    				e.printStackTrace();
+    				e1.printStackTrace();
     			}
-            }
+    		}
 
 	}
 	public static PlayerCar getcar(){
@@ -138,46 +146,78 @@ public class GameServer {
 	public static void servertoclient(){
 		try {
 				//System.out.println("---READDDD s to c");
-				othercar = (PlayerCar) reader.readObject();
-				writer.writeObject(GamePanel.Test);
+				othercar = (PlayerCar) SERVERreader.readObject();
+			
+				
+				/*ONLY READ*/
+				SERVERwriter.writeObject(GamePanel.Test);
 
 			
-		} catch (Exception e1) {
-			System.out.println("IT FAILED PLEASE");
-		}
-		finally{
+		} 
+		catch (Exception e1) {
+			//e1.printStackTrace();
+			System.out.println("closed by peer");
 			active=false;
 			try {
-				writer.close();
-				reader.close();
-				client.close();
+				SERVERwriter.close();
+				SERVERreader.close();
 				server.close();
 
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+
+		
 		
 	}
 
-
-
-}
-
-class Communication implements Runnable{
-
-	@Override
-	public void run() {
-		System.out.println("hai");
-		try{
-			wait(1000);
-			System.out.println("hi");
-		}
-		catch(Exception e){
+	
+	static class CommunicationServer implements Runnable{
+	
+		@Override
+		public void run() {
 			
+			System.out.println("hai=server");
+			while (active){
+				servertoclient();
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 	}
 	
+	
+	static class CommunicationClient implements Runnable{
+	
+		@Override
+		public void run() {
+			
+			System.out.println("hai=client");
+			while (active){
+				clienttoserver();
+				
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	
+			
+		}
+		
+	}
+
+
+
+
 }
+
 
