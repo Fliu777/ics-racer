@@ -75,7 +75,7 @@ public class PlayerCar extends GameObject {
         			angle=180+angle;
         		}
                 
-                System.out.println(vx+ " "+ vy);
+              //  System.out.println(vx+ " "+ vy);
         }
         
         public void moveforward(){

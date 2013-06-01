@@ -23,7 +23,7 @@ public class MainLoop extends JFrame{
 	static JFrame GameFrame;
 	static int ScreenWidth;
 	static int ScreenHeight;
-	public static void main(String [] args){
+	public MainLoop(){
 		ScreenWidth= java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 		ScreenHeight= java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 		/* Initialize Frame here

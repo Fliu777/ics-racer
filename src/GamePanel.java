@@ -13,7 +13,10 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	GameMap map = new GameMap();
 	
-	PlayerCar Test=new PlayerCar();
+	static PlayerCar Test=new PlayerCar();
+	
+	PlayerCar Opponent=new PlayerCar();
+	
 	ArrayList<PlayerCar> AI;
 	
 	ArrayList<Bullets> BulletList;
@@ -143,7 +146,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	public void fpscap() {
 	    double wait=1000.0/fps;
 	    double used = System.currentTimeMillis() - start;
-	    System.out.println(used);
+	    //System.out.println(used);
 	    if (used < wait) {
 	        try{
 	        	Thread.sleep((long) (wait-used));
@@ -157,8 +160,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 	public void paintComponent(Graphics g) {
 		
-		
-		
+
 		if (running){
 			
 			long temp=System.currentTimeMillis();
@@ -171,6 +173,14 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			g.setColor(Color.black);
 			Test.draw(g);
 			Test.move();
+			Opponent=GameServer.getcar();
+			if (Opponent!=null){
+				Opponent.draw(g);
+				Opponent.move();
+			}
+			
+
+			
 			
 			for (int i=0;i<BulletList.size();i++){
 				if (BulletList.get(i).dead()){
@@ -204,7 +214,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				BulletList.get(i).draw(g);
 			}
 			running=false;
-			System.out.println(System.currentTimeMillis()-temp);
+			//System.out.println(System.currentTimeMillis()-temp);
 			repaint();
 		}
 		//fpscap();
@@ -214,13 +224,23 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 	}
 	
+	public static PlayerCar curcar(){
+		return Test;
+	}
+	
 	class starthere implements Runnable{
 		public void run() {
-			while(true){
-				running=true;
-			}
+		//	if (GameServer.isready()){
+				System.out.println("GOOGGOOG");
+				while(true){
+					running=true;
+				}
+		//	}
+
 		}
 	}
+	
+	
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
