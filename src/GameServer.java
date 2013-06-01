@@ -39,13 +39,13 @@ public class GameServer {
 
 		// port has not been used, just make streams for server
 		if (ipad == null) {
+			try {
+				server = new ServerSocket(12345);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			while (true) {
 
-				try {
-					server = new ServerSocket(12345);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 
 				System.out.println("i am server---------------------");
 				try {
