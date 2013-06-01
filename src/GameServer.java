@@ -42,17 +42,23 @@ public class GameServer {
 		System.out.println(":please?");
 		MainLoop menu=new MainLoop();
 		menu.setFocusable(true);
-		
+
 		//port has not been used, just make streams for server
 		if (portuse){
-			System.out.println("i am server---------------------");
-			client=server.accept();
-			//hang until client is found.
-			System.out.println("streams are being made");			
-			writer= new ObjectOutputStream(client.getOutputStream());  
-			reader = new ObjectInputStream(client.getInputStream());
-			System.out.println("streams done");
-			while (active)servertoclient();
+			while (active){
+				System.out.println("i am server---------------------");
+				client=server.accept();
+				//hang until client is found.
+				System.out.println("streams are being made");			
+				writer= new ObjectOutputStream(client.getOutputStream());  
+				reader = new ObjectInputStream(client.getInputStream());
+				System.out.println("streams done");
+				
+				Thread comm=new Thread(new Communication());
+			    comm.start();
+			    
+				//servertoclient();
+			}
 			
 			
 		}
@@ -85,6 +91,8 @@ public class GameServer {
 
 	}	
 	
+	
+	
 	public static boolean ishoster(){
 		return portuse;
 	}
@@ -96,15 +104,14 @@ public class GameServer {
 	
 	public static void clienttoserver() throws IOException{
             try{
-    			while (true){
-    				//System.out.println("---READDDD c to s");
+            	//System.out.println("---READDDD c to s");
     				writer.writeObject(GamePanel.Test);
     				//System.out.println("MY CAR IS "+GamePanel.Test);
     				//othercar = (PlayerCar) reader.readObject();
     				//System.out.println("im done");
     				System.out.println("here?");
 
-    			}
+    			
             }
             catch (Exception e) {
     			// TODO Auto-generated catch block
@@ -130,12 +137,11 @@ public class GameServer {
 
 	public static void servertoclient(){
 		try {
-			while (true){
 				//System.out.println("---READDDD s to c");
 				othercar = (PlayerCar) reader.readObject();
 				writer.writeObject(GamePanel.Test);
 
-			}
+			
 		} catch (Exception e1) {
 			System.out.println("IT FAILED PLEASE");
 		}
@@ -157,3 +163,21 @@ public class GameServer {
 
 
 }
+
+class Communication implements Runnable{
+
+	@Override
+	public void run() {
+		System.out.println("hai");
+		try{
+			wait(1000);
+			System.out.println("hi");
+		}
+		catch(Exception e){
+			
+		}
+		
+	}
+	
+}
+

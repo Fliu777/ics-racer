@@ -25,6 +25,7 @@ public class PlayerCar extends GameObject implements Serializable {
         private double power;
         private int life=10;
         private double pcap;
+        private double pstart;
         double curvx, curvy;
         double accel;
         
@@ -33,11 +34,12 @@ public class PlayerCar extends GameObject implements Serializable {
                 velocity=0;
                 angle=0;
                 pcap=8.5;
+                pstart=1.5;
                 
-                accel=0.01;
+                accel=0.05;
                 turnSpeed=0.45;
-                fric=0.989;
-                power=0.75;
+                fric=0.979;
+                power=pstart;
                 vx= cos(angle)*velocity;
                 vy= sin(angle)*velocity;
         		try {
@@ -67,7 +69,7 @@ public class PlayerCar extends GameObject implements Serializable {
                 
                 //has stopped
                 if (Math.abs(vx)<0.1 && Math.abs(vy)<0.1) {
-                        power=0.75;
+                        power=pstart;
                         vx=0;
                         vy=0;
                 }
@@ -105,7 +107,7 @@ public class PlayerCar extends GameObject implements Serializable {
         
         public void stop(){
         	vx=vy=0;
-            power=1;
+            power=pstart;
         }
         
         public void turnclock(){
@@ -115,7 +117,7 @@ public class PlayerCar extends GameObject implements Serializable {
                 angle-=turnSpeed;
         }
     	public void restart(){
-    		power=0.75;
+    		power=pstart;
     	}
     	public void loselife(){
     		life--;
@@ -149,23 +151,6 @@ public class PlayerCar extends GameObject implements Serializable {
         
         public String toString(){
         	return "The velocity "+ vx+ vy+ "the angle"+angle;
-        }
-
-        class other implements Serializable {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-	        private double vx;
-	        private double vy;
-	        private double power;
-	        private int life;
-	        double accel;
-	        
-	        public other(){
-	        	this.vx=vx;
-	        }
         }
 
 }
