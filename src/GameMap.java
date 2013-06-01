@@ -68,9 +68,9 @@ public class GameMap {
 	}
 	
 	public String[][] currentMap(int x, int y) {
-		String[][] newMap = new String[7][7];
-		for (int i = 0; i<7; i++) {
-			for (int j = 0; j<7; j++) {
+		String[][] newMap = new String[10][10];
+		for (int i = 0; i<10; i++) {
+			for (int j = 0; j<10; j++) {
 				newMap[i][j] = textArray[x+i][y+j];
 			}
 		}
@@ -88,7 +88,8 @@ public class GameMap {
 		if (!(textArray[x][y-1].equals("."))) left=true;
 		
 		//Change the character of the current block after judging which direction the block is going in
-		if (up&&down) textArray[x][y] = "|"; //NS block
+		if (up&&down&&left&&right) textArray[x][y] = "+"; //4Way block
+		else if (up&&down) textArray[x][y] = "|"; //NS block
 		else if (left&right) textArray[x][y] = "-"; //SW block
 		else if (up&&right) textArray[x][y] = "1"; //1 is NE
 		else if (down&&right) textArray[x][y] = "2"; //2 is SE
@@ -106,18 +107,22 @@ public class GameMap {
 	}
 	
 	public void draw(Graphics g) {
-		mapConvert(2,3);
+		mapConvert(1,1);
 		String[][] map = currentMap(0,0);
-		for (int i = 0; i<7; i++) {
-			for (int j = 0; j<7; j++) {
-				if (map[i][j].equals(".")) g.drawImage(roadArray[7],i*200, j*200, null);
-				else if (map[i][j].equals("-")) g.drawImage(roadArray[0], i*200, j*200, null);
-				else if (map[i][j].equals("|")) g.drawImage(roadArray[1], i*200, j*200, null);
-				else if (map[i][j].equals("1")) g.drawImage(roadArray[2], i*200, j*200, null);
-				else if (map[i][j].equals("2")) g.drawImage(roadArray[3], i*200, j*200, null);
-				else if (map[i][j].equals("3")) g.drawImage(roadArray[4], i*200, j*200, null);
-				else if (map[i][j].equals("4")) g.drawImage(roadArray[5], i*200, j*200, null);
+		for (int i = 0; i<10; i++) {
+			for (int j = 0; j<10; j++) {
+				//System.out.print(map[i][j]);
+				if (map[i][j].equals("|")) g.drawImage(roadArray[0], j*200, i*200, null);
+				else if (map[i][j].equals("-")) g.drawImage(roadArray[1], j*200, i*200, null);
+				else if (map[i][j].equals("1")) g.drawImage(roadArray[2], j*200, i*200, null);
+				else if (map[i][j].equals("2")) g.drawImage(roadArray[3], j*200, i*200, null);
+				else if (map[i][j].equals("3")) g.drawImage(roadArray[4], j*200, i*200, null);
+				else if (map[i][j].equals("4")) g.drawImage(roadArray[5], j*200, i*200, null);
+				else if (map[i][j].equals("+")) g.drawImage(roadArray[6], j*200, i*200, null);
+				else if (map[i][j].equals(".")) g.drawImage(roadArray[7],j*200, i*200, null);
 			}
+			//System.out.println();
 		}
+		//System.out.println("\n\n\n\n");
 	}
 }
