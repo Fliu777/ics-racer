@@ -3,185 +3,172 @@ Frank Liu & Michael Zhang
 Multiplayer Server handling (main)
 Physics Racing Game
 ICS4U
-*/
+ */
 
 import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Scanner;
+import java.net.*;
 
 public class GameServer {
 
 	/**
 	 * @param args
 	 */
-	
-	static boolean active=true;
 
-	static ObjectInputStream  SERVERreader;
-	static ObjectOutputStream  SERVERwriter;
-	static ObjectInputStream  CLIENTreader;
-	static ObjectOutputStream  CLIENTwriter;
-	
+	static boolean active = true;
+
+	static ObjectInputStream SERVERreader;
+	static ObjectOutputStream SERVERwriter;
+	static ObjectInputStream CLIENTreader;
+	static ObjectOutputStream CLIENTwriter;
+
 	static Socket client;
 	static ServerSocket server;
-	static Socket serv;
-	static boolean portuse=true;
-	static PlayerCar othercar=null;
-	static boolean ready=false;
 	
-	public static void main(String[] args) throws IOException {
-		
-		int port=12345;
+	static Socket serv;
+	
+	static boolean portuse = true;
+	static PlayerCar othercar = null;
+	static boolean ready = false;
 
-		String ipad=detectserver();
-		
-		
-		portuse=false;
+	public static void main(String[] args) throws IOException {
+
+		int port = 12345;
+
+		String ipad = detectserver();
+
+		portuse = false;
 		System.out.println(":please?");
-		MainLoop menu=new MainLoop();
+		MainLoop menu = new MainLoop();
 		menu.setFocusable(true);
 
-		//port has not been used, just make streams for server
-		if (ipad.equals("")){
-			//while (active){
-			
-			try{
-			server=new ServerSocket(12345);
+		// port has not been used, just make streams for server
+		if (ipad.equals("")) {
+			// while (active){
 
-				}
-				catch(Exception e){
-					portuse=false;
-				}
-			
-				System.out.println("i am server---------------------");
-				client=server.accept();
-				//hang until client is found.
-				System.out.println("streams are being made");		
-				
-				
-				SERVERwriter= new ObjectOutputStream(client.getOutputStream());  
-				SERVERwriter.flush();
-				
-				SERVERreader = new ObjectInputStream(client.getInputStream());
-				
-				
-				
-				System.out.println("streams done");
-				
-				Thread comma=new Thread(new CommunicationServer());
-			    comma.start();
-
-			//}
-			
-			
-		}
-		
-		
-		//port is already used, we assume the server did it, client starts
-
-		else{
-			System.out.println("i am client---------------------");
-			
 			try {
-				ready=true;
-				client=new Socket(ipad,12345);
-				
+				server = new ServerSocket(12345);
+
+			} catch (Exception e) {
+				portuse = false;
+			}
+
+			System.out.println("i am server---------------------");
+			client = server.accept();
+			// hang until client is found.
+			System.out.println("streams are being made");
+
+			SERVERwriter = new ObjectOutputStream(client.getOutputStream());
+			SERVERwriter.flush();
+
+			SERVERreader = new ObjectInputStream(client.getInputStream());
+
+			System.out.println("streams done");
+
+			Thread comma = new Thread(new CommunicationServer());
+			comma.start();
+
+			// }
+
+		}
+
+		// port is already used, we assume the server did it, client starts
+
+		else {
+			System.out.println("i am client---------------------");
+
+			try {
+				ready = true;
+				client = new Socket(ipad, 12345);
+
 				System.out.println("It be alive");
-				
-				CLIENTwriter= new ObjectOutputStream(client.getOutputStream());  
+
+				CLIENTwriter = new ObjectOutputStream(client.getOutputStream());
 				CLIENTwriter.flush();
 				CLIENTreader = new ObjectInputStream(client.getInputStream());
 
-				
 				System.out.println("finished?");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.println("PLEASE--");
-			} 
-			
-				Thread comm=new Thread(new CommunicationClient());
-			    comm.start();
+			}
+
+			Thread comm = new Thread(new CommunicationClient());
+			comm.start();
 		}
 
-	}	
-	
-	public static String detectserver(){
-		for (int i=1;i<255;i++){
+	}
+
+	public static String detectserver() {
+		for (int i = 1; i < 255; i++) {
 			try {
-				String temp="192.168.1."+Integer.toString(i);
-				System.out.println("trying"+temp);
-				//Socket c1=new Socket(temp,12345);
-				Socket c1=new Socket();   
-				c1.connect(new InetSocketAddress(temp,12345),50); 
+				String myip=InetAddress.getLocalHost().getHostAddress();
+				
+				String temp = myip.substring(0, myip.lastIndexOf('.')+1) + Integer.toString(i);
+				//System.out.println("trying" + temp+"-=");
+				// Socket c1=new Socket(temp,12345);
+				Socket c1 = new Socket();
+				long tstart=System.currentTimeMillis();
+
+				c1.connect(new InetSocketAddress(temp, 12345), 20);
+				System.out.println(System.currentTimeMillis()-tstart);
 				c1.close();
 				return temp;
-				
+
 			} catch (Exception e) {
 			}
 		}
 		return "";
 	}
-	
-	
-	public static boolean ishoster(){
+
+	public static boolean ishoster() {
 		return portuse;
 	}
-	
-	public static boolean isready(){
+
+	public static boolean isready() {
 		System.out.println("good to go");
 		return ready;
 	}
-	
-	public static void clienttoserver() {
-            try{
-            	//System.out.println("---READDDD c to s");
-            	CLIENTwriter.writeObject(GamePanel.Test);
-    				//System.out.println("MY CAR IS "+GamePanel.Test);
-    			othercar = (PlayerCar) CLIENTreader.readObject();
-    				//System.out.println("im done");
-			//	System.out.println("here?");
 
-    			
-            }
-            catch (Exception e) {
-    			// TODO Auto-generated catch block
-    			//e.printStackTrace();
-            	active=false;
-				System.out.println("closed by peer");
-    			try {
-    				CLIENTreader.close();
-    				CLIENTwriter.close();
-    				client.close();
-    			} catch (IOException e1) {
-    				// TODO Auto-generated catch block
-    				e1.printStackTrace();
-    			}
-    		}
+	public static void clienttoserver() {
+		try {
+			CLIENTwriter.writeObject(GamePanel.Test);
+			othercar = (PlayerCar) CLIENTreader.readObject();
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
+			active = false;
+			System.out.println("closed by peer");
+			try {
+				CLIENTreader.close();
+				CLIENTwriter.close();
+				client.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 
 	}
-	public static PlayerCar getcar(){
+
+	public static PlayerCar getcar() {
 		return othercar;
 	}
 
-	public static void servertoclient(){
+	public static void servertoclient() {
 		try {
-				//System.out.println("---READDDD s to c");
-				othercar = (PlayerCar) SERVERreader.readObject();
-			
-				
-				/*ONLY READ*/
-				SERVERwriter.writeObject(GamePanel.Test);
+			// System.out.println("---READDDD s to c");
+			othercar = (PlayerCar) SERVERreader.readObject();
 
-			
-		} 
-		catch (Exception e1) {
-			//e1.printStackTrace();
+			/* ONLY READ */
+			SERVERwriter.writeObject(GamePanel.Test);
+
+		} catch (Exception e1) {
+			// e1.printStackTrace();
 			System.out.println("closed by peer");
-			active=false;
+			active = false;
 			try {
 				SERVERwriter.close();
 				SERVERreader.close();
@@ -192,18 +179,15 @@ public class GameServer {
 			}
 		}
 
-		
-		
 	}
 
-	
-	static class CommunicationServer implements Runnable{
-	
+	static class CommunicationServer implements Runnable {
+
 		@Override
 		public void run() {
-			
+
 			System.out.println("hai=server");
-			while (active){
+			while (active) {
 				servertoclient();
 				try {
 					Thread.sleep(100);
@@ -213,19 +197,18 @@ public class GameServer {
 				}
 			}
 		}
-		
+
 	}
-	
-	
-	static class CommunicationClient implements Runnable{
-	
+
+	static class CommunicationClient implements Runnable {
+
 		@Override
 		public void run() {
-			
+
 			System.out.println("hai=client");
-			while (active){
+			while (active) {
 				clienttoserver();
-				
+
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
@@ -233,15 +216,9 @@ public class GameServer {
 					e.printStackTrace();
 				}
 			}
-	
-			
+
 		}
-		
+
 	}
 
-
-
-
 }
-
-
