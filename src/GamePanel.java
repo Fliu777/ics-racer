@@ -218,7 +218,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				BulletList.get(i).draw(g);
 			}
 			running=false;
-			System.out.println(System.currentTimeMillis()-temp);
+			//System.out.println(System.currentTimeMillis()-temp);
 
 		
 		//repaint();

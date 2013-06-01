@@ -34,20 +34,27 @@ public class GameServer {
 	public static void main(String[] args) throws IOException {
 		
 		int port=12345;
-		try{
-			server=new ServerSocket(12345);
 
-		}
-		catch(Exception e){
-			portuse=false;
-		}
+		String ipad=detectserver();
+		
+		
+		portuse=false;
 		System.out.println(":please?");
 		MainLoop menu=new MainLoop();
 		menu.setFocusable(true);
 
 		//port has not been used, just make streams for server
-		if (portuse){
+		if (ipad.equals("")){
 			//while (active){
+			
+			try{
+			server=new ServerSocket(12345);
+
+				}
+				catch(Exception e){
+					portuse=false;
+				}
+			
 				System.out.println("i am server---------------------");
 				client=server.accept();
 				//hang until client is found.
@@ -79,7 +86,7 @@ public class GameServer {
 			
 			try {
 				ready=true;
-				client=new Socket("localhost",12345);
+				client=new Socket(ipad,12345);
 				
 				System.out.println("It be alive");
 				
@@ -101,6 +108,20 @@ public class GameServer {
 
 	}	
 	
+	public static String detectserver(){
+		for (int i=0;i<255;i++){
+			try {
+				String temp="192.168.1."+Integer.toString(i);
+				System.out.println("trying"+temp);
+				Socket c1=new Socket(temp,12345);
+				c1.close();
+				return temp;
+				
+			} catch (Exception e) {
+			}
+		}
+		return "";
+	}
 	
 	
 	public static boolean ishoster(){
@@ -119,7 +140,7 @@ public class GameServer {
     				//System.out.println("MY CAR IS "+GamePanel.Test);
     			othercar = (PlayerCar) CLIENTreader.readObject();
     				//System.out.println("im done");
-				System.out.println("here?");
+			//	System.out.println("here?");
 
     			
             }
