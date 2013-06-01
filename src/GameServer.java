@@ -30,11 +30,11 @@ public class GameServer {
 	static PlayerCar othercar = null;
 	static boolean isserver = true;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 
 		int port = 12345;
 
-		String ipad = detectserver();
+		Socket ipad = detectserver();
 
 		portuse = false;
 		System.out.println(":please?");
@@ -42,7 +42,7 @@ public class GameServer {
 		menu.setFocusable(true);
 
 		// port has not been used, just make streams for server
-		if (ipad.equals("")) {
+		if (ipad==null) {
 			// while (active){
 
 			try {
@@ -53,14 +53,36 @@ public class GameServer {
 			}
 
 			System.out.println("i am server---------------------");
-			client = server.accept();
+			try {
+				client = server.accept();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("server closed please");
+				System.exit(0);
+			}
 			// hang until client is found.
 			System.out.println("streams are being made");
 
-			SERVERwriter = new ObjectOutputStream(client.getOutputStream());
-			SERVERwriter.flush();
+			try {
+				SERVERwriter = new ObjectOutputStream(client.getOutputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				SERVERwriter.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-			SERVERreader = new ObjectInputStream(client.getInputStream());
+			try {
+				SERVERreader = new ObjectInputStream(client.getInputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			System.out.println("streams done");
 			active=true;
@@ -79,7 +101,7 @@ public class GameServer {
 
 			try {
 				isserver = false;
-				client = new Socket(ipad, 12345);
+				client = ipad;
 
 				System.out.println("It be alive::"+ipad);
 
@@ -101,8 +123,8 @@ public class GameServer {
 
 	}
 
-	public static String detectserver() {
-		for (int i = 1; i < 150; i++) {
+	public static Socket detectserver() {
+		for (int i = 100; i < 150; i++) {
 			try {
 				String myip=InetAddress.getLocalHost().getHostAddress();
 				
@@ -115,13 +137,12 @@ public class GameServer {
 
 				c1.connect(new InetSocketAddress(temp, 12345), 50);
 				System.out.println(System.currentTimeMillis()-tstart);
-				c1.close();
-				return temp;
+				return c1;
 
 			} catch (Exception e) {
 			}
 		}
-		return "";
+		return null;
 	}
 
 	public static boolean ishoster() {
