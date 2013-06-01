@@ -104,7 +104,8 @@ public class GameServer {
 			try {
 				String myip=InetAddress.getLocalHost().getHostAddress();
 				
-				String temp = myip.substring(0, myip.lastIndexOf('.')+1) + Integer.toString(i);
+				//String temp = myip.substring(0, myip.lastIndexOf('.')+1) + Integer.toString(i);
+				String temp="192.168.1."+Integer.toString(i);
 				System.out.println("trying   " + temp+"   -=");
 				// Socket c1=new Socket(temp,12345);
 				Socket c1 = new Socket();
