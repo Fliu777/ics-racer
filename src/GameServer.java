@@ -14,17 +14,17 @@ public class GameServer {
 	 * @param args
 	 */
 
-	static boolean active = true;
+	static boolean active = false;
 
-	static ObjectInputStream SERVERreader;
-	static ObjectOutputStream SERVERwriter;
-	static ObjectInputStream CLIENTreader;
-	static ObjectOutputStream CLIENTwriter;
+	static ObjectInputStream SERVERreader=null;
+	static ObjectOutputStream SERVERwriter=null;
+	static ObjectInputStream CLIENTreader=null;
+	static ObjectOutputStream CLIENTwriter=null;
 
-	static Socket client;
-	static ServerSocket server;
+	static Socket client=null;
+	static ServerSocket server=null;
 	
-	static Socket serv;
+	static Socket serv=null;
 	
 	static boolean portuse = true;
 	static PlayerCar othercar = null;
@@ -63,6 +63,7 @@ public class GameServer {
 			SERVERreader = new ObjectInputStream(client.getInputStream());
 
 			System.out.println("streams done");
+			active=true;
 
 			Thread comma = new Thread(new CommunicationServer());
 			comma.start();
@@ -80,11 +81,12 @@ public class GameServer {
 				isserver = false;
 				client = new Socket(ipad, 12345);
 
-				System.out.println("It be alive");
+				System.out.println("It be alive::"+ipad);
 
 				CLIENTwriter = new ObjectOutputStream(client.getOutputStream());
 				CLIENTwriter.flush();
 				CLIENTreader = new ObjectInputStream(client.getInputStream());
+				active=true;
 
 				System.out.println("finished?");
 			} catch (Exception e) {
@@ -100,7 +102,7 @@ public class GameServer {
 	}
 
 	public static String detectserver() {
-		for (int i = 1; i < 255; i++) {
+		for (int i = 1; i < 150; i++) {
 			try {
 				String myip=InetAddress.getLocalHost().getHostAddress();
 				
@@ -111,7 +113,7 @@ public class GameServer {
 				Socket c1 = new Socket();
 				long tstart=System.currentTimeMillis();
 
-				c1.connect(new InetSocketAddress(temp, 12345), 20);
+				c1.connect(new InetSocketAddress(temp, 12345), 50);
 				System.out.println(System.currentTimeMillis()-tstart);
 				c1.close();
 				return temp;
@@ -144,11 +146,11 @@ public class GameServer {
 	}
 	public static void clientcleanup(){
 		active = false;
-		System.out.println("closed by");
+		System.out.println("closed from client");
 		try {
-			CLIENTreader.close();
-			CLIENTwriter.close();
-			client.close();
+			if (CLIENTreader!=null) CLIENTreader.close();
+			if (CLIENTwriter!=null)	CLIENTwriter.close();
+			if (client!=null) 		client.close();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -157,13 +159,13 @@ public class GameServer {
 	
 	
 	public static void servercleanup() {
-		System.out.println("closed by peer");
+		System.out.println("closed from server");
 		active = false;
 		try {
-			SERVERwriter.close();
-			SERVERreader.close();
-			
-			server.close();
+			if (SERVERreader!=null) SERVERreader.close();
+			if (SERVERwriter!=null)	SERVERwriter.close();
+			if (client!=null)		client.close();
+			if (server!=null)		server.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -204,6 +206,7 @@ public class GameServer {
 					e.printStackTrace();
 				}
 			}
+			System.out.println("Exited from active-=server");
 		}
 
 	}
@@ -224,6 +227,8 @@ public class GameServer {
 					e.printStackTrace();
 				}
 			}
+			System.out.println("Exited from active-=client");
+
 
 		}
 
