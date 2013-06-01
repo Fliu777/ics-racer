@@ -8,8 +8,9 @@ ICS4U
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
 	
 	/*
 	 * General Abstract Class with many components that would be common to nearly any object
