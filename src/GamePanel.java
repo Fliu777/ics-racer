@@ -167,8 +167,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 	public void paintComponent(Graphics g) {
 		
-		System.out.println("go--");
-			System.out.println("go");
 			long temp=System.currentTimeMillis();
 			keyinput();
 			g.setColor(Color.green);
@@ -238,7 +236,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				System.out.println("GOOGGOOG");
 				while(true){
 					try {
-						Thread.sleep(10);
+						Thread.sleep(15);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
