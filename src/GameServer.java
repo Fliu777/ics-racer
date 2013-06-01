@@ -105,7 +105,7 @@ public class GameServer {
 				String myip=InetAddress.getLocalHost().getHostAddress();
 				
 				String temp = myip.substring(0, myip.lastIndexOf('.')+1) + Integer.toString(i);
-				//System.out.println("trying" + temp+"-=");
+				System.out.println("trying   " + temp+"   -=");
 				// Socket c1=new Socket(temp,12345);
 				Socket c1 = new Socket();
 				long tstart=System.currentTimeMillis();
@@ -172,6 +172,7 @@ public class GameServer {
 			try {
 				SERVERwriter.close();
 				SERVERreader.close();
+				
 				server.close();
 
 			} catch (IOException e) {
