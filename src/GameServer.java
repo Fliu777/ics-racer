@@ -43,7 +43,7 @@ public class GameServer {
 
 		// port has not been used, just make streams for server
 		if (ipad==null) {
-			// while (active){
+			while (true){
 
 			try {
 				server = new ServerSocket(12345);
@@ -90,7 +90,7 @@ public class GameServer {
 			Thread comma = new Thread(new CommunicationServer());
 			comma.start();
 
-			// }
+			 }
 
 		}
 
@@ -177,7 +177,15 @@ public class GameServer {
 			e1.printStackTrace();
 		}
 	}
-	
+	public static void removeserver(){
+		if (server!=null)
+			try {
+				server.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
 	
 	public static void servercleanup() {
 		System.out.println("closed from server");
@@ -186,7 +194,7 @@ public class GameServer {
 			if (SERVERreader!=null) SERVERreader.close();
 			if (SERVERwriter!=null)	SERVERwriter.close();
 			if (client!=null)		client.close();
-			if (server!=null)		server.close();
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();

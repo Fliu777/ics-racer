@@ -44,6 +44,7 @@ public class MainLoop extends JFrame{
 		       if (GameServer.isserver()==true){
 		    	   //if (GameServer.active)
 		    		   GameServer.servercleanup();
+		    		   GameServer.removeserver();
 		       }
 		       else{
 		    	   //if (GameServer.active)
