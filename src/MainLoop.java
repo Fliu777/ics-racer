@@ -1,3 +1,10 @@
+/*
+Frank Liu & Michael Zhang
+ICS Summative
+Physics Racing Game
+ICS4U
+*/
+
 import java.awt.AWTException;
 import java.awt.Canvas;
 import java.awt.Dimension;
