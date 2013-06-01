@@ -28,7 +28,7 @@ public class GameServer {
 	
 	static boolean portuse = true;
 	static PlayerCar othercar = null;
-	static boolean ready = false;
+	static boolean isserver = true;
 
 	public static void main(String[] args) throws IOException {
 
@@ -77,7 +77,7 @@ public class GameServer {
 			System.out.println("i am client---------------------");
 
 			try {
-				ready = true;
+				isserver = false;
 				client = new Socket(ipad, 12345);
 
 				System.out.println("It be alive");
@@ -125,9 +125,8 @@ public class GameServer {
 		return portuse;
 	}
 
-	public static boolean isready() {
-		System.out.println("good to go");
-		return ready;
+	public static boolean isserver(){
+		return isserver;
 	}
 
 	public static void clienttoserver() {

@@ -12,6 +12,8 @@ import java.awt.Graphics2D;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 
@@ -33,6 +35,35 @@ public class MainLoop extends JFrame{
 		GameFrame=new JFrame();
 		GameFrame.setSize(ScreenWidth,ScreenHeight);
 		GameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		addWindowListener(new WindowAdapter() {
+		    public void windowClosing(WindowEvent e) {
+		    	System.out.println("FINAL CLOSING OPERATIONS");
+		       if (GameServer.isserver()==true){
+		    	   try {
+		    		   GameServer.SERVERreader.close();
+		    		   GameServer.SERVERwriter.close();
+		    		   GameServer.server.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    	   
+		       }
+		       else{
+		    	   try {
+		    		   GameServer.CLIENTreader.close();
+		    		   GameServer.CLIENTwriter.close();
+		    		   GameServer.client.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		       }
+		    }
+		});
+
+		
 		GamePanel game=new GamePanel();
 		game.setFocusable(true);
 		GameFrame.add(game);
