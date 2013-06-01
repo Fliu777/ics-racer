@@ -190,9 +190,11 @@ public class GameServer {
 	public static void servertoclient() {
 		try {
 			// System.out.println("---READDDD s to c");
+			System.out.println("starting this part a");
 			othercar = (PlayerCar) SERVERreader.readObject();
 
 			/* ONLY READ */
+			System.out.println("OBECASFASDF--"+GamePanel.Test);
 			SERVERwriter.writeObject(GamePanel.Test);
 
 		} catch (Exception e1) {
