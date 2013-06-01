@@ -188,9 +188,10 @@ public class GameServer {
 	}
 
 	public static void servertoclient() {
+		System.out.println("starting this part a");
 		try {
 			// System.out.println("---READDDD s to c");
-			System.out.println("starting this part a");
+			System.out.println("starting this part b");
 			othercar = (PlayerCar) SERVERreader.readObject();
 
 			/* ONLY READ */
