@@ -16,17 +16,14 @@ public class GameServer {
 
 	static boolean active = false;
 
-	static ObjectInputStream SERVERreader=null;
-	static ObjectOutputStream SERVERwriter=null;
-	static ObjectInputStream CLIENTreader=null;
-	static ObjectOutputStream CLIENTwriter=null;
+	static ObjectInputStream SERVERreader = null;
+	static ObjectOutputStream SERVERwriter = null;
+	static ObjectInputStream CLIENTreader = null;
+	static ObjectOutputStream CLIENTwriter = null;
 
-	static Socket client=null;
-	static ServerSocket server=null;
-	
-	static Socket serv=null;
-	
-	static boolean portuse = true;
+	static Socket client = null;
+	static ServerSocket server = null;
+
 	static PlayerCar othercar = null;
 	static boolean isserver = true;
 
@@ -36,62 +33,49 @@ public class GameServer {
 
 		Socket ipad = detectserver();
 
-		portuse = false;
 		System.out.println(":please?");
 		MainLoop menu = new MainLoop();
 		menu.setFocusable(true);
 
 		// port has not been used, just make streams for server
-		if (ipad==null) {
-			while (true){
+		if (ipad == null) {
+			while (true) {
 
-			try {
-				server = new ServerSocket(12345);
+				try {
+					server = new ServerSocket(12345);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-			} catch (Exception e) {
-				portuse = false;
+				System.out.println("i am server---------------------");
+				try {
+					client = server.accept();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					System.out.println("server closed please");
+					System.exit(0);
+				}
+				// hang until client is found.
+				
+				try {
+					SERVERwriter = new ObjectOutputStream(client.getOutputStream());
+				} catch (IOException e) {e.printStackTrace();}
+				try {
+					SERVERwriter.flush();
+				} catch (IOException e) {e.printStackTrace();}
+
+				try {
+					SERVERreader = new ObjectInputStream(
+							client.getInputStream());
+				} catch (IOException e) {e.printStackTrace();}
+
+				//System.out.println("streams done");
+				active = true;
+
+				Thread comma = new Thread(new CommunicationServer());
+				comma.start();
 			}
-
-			System.out.println("i am server---------------------");
-			try {
-				client = server.accept();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("server closed please");
-				System.exit(0);
-			}
-			// hang until client is found.
-			System.out.println("streams are being made");
-
-			try {
-				SERVERwriter = new ObjectOutputStream(client.getOutputStream());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				SERVERwriter.flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			try {
-				SERVERreader = new ObjectInputStream(client.getInputStream());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			System.out.println("streams done");
-			active=true;
-
-			Thread comma = new Thread(new CommunicationServer());
-			comma.start();
-
-			 }
-
 		}
 
 		// port is already used, we assume the server did it, client starts
@@ -103,12 +87,12 @@ public class GameServer {
 				isserver = false;
 				client = ipad;
 
-				System.out.println("It be alive::"+ipad);
+				System.out.println("It be alive::" + ipad);
 
 				CLIENTwriter = new ObjectOutputStream(client.getOutputStream());
 				CLIENTwriter.flush();
 				CLIENTreader = new ObjectInputStream(client.getInputStream());
-				active=true;
+				active = true;
 
 				System.out.println("finished?");
 			} catch (Exception e) {
@@ -126,17 +110,14 @@ public class GameServer {
 	public static Socket detectserver() {
 		for (int i = 100; i < 150; i++) {
 			try {
-				String myip=InetAddress.getLocalHost().getHostAddress();
-				
-				//String temp = myip.substring(0, myip.lastIndexOf('.')+1) + Integer.toString(i);
-				String temp="192.168.1."+Integer.toString(i);
-				System.out.println("trying   " + temp+"   -=");
+				String myip = InetAddress.getLocalHost().getHostAddress();
+
+				String temp = myip.substring(0, myip.lastIndexOf('.')+1) +Integer.toString(i);
+				//String temp = "192.168.1." + Integer.toString(i);
+				System.out.println("trying   " + temp + "   -=");
 				// Socket c1=new Socket(temp,12345);
 				Socket c1 = new Socket();
-				long tstart=System.currentTimeMillis();
-
 				c1.connect(new InetSocketAddress(temp, 12345), 50);
-				System.out.println(System.currentTimeMillis()-tstart);
 				return c1;
 
 			} catch (Exception e) {
@@ -145,11 +126,7 @@ public class GameServer {
 		return null;
 	}
 
-	public static boolean ishoster() {
-		return portuse;
-	}
-
-	public static boolean isserver(){
+	public static boolean isserver() {
 		return isserver;
 	}
 
@@ -158,27 +135,30 @@ public class GameServer {
 			CLIENTwriter.writeObject(GamePanel.Test);
 			othercar = (PlayerCar) CLIENTreader.readObject();
 
-
 		} catch (Exception e) {
 			clientcleanup();
-
 		}
 
 	}
-	public static void clientcleanup(){
+
+	public static void clientcleanup() {
 		active = false;
 		System.out.println("closed from client");
 		try {
-			if (CLIENTreader!=null) CLIENTreader.close();
-			if (CLIENTwriter!=null)	CLIENTwriter.close();
-			if (client!=null) 		client.close();
+			if (CLIENTreader != null)
+				CLIENTreader.close();
+			if (CLIENTwriter != null)
+				CLIENTwriter.close();
+			if (client != null)
+				client.close();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
-	public static void removeserver(){
-		if (server!=null)
+
+	public static void removeserver() {
+		if (server != null)
 			try {
 				server.close();
 			} catch (IOException e) {
@@ -186,15 +166,17 @@ public class GameServer {
 				e.printStackTrace();
 			}
 	}
-	
+
 	public static void servercleanup() {
 		System.out.println("closed from server");
 		active = false;
 		try {
-			if (SERVERreader!=null) SERVERreader.close();
-			if (SERVERwriter!=null)	SERVERwriter.close();
-			if (client!=null)		client.close();
-			
+			if (SERVERreader != null)
+				SERVERreader.close();
+			if (SERVERwriter != null)
+				SERVERwriter.close();
+			if (client != null)
+				client.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -214,8 +196,8 @@ public class GameServer {
 			SERVERwriter.writeObject(GamePanel.Test);
 
 		} catch (Exception e1) {
-				servercleanup();
-			
+			servercleanup();
+
 		}
 
 	}
@@ -257,7 +239,6 @@ public class GameServer {
 				}
 			}
 			System.out.println("Exited from active-=client");
-
 
 		}
 
