@@ -167,9 +167,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 	public void paintComponent(Graphics g) {
 		
-
-		if (running){
-			
+		System.out.println("go--");
+			System.out.println("go");
 			long temp=System.currentTimeMillis();
 			keyinput();
 			g.setColor(Color.green);
@@ -222,8 +221,9 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			}
 			running=false;
 			//System.out.println(System.currentTimeMillis()-temp);
-			repaint();
-		}
+
+		
+		//repaint();
 		//fpscap();
 
 
@@ -237,7 +237,14 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		//	if (GameServer.isready()){
 				System.out.println("GOOGGOOG");
 				while(true){
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					running=true;
+					repaint();
 				}
 		//	}
 
