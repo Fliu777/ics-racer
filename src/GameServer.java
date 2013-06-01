@@ -86,8 +86,8 @@ public class GameServer {
             try{
     			while (true){
     				System.out.println("---READDDD c to s");
-    				othercar = (PlayerCar) reader.readObject();
     				writer.writeObject(GamePanel.curcar());
+    				othercar = (PlayerCar) reader.readObject();
 
     			}
             }
@@ -117,8 +117,9 @@ public class GameServer {
 		try {
 			while (true){
 				System.out.println("---READDDD s to c");
-				writer.writeObject(GamePanel.curcar());
 				othercar = (PlayerCar) reader.readObject();
+				writer.writeObject(GamePanel.curcar());
+
 			}
 		} catch (Exception e1) {
 			
