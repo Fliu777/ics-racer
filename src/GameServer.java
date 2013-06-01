@@ -1,6 +1,6 @@
 /*
 Frank Liu & Michael Zhang
-Multiplayer Server handling
+Multiplayer Server handling (main)
 Physics Racing Game
 ICS4U
 */

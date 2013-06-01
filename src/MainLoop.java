@@ -1,6 +1,6 @@
 /*
 Frank Liu & Michael Zhang
-ICS Summative
+Window/Frame handling
 Physics Racing Game
 ICS4U
 */
