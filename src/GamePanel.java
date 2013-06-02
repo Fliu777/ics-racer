@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	static PlayerCar Test=new PlayerCar();
 	
-	static PlayerCar Opponent;
+	static PlayerCar Opponent=null;
 	
 	ArrayList<PlayerCar> AI;
 	
@@ -164,8 +164,20 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	    }
 	    start = System.currentTimeMillis();
 	}
+	
+	public synchronized static void setcar(PlayerCar othercar0){
+		Opponent = othercar0;
+	}
+	
+	public synchronized static void updatecar(Graphics g){
+		if (Opponent!=null){
+			System.out.println("their cycle");
+			Opponent.draw(g);
+			Opponent.move();
+		}
+	}
 
-
+	
 	public void paintComponent(Graphics g) {
 		
 			long temp=System.currentTimeMillis();
@@ -178,17 +190,17 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			g.setColor(Color.black);
 			Test.draw(g);
 			Test.move();
-			if (GameServer.getcar()!=null){
-				Opponent=GameServer.getcar();
-			}
+			
+			//Opponent=GameServer.getcar();
 			System.out.println("myclce");
 			
-			if (Opponent!=null){
+			/*if (Opponent!=null){
 				System.out.println("their cycle");
 				Opponent.draw(g);
 				Opponent.move();
 			}
-			
+			*/
+			updatecar(g);
 
 			
 			
