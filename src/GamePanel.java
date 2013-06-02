@@ -171,9 +171,9 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	public synchronized static void updatecar(Graphics g){
 		if (Opponent!=null){
-			System.out.println("their cycle");
+			//System.out.println("their cycle");
 			Opponent.draw(g);
-			Opponent.move();
+			//Opponent.move();
 		}
 	}
 
@@ -191,16 +191,16 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			Test.draw(g);
 			Test.move();
 			
-			Opponent=GameServer.getcar();
+			//Opponent=GameServer.getcar();
 			System.out.println("myclce");
 			
-			if (Opponent!=null){
+		/*	if (Opponent!=null){
 				//System.out.println("their cycle");
 				Opponent.draw(g);
 				//Opponent.move();
-			}
+			}*/
 			
-			//updatecar(g);
+			updatecar(g);
 
 			
 			
