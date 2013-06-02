@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	private int counter=0;
     private long start = 0;
+    boolean opponentalive=false;
 	
 	/*Keybits here is a bitset that takes into account the various input keys that can be
 	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
@@ -180,11 +181,14 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			Opponent=GameServer.getcar();
 			//System.out.println(Opponent);
 			
-			/*if (Opponent!=null){
+			if (Opponent!=null){
+				opponentalive=true;
+			}
+			if (opponentalive){
 				Opponent.draw(g);
 				Opponent.move();
 			}
-			*/
+			
 
 			
 			
