@@ -196,7 +196,8 @@ public class GameServer {
 			othercar = (PlayerCar) SERVERreader.readObject();
 
 			/* ONLY READ */
-			System.out.println("OBECASFASDF--"+othercar);
+			System.out.println("them--"+othercar);
+			System.out.println("me--"+GamePanel.Test);
 			SERVERwriter.writeObject(GamePanel.Test);
 
 		} catch (Exception e1) {
