@@ -141,7 +141,7 @@ public class GameServer {
 			CLIENTwriter.writeObject(GamePanel.Test);
 			
 			othercar0 = (PlayerCar) CLIENTreader.readObject();
-			setcar(	othercar0);
+			GamePanel.setcar(othercar0);
 
 		} catch (Exception e) {
 			clientcleanup();
@@ -218,7 +218,7 @@ public class GameServer {
 			// System.out.println("---READDDD s to c");
 			othercar = (PlayerCar) SERVERreader.readObject();
 			System.out.println("starting this part b");
-
+			GamePanel.setcar(othercar);
 			/* ONLY READ */
 			System.out.println("them--"+othercar);
 			othercar.angle+=5;
