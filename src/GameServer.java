@@ -192,8 +192,8 @@ public class GameServer {
 		System.out.println("starting this part a");
 		try {
 			// System.out.println("---READDDD s to c");
-			System.out.println("starting this part b");
 			othercar = (PlayerCar) SERVERreader.readObject();
+			System.out.println("starting this part b");
 
 			/* ONLY READ */
 			System.out.println("them--"+othercar);
@@ -201,6 +201,8 @@ public class GameServer {
 			SERVERwriter.writeObject(GamePanel.Test);
 
 		} catch (Exception e1) {
+			e1.printStackTrace();
+
 			servercleanup();
 
 		}
