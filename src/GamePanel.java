@@ -180,11 +180,11 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			Opponent=GameServer.getcar();
 			//System.out.println(Opponent);
 			
-			if (Opponent!=null){
+			/*if (Opponent!=null){
 				Opponent.draw(g);
 				Opponent.move();
 			}
-			
+			*/
 
 			
 			
