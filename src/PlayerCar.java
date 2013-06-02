@@ -57,12 +57,12 @@ public class PlayerCar extends GameObject implements Serializable {
                 
         }
         public void draw(Graphics g){
-
+        		rotate();
                 super.draw(g);
                 g.drawLine((int)xpos, (int)ypos, (int)(xpos+Math.cos(Math.toRadians(angle))*25), (int)(ypos+Math.sin(Math.toRadians(angle))*25));
         }
         public void move(){
-        	rotate();
+        	///rotate();
                 vx *= fric;
                 vy *= fric;
         
@@ -162,8 +162,8 @@ public class PlayerCar extends GameObject implements Serializable {
         private void writeObject(ObjectOutputStream out) throws IOException {
             System.out.println("wruite  COUNT IS :::");
             out.defaultWriteObject();
-            ImageIO.write(picture, "png", out); // png is lossless
- //           ImageIO.write(orig, "png", out); // png is lossless
+//            ImageIO.write(picture, "png", out); // png is lossless
+            ImageIO.write(orig, "png", out); // png is lossless
         }
 
         private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -172,8 +172,8 @@ public class PlayerCar extends GameObject implements Serializable {
         	in.defaultReadObject();
             //final int imageCount = in.readInt();
           //  System.out.println("IMAGE  COUNT IS "+imageCount);
-        	picture=ImageIO.read(in);
- //           orig=ImageIO.read(in);
+ //       	picture=ImageIO.read(in);
+            orig=ImageIO.read(in);
 
             
         }

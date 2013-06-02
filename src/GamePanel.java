@@ -270,7 +270,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				System.out.println("GOOGGOOG");
 				while(true){
 					try {
-						Thread.sleep(15);
+						Thread.sleep(50);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
