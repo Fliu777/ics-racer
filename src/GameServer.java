@@ -132,6 +132,10 @@ public class GameServer {
 
 	public static void clienttoserver() {
 		try {
+			CLIENTwriter = new ObjectOutputStream(client.getOutputStream());
+			CLIENTwriter.flush();
+			CLIENTreader = new ObjectInputStream(client.getInputStream());
+			
 			System.out.println("client to the server passing");
 			CLIENTwriter.writeObject(GamePanel.Test);
 			othercar = (PlayerCar) CLIENTreader.readObject();
@@ -189,6 +193,19 @@ public class GameServer {
 	}
 
 	public static void servertoclient() {
+		try {
+			SERVERwriter = new ObjectOutputStream(client.getOutputStream());
+		} catch (IOException e) {e.printStackTrace();}
+		try {
+			SERVERwriter.flush();
+		} catch (IOException e) {e.printStackTrace();}
+
+		try {
+			SERVERreader = new ObjectInputStream(
+					client.getInputStream());
+		} catch (IOException e) {e.printStackTrace();}
+
+		
 		System.out.println("starting this part a");
 		try {
 			// System.out.println("---READDDD s to c");
