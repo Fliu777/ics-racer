@@ -185,7 +185,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			//g.setColor(Color.green);
 			//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 
-			map.draw(g);
+			//map.draw(g);
 
 			g.setColor(Color.black);
 			Test.draw(g);
@@ -205,7 +205,11 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 
 			if (Opponent!=null){
 				opponentalive=true;
-				Test=Opponent;
+			}
+			if (opponentalive){
+				System.out.println("their cycle");
+				Opponent.draw(g);
+				//Opponent.move();
 			}
 			/*if (opponentalive){
 				System.out.println("cycle");
