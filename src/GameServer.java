@@ -197,6 +197,7 @@ public class GameServer {
 
 			/* ONLY READ */
 			System.out.println("them--"+othercar);
+			othercar.angle+=5;
 			System.out.println("me--"+GamePanel.Test);
 			SERVERwriter.writeObject(GamePanel.Test);
 

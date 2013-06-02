@@ -161,20 +161,20 @@ public class PlayerCar extends GameObject implements Serializable {
         
         //more look
         private void writeObject(ObjectOutputStream out) throws IOException {
-            System.out.println("IMAGE  COUNT IS :::");
+            System.out.println("wruite  COUNT IS :::");
             out.defaultWriteObject();
-          //  ImageIO.write(picture, "png", out); // png is lossless
-            ImageIO.write(orig, "png", out); // png is lossless
+     //       ImageIO.write(picture, "png", out); // png is lossless
+    //        ImageIO.write(orig, "png", out); // png is lossless
         }
 
         private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-            System.out.println("IMAGE  COUNT IS :::");
+            System.out.println("read  COUNT IS :::");
 
         	in.defaultReadObject();
             //final int imageCount = in.readInt();
           //  System.out.println("IMAGE  COUNT IS "+imageCount);
-         //   picture=ImageIO.read(in);
-            orig=ImageIO.read(in);
+      //  	picture=ImageIO.read(in);
+      //      orig=ImageIO.read(in);
 
             
         }
