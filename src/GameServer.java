@@ -33,6 +33,7 @@ public class GameServer {
 
 		Socket ipad = detectserver();
 
+		//
 		System.out.println(":please?");
 		MainLoop menu = new MainLoop();
 		menu.setFocusable(true);
@@ -137,7 +138,7 @@ public class GameServer {
 			CLIENTwriter.flush();
 			CLIENTreader = new ObjectInputStream(client.getInputStream());
 			
-			System.out.println("client to the server passing");
+			//System.out.println("client to the server passing");
 			CLIENTwriter.writeObject(GamePanel.Test);
 			
 			othercar0 = (PlayerCar) CLIENTreader.readObject();
@@ -213,16 +214,19 @@ public class GameServer {
 		} catch (IOException e) {e.printStackTrace();}
 
 		
-		System.out.println("starting this part a");
+		//System.out.println("starting this part a");
 		try {
 			// System.out.println("---READDDD s to c");
+
+
 			othercar = (PlayerCar) SERVERreader.readObject();
-			System.out.println("starting this part b");
+			
+			//System.out.println("starting this part b");
 			GamePanel.setcar(othercar);
 			/* ONLY READ */
-			System.out.println("them--"+othercar);
-			othercar.angle+=5;
-			System.out.println("me--"+GamePanel.Test);
+			//System.out.println("them--"+othercar);
+			//othercar.angle+=5;
+			//System.out.println("me--"+GamePanel.Test);
 			SERVERwriter.writeObject(GamePanel.Test);
 
 		} catch (Exception e1) {
@@ -241,9 +245,13 @@ public class GameServer {
 
 			System.out.println("hai=server");
 			while (active) {
+				
+				long starttime=System.currentTimeMillis();
 				servertoclient();
+				System.out.println(System.currentTimeMillis()-starttime);
+				
 				try {
-					Thread.sleep(30);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -264,7 +272,7 @@ public class GameServer {
 				clienttoserver();
 
 				try {
-					Thread.sleep(30);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
