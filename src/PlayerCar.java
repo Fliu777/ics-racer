@@ -10,6 +10,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
@@ -155,6 +157,17 @@ public class PlayerCar extends GameObject implements Serializable {
         
         public String toString(){
         	return "The velocity "+ vx+ vy+ "the angle"+angle;
+        }
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeInt(1); // how many images are serialized?
+            ImageIO.write(picture, "png", out); // png is lossless
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        	System.out.println("helloasdf");
+        	in.defaultReadObject();
+            picture=ImageIO.read(in);
         }
 
 }
