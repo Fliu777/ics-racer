@@ -163,7 +163,7 @@ public class PlayerCar extends GameObject implements Serializable {
         private void writeObject(ObjectOutputStream out) throws IOException {
             System.out.println("wruite  COUNT IS :::");
             out.defaultWriteObject();
-            ImageIO.write(picture, "png", out); // png is lossless
+ //           ImageIO.write(picture, "png", out); // png is lossless
             ImageIO.write(orig, "png", out); // png is lossless
         }
 
@@ -173,7 +173,7 @@ public class PlayerCar extends GameObject implements Serializable {
         	in.defaultReadObject();
             //final int imageCount = in.readInt();
           //  System.out.println("IMAGE  COUNT IS "+imageCount);
-        	picture=ImageIO.read(in);
+  //      	picture=ImageIO.read(in);
             orig=ImageIO.read(in);
 
             

@@ -182,10 +182,10 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		
 			long temp=System.currentTimeMillis();
 			keyinput();
-			g.setColor(Color.green);
-			g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+			//g.setColor(Color.green);
+			//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 
-			map.draw(g);
+			//map.draw(g);
 
 			g.setColor(Color.black);
 			Test.draw(g);
@@ -211,7 +211,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			}
 			for (int i=0;i<AI.size();i++){
 				((AICar)(AI.get(i))).update();
-				((AICar)(AI.get(i))).draw(g);
+				//((AICar)(AI.get(i))).draw(g);
 			}
 			
 			
