@@ -185,14 +185,14 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			//g.setColor(Color.green);
 			//g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 
-			//map.draw(g);
+			map.draw(g);
 
 			g.setColor(Color.black);
 			Test.draw(g);
 			Test.move();
 			
 			//Opponent=GameServer.getcar();
-			System.out.println("myclce");
+		//	System.out.println("myclce");
 			
 			/*if (Opponent!=null){
 				System.out.println("their cycle");
@@ -200,10 +200,22 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				Opponent.move();
 			}
 			*/
-			updatecar(g);
+			//updatecar(g);
+			Opponent=GameServer.getcar();
 
-			
-			
+			if (Opponent!=null){
+				opponentalive=true;
+				Test=Opponent;
+			}
+			/*if (opponentalive){
+				System.out.println("cycle");
+
+			//	System.out.println("their cycle");
+				Opponent.draw(g);
+				Opponent.move();
+			}
+
+			*/
 			for (int i=0;i<BulletList.size();i++){
 				if (BulletList.get(i).dead()){
 					BulletList.remove(i);
