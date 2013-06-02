@@ -243,7 +243,7 @@ public class GameServer {
 			while (active) {
 				servertoclient();
 				try {
-					Thread.sleep(100);
+					Thread.sleep(30);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -264,7 +264,7 @@ public class GameServer {
 				clienttoserver();
 
 				try {
-					Thread.sleep(100);
+					Thread.sleep(30);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
