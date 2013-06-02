@@ -178,13 +178,11 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			g.setColor(Color.black);
 			Test.draw(g);
 			Test.move();
-			Opponent=GameServer.getcar();
-			//System.out.println(Opponent);
+			if (GameServer.getcar()!=null){
+				Opponent=GameServer.getcar();
+			}
 			
 			if (Opponent!=null){
-				opponentalive=true;
-			}
-			if (opponentalive){
 				Opponent.draw(g);
 				Opponent.move();
 			}
