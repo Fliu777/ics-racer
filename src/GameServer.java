@@ -108,7 +108,7 @@ public class GameServer {
 	}
 
 	public static Socket detectserver() {
-		for (int i = 100; i < 150; i++) {
+		for (int i = 100; i < 110; i++) {
 			try {
 				String myip = InetAddress.getLocalHost().getHostAddress();
 
@@ -243,7 +243,7 @@ public class GameServer {
 			while (active) {
 				servertoclient();
 				try {
-					Thread.sleep(200);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -264,7 +264,7 @@ public class GameServer {
 				clienttoserver();
 
 				try {
-					Thread.sleep(200);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
