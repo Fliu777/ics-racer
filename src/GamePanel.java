@@ -173,7 +173,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		if (Opponent!=null){
 			//System.out.println("their cycle");
 			Opponent.draw(g);
-			Opponent=null;
 			//Opponent.move();
 		}
 	}
@@ -193,7 +192,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			Test.move();
 			
 			//Opponent=GameServer.getcar();
-			System.out.println("myclce");
+			//System.out.println("myclce");
 			
 		/*	if (Opponent!=null){
 				//System.out.println("their cycle");
