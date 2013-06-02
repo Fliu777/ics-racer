@@ -158,6 +158,8 @@ public class PlayerCar extends GameObject implements Serializable {
         public String toString(){
         	return "The velocity "+ vx+ vy+ "the angle"+angle;
         }
+        
+        //more look
         private void writeObject(ObjectOutputStream out) throws IOException {
             out.defaultWriteObject();
             out.writeInt(1); // how many images are serialized?
@@ -165,7 +167,6 @@ public class PlayerCar extends GameObject implements Serializable {
         }
 
         private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        	System.out.println("helloasdf");
         	in.defaultReadObject();
             picture=ImageIO.read(in);
         }
