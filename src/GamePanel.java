@@ -191,35 +191,19 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			Test.draw(g);
 			Test.move();
 			
-			//Opponent=GameServer.getcar();
-		//	System.out.println("myclce");
-			
-			/*if (Opponent!=null){
-				System.out.println("their cycle");
-				Opponent.draw(g);
-				Opponent.move();
-			}
-			*/
-			//updatecar(g);
 			Opponent=GameServer.getcar();
-
+			System.out.println("myclce");
+			
 			if (Opponent!=null){
-				opponentalive=true;
-			}
-			if (opponentalive){
-				System.out.println("their cycle");
+				//System.out.println("their cycle");
 				Opponent.draw(g);
 				//Opponent.move();
 			}
-			/*if (opponentalive){
-				System.out.println("cycle");
+			
+			//updatecar(g);
 
-			//	System.out.println("their cycle");
-				Opponent.draw(g);
-				Opponent.move();
-			}
-
-			*/
+			
+			
 			for (int i=0;i<BulletList.size();i++){
 				if (BulletList.get(i).dead()){
 					BulletList.remove(i);
