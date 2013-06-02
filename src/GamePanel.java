@@ -181,8 +181,10 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			if (GameServer.getcar()!=null){
 				Opponent=GameServer.getcar();
 			}
+			System.out.println("myclce");
 			
 			if (Opponent!=null){
+				System.out.println("their cycle");
 				Opponent.draw(g);
 				Opponent.move();
 			}
