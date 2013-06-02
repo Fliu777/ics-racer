@@ -49,7 +49,7 @@ public class PlayerCar extends GameObject implements Serializable {
                 vx= cos(angle)*velocity;
                 vy= sin(angle)*velocity;
         		try {
-        			orig= ImageIO.read(new File("src/Images/car1.png"));
+        			picture= ImageIO.read(new File("src/Images/car1.png"));
         			picture=orig;
         		} catch (IOException e) {
         			e.printStackTrace();
@@ -161,13 +161,16 @@ public class PlayerCar extends GameObject implements Serializable {
         
         //more look
         private void writeObject(ObjectOutputStream out) throws IOException {
+            System.out.println("IMAGE  COUNT IS :::");
             out.defaultWriteObject();
-            out.writeInt(1); // how many images are serialized?
             ImageIO.write(picture, "png", out); // png is lossless
         }
 
         private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         	in.defaultReadObject();
+            final int imageCount = in.readInt();
+            System.out.println("IMAGE  COUNT IS "+imageCount);
+ 
             picture=ImageIO.read(in);
         }
 

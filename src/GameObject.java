@@ -23,7 +23,7 @@ public abstract class GameObject implements Serializable {
 	protected double acceleration;
 	protected double angle;
 	protected final int IMAGESIZE;
-	protected transient BufferedImage picture=null; 
+	protected BufferedImage picture=null; 
 	protected transient BufferedImage orig=null;
 	
 	protected boolean active;
