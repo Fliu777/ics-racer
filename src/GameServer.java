@@ -131,6 +131,7 @@ public class GameServer {
 	}
 
 	public static void clienttoserver() {
+		PlayerCar othercar0;
 		try {
 			CLIENTwriter = new ObjectOutputStream(client.getOutputStream());
 			CLIENTwriter.flush();
@@ -138,12 +139,18 @@ public class GameServer {
 			
 			System.out.println("client to the server passing");
 			CLIENTwriter.writeObject(GamePanel.Test);
-			othercar = (PlayerCar) CLIENTreader.readObject();
+			
+			othercar0 = (PlayerCar) CLIENTreader.readObject();
+			setcar(	othercar0);
 
 		} catch (Exception e) {
 			clientcleanup();
 		}
 
+	}
+	public synchronized static void setcar(PlayerCar othercar0){
+		
+		othercar =othercar0;
 	}
 
 	public static void clientcleanup() {
@@ -188,7 +195,7 @@ public class GameServer {
 		}
 	}
 
-	public static PlayerCar getcar() {
+	public synchronized  static PlayerCar getcar() {
 		return othercar;
 	}
 
@@ -236,7 +243,7 @@ public class GameServer {
 			while (active) {
 				servertoclient();
 				try {
-					Thread.sleep(100);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -257,7 +264,7 @@ public class GameServer {
 				clienttoserver();
 
 				try {
-					Thread.sleep(100);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
