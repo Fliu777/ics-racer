@@ -132,6 +132,7 @@ public class GameServer {
 
 	public static void clienttoserver() {
 		try {
+			System.out.println("client to the server passing");
 			CLIENTwriter.writeObject(GamePanel.Test);
 			othercar = (PlayerCar) CLIENTreader.readObject();
 
@@ -195,7 +196,7 @@ public class GameServer {
 			othercar = (PlayerCar) SERVERreader.readObject();
 
 			/* ONLY READ */
-			System.out.println("OBECASFASDF--"+GamePanel.Test);
+			System.out.println("OBECASFASDF--"+othercar);
 			SERVERwriter.writeObject(GamePanel.Test);
 
 		} catch (Exception e1) {
