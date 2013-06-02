@@ -39,12 +39,12 @@ public class PlayerCar extends GameObject implements Serializable {
                 super();
                 velocity=0;
                 angle=0;
-                pcap=8.5;
+                pcap=15.5;
                 pstart=1.5;
                 
-                accel=0.05;
-                turnSpeed=0.45;
-                fric=0.979;
+                accel=0.15;
+                turnSpeed=1.5;
+                fric=0.959;
                 power=pstart;
                 vx= cos(angle)*velocity;
                 vy= sin(angle)*velocity;
