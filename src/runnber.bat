@@ -1,3 +1,3 @@
-javac GameServer.java
+javac *.java
 java GameServer
 pause
