@@ -26,10 +26,10 @@ public class GameServer {
 
 	static PlayerCar othercar = null;
 	static boolean isserver = true;
-
+	static int port = 132654;
 	public static void main(String[] args) {
 
-		int port = 12345;
+
 
 		Socket ipad = detectserver();
 
@@ -41,7 +41,7 @@ public class GameServer {
 		// port has not been used, just make streams for server
 		if (ipad == null) {
 			try {
-				server = new ServerSocket(12345);
+				server = new ServerSocket(port);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -109,16 +109,16 @@ public class GameServer {
 	}
 
 	public static Socket detectserver() {
-		for (int i = 100; i < 150; i++) {
+		for (int i = 1; i < 255; i++) {
 			try {
 				String myip = InetAddress.getLocalHost().getHostAddress();
 
 				String temp = myip.substring(0, myip.lastIndexOf('.')+1) +Integer.toString(i);
 				//String temp = "192.168.1." + Integer.toString(i);
 				System.out.println("trying   " + temp + "   -=");
-				// Socket c1=new Socket(temp,12345);
+				// Socket c1=new Socket(temp,port);
 				Socket c1 = new Socket();
-				c1.connect(new InetSocketAddress(temp, 12345), 50);
+				c1.connect(new InetSocketAddress(temp, port), 20);
 				return c1;
 
 			} catch (Exception e) {
