@@ -97,6 +97,8 @@ public class GameMap {
 	public void mapConvert(int x, int y) {
 		up=down=left=right=false; //Sets all surrounding blocks as false (no path)
 		
+		if (x==0||y==0||x==textArray.length||y==textArray[0].length) return;
+		
 		//If a path is detected, set variable to true
 		if (!(textArray[x+1][y].equals("."))) down=true;
 		if (!(textArray[x-1][y].equals("."))) up=true;
