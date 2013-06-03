@@ -26,7 +26,7 @@ public class GameServer {
 
 	static PlayerCar othercar = null;
 	static boolean isserver = true;
-	static int port = 132654;
+	static int port = 13254;
 	public static void main(String[] args) {
 
 
