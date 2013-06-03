@@ -159,6 +159,14 @@ public class PlayerCar extends GameObject implements Serializable {
         	return "The velocity "+ vx+ vy+ "the angle"+angle;
         }
         
+        public double getVX() {
+        	return vx;
+        }
+        
+        public double getVY() {
+        	return vy;
+        }
+        
         //more look
         private void writeObject(ObjectOutputStream out) throws IOException {
             System.out.println("wruite  COUNT IS :::");

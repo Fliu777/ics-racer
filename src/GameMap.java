@@ -97,7 +97,7 @@ public class GameMap {
 	public void mapConvert(int x, int y) {
 		up=down=left=right=false; //Sets all surrounding blocks as false (no path)
 		
-		if (x==0||y==0||x==textArray.length||y==textArray[0].length) return;
+		if (x==0||y==0||x==textArray.length-1||y==textArray[0].length-1) return;
 		
 		//If a path is detected, set variable to true
 		if (!(textArray[x+1][y].equals("."))) down=true;
@@ -153,18 +153,27 @@ public class GameMap {
 	
 	public void draw(Graphics g) {
 		this.g = g;
-		vx++;
-		vy++;
+		vx+=GamePanel.Test.getVX();
+		vy+=GamePanel.Test.getVY();
+		System.out.println(vx+", "+vy);
 		if (vx>200) {
-			vx=0;
+			vx=0+(vx-200);
 			mapX++;
 		}
+		if (vx<-200) {
+			vx=0-(vx+200);
+			mapX--;
+		}
 		if (vy>200) {
-			vy=0;
+			vy=0+(vy-200);
 			mapY++;
 		}
+		if (vy<-200) {
+			vy=0-(vy+200);
+			mapY--;
+		}
 		mapConvert(findX(0),findX(1));
-		String[][] map = currentMap(mapX,mapY);
+		String[][] map = currentMap(5,5);
 		drawCurrentMap(map, vx, vy);
 	}
 }
