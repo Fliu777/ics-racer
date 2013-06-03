@@ -118,7 +118,7 @@ public class GameServer {
 				System.out.println("trying   " + temp + "   -=");
 				// Socket c1=new Socket(temp,port);
 				Socket c1 = new Socket();
-				c1.connect(new InetSocketAddress(temp, port), 20);
+				c1.connect(new InetSocketAddress(temp, port), 30);
 				return c1;
 
 			} catch (Exception e) {
