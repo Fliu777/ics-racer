@@ -157,8 +157,10 @@ public class GameMap {
 		vy+=GamePanel.Test.getY()-MainLoop.ScreenHeight/2;
 		if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2<0&&mapY<1) vx = 0;
 		else if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2>0&&mapY>=textArray[0].length-9) vx = 0;
+		else GamePanel.Test.setX(MainLoop.ScreenWidth/2.0);
 		if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2<0&&mapX<1) vy = 0;
 		else if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2>0&&mapX>=textArray.length-7) vy = 0;
+		else GamePanel.Test.setY(MainLoop.ScreenHeight/2.0);
 		System.out.println(vx+", "+vy);
 		if (vx>200) {
 			vx=0+(vx-200);
@@ -178,6 +180,7 @@ public class GameMap {
 		}
 		mapConvert(findX(0),findX(1));
 		String[][] map = currentMap(mapX,mapY);
+		
 		drawCurrentMap(map, vx, vy);
 	}
 }

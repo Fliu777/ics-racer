@@ -57,6 +57,12 @@ public abstract class GameObject implements Serializable {
 	public double getY(){
 		return ypos;
 	}
+	public void setX(double x) {
+		xpos = x;
+	}
+	public void setY(double y) {
+		ypos = y;
+	}
 	public double getAngle(){
 		return angle;
 	}
