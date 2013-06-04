@@ -40,13 +40,13 @@ public class PlayerCar extends GameObject implements Serializable {
                 super();
                 velocity=0;
                 angle=0;
-                pcap=15.5;
-                pstart=1.5;
+                //pcap=15.5;
+                pstart=1;
                 vcap=10;
                 
                 accel=0.15;
                 turnSpeed=1.5;
-                fric=0.98;
+                fric=0.95;
                 power=pstart;
                 vx= cos(angle)*velocity;
                 vy= sin(angle)*velocity;
@@ -65,7 +65,6 @@ public class PlayerCar extends GameObject implements Serializable {
                 g.drawLine((int)xpos, (int)ypos, (int)(xpos+Math.cos(Math.toRadians(angle))*25), (int)(ypos+Math.sin(Math.toRadians(angle))*25));
         }
         public void move(){
-        	rotate();
                 vx *= fric;
                 vy *= fric;
         
@@ -87,11 +86,11 @@ public class PlayerCar extends GameObject implements Serializable {
                 
         		//temp fix to make the map not small while waiting for scroll
         		//disable when scroll done
-        		if (xpos>MainLoop.ScreenWidth || xpos<0 ||  ypos>MainLoop.ScreenHeight || ypos<0){
+        	/*	if (xpos>MainLoop.ScreenWidth || xpos<0 ||  ypos>MainLoop.ScreenHeight || ypos<0){
         			vx=-vx;
         			vy=-vy;
         			angle=180+angle;
-        		}
+        		}*/
                 
               //  System.out.println(vx+ " "+ vy);
         }
@@ -102,7 +101,7 @@ public class PlayerCar extends GameObject implements Serializable {
                 curvy = vy;
                 vx += cos(angle) * power;
                 vy += sin(angle) * power;
-                if (power>pcap)power=pcap;
+               // if (power>pcap)power=pcap;
                 
         }
         
