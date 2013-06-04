@@ -7,9 +7,14 @@ ICS4U
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements   ActionListener, KeyListener, MouseListener, MouseMotionListener{
@@ -17,6 +22,8 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	public boolean running;
 	private BitSet keysPressed = new BitSet(256);
 	private BitSet keysReleased = new BitSet(256);
+	
+	public static BufferedImage[] cars=new BufferedImage[1];
 	
 	GameMap map = new GameMap();
 	
@@ -48,6 +55,15 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		AI=new ArrayList<PlayerCar>();
 		AICar temp=new AICar();
 		AI.add((AICar)temp);
+		
+		BufferedImage orig = null;
+		try {
+			 orig= ImageIO.read(new File("src/Images/car1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		cars[0]=orig;
+		
 	   
 	    Thread myrunnable = new Thread(new starthere());
 	    myrunnable.start();

@@ -109,10 +109,11 @@ public class GameServer {
 	}
 
 	public static Socket detectserver() {
-		for (int i = 1; i < 2; i++) {
+		for (int i = 1; i < 255; i++) {
 			try {
 				String myip = InetAddress.getLocalHost().getHostAddress();
 
+				
 				String temp = myip.substring(0, myip.lastIndexOf('.')+1) +Integer.toString(i);
 				//String temp = "192.168.1." + Integer.toString(i);
 				System.out.println("trying   " + temp + "   -=");
