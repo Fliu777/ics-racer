@@ -84,9 +84,9 @@ public class GameMap {
 	
 	//Clipping a portion of the map
 	 public String[][] currentMap(int x, int y) {
-		String[][] newMap = new String[10][10];
-		for (int i = 0; i<10; i++) {
-			for (int j = 0; j<10; j++) {
+		String[][] newMap = new String[7][9];
+		for (int i = 0; i<7; i++) {
+			for (int j = 0; j<9; j++) {
 				newMap[i][j] = textArray[x+i][y+j];
 			}
 		}
@@ -139,41 +139,45 @@ public class GameMap {
 	public void drawCurrentMap(String[][] map, double vx, double vy) {
 		for (int i = 0; i<map.length; i++) {
 			for (int j = 0; j<map[0].length; j++) {
-				if (map[i][j].equals("|")) g.drawImage(roadArray[0], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
-				else if (map[i][j].equals("-")) g.drawImage(roadArray[1], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
-				else if (map[i][j].equals("1")) g.drawImage(roadArray[2], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
-				else if (map[i][j].equals("2")) g.drawImage(roadArray[3], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
-				else if (map[i][j].equals("3")) g.drawImage(roadArray[4], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
-				else if (map[i][j].equals("4")) g.drawImage(roadArray[5], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
-				else if (map[i][j].equals("+")) g.drawImage(roadArray[6], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
-				else if (map[i][j].equals(".")) g.drawImage(roadArray[7], (int)Math.round(j*200-vx), (int)Math.round(i*200-vy), null);
+				if (map[i][j].equals("|")) g.drawImage(roadArray[0], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				else if (map[i][j].equals("-")) g.drawImage(roadArray[1], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				else if (map[i][j].equals("1")) g.drawImage(roadArray[2], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				else if (map[i][j].equals("2")) g.drawImage(roadArray[3], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				else if (map[i][j].equals("3")) g.drawImage(roadArray[4], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				else if (map[i][j].equals("4")) g.drawImage(roadArray[5], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				else if (map[i][j].equals("+")) g.drawImage(roadArray[6], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				else if (map[i][j].equals(".")) g.drawImage(roadArray[7], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
 			}
 		}
 	}
 	
 	public void draw(Graphics g) {
 		this.g = g;
-		vx+=GamePanel.Test.getVX();
-		vy+=GamePanel.Test.getVY();
+		vx+=GamePanel.Test.getX()-MainLoop.ScreenWidth/2;
+		vy+=GamePanel.Test.getY()-MainLoop.ScreenHeight/2;
+		if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2<0&&mapY<1) vx = 0;
+		else if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2>0&&mapY>=textArray[0].length-9) vx = 0;
+		if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2<0&&mapX<1) vy = 0;
+		else if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2>0&&mapX>=textArray.length-7) vy = 0;
 		System.out.println(vx+", "+vy);
 		if (vx>200) {
 			vx=0+(vx-200);
-			mapX++;
+			mapY++;
 		}
-		if (vx<-200) {
+		else if (vx<-200) {
 			vx=0-(vx+200);
-			mapX--;
+			mapY--;
 		}
 		if (vy>200) {
 			vy=0+(vy-200);
-			mapY++;
+			mapX++;
 		}
-		if (vy<-200) {
+		else if (vy<-200) {
 			vy=0-(vy+200);
-			mapY--;
+			mapX--;
 		}
 		mapConvert(findX(0),findX(1));
-		String[][] map = currentMap(5,5);
+		String[][] map = currentMap(mapX,mapY);
 		drawCurrentMap(map, vx, vy);
 	}
 }
