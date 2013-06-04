@@ -40,7 +40,7 @@ public class PlayerCar extends GameObject implements Serializable {
                 super();
                 velocity=0;
                 angle=0;
-                //pcap=15.5;
+                pcap=15.5;
                 pstart=1;
                 vcap=10;
                 
@@ -50,18 +50,14 @@ public class PlayerCar extends GameObject implements Serializable {
                 power=pstart;
                 vx= cos(angle)*velocity;
                 vy= sin(angle)*velocity;
-        		try {
-        			orig= ImageIO.read(new File("src/Images/car1.png"));
-        			picture=orig;
-        		} catch (IOException e) {
-        			e.printStackTrace();
-        		}
+
                 
         }
         public void draw(Graphics g){
-
-        	rotate();
+        		orig=GamePanel.cars[0];
+        		rotate();
                 super.draw(g);
+                orig=null;
                 g.drawLine((int)xpos, (int)ypos, (int)(xpos+Math.cos(Math.toRadians(angle))*25), (int)(ypos+Math.sin(Math.toRadians(angle))*25));
         }
         public void move(){
@@ -69,7 +65,7 @@ public class PlayerCar extends GameObject implements Serializable {
                 vy *= fric;
         
                 //Velocity cap
-                if (Math.sqrt(vx*vx+vy*vy)>vcap){
+                if (Math.sqrt(vx*vx+vy*vy)>pcap){
                         vx = curvx;
                         vy = curvy;
                 }
@@ -96,12 +92,12 @@ public class PlayerCar extends GameObject implements Serializable {
         }
         
         public void moveforward(){
-                //power+=accel;
+                power+=accel;
                 curvx = vx;
                 curvy = vy;
-                vx += cos(angle) * power;
-                vy += sin(angle) * power;
-               // if (power>pcap)power=pcap;
+                vx = cos(angle) * power;
+                vy = sin(angle) * power;
+                if (power>pcap)power=pcap;
                 
         }
         
@@ -173,7 +169,7 @@ public class PlayerCar extends GameObject implements Serializable {
             System.out.println("wruite  COUNT IS :::");
             out.defaultWriteObject();
  //           ImageIO.write(picture, "png", out); // png is lossless
-            ImageIO.write(orig, "png", out); // png is lossless
+           // ImageIO.write(orig, "png", out); // png is lossless
         }
 
         private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -183,7 +179,7 @@ public class PlayerCar extends GameObject implements Serializable {
             //final int imageCount = in.readInt();
           //  System.out.println("IMAGE  COUNT IS "+imageCount);
   //      	picture=ImageIO.read(in);
-            orig=ImageIO.read(in);
+          //  orig=ImageIO.read(in);
 
             
         }
