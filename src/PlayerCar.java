@@ -8,13 +8,10 @@ ICS4U
 import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import javax.imageio.ImageIO;
 
 
 
@@ -31,30 +28,31 @@ public class PlayerCar extends GameObject implements Serializable {
         private double power;
         private int life=10;
         private double pcap;
-        private double vcap;
         private double pstart;
         double curvx, curvy;
         double accel;
+        private int indexcar;
         
         public PlayerCar(){
                 super();
                 velocity=0;
                 angle=0;
-                pcap=5.5;
+                pcap=15.5;
                 pstart=1;
-                vcap=10;
-                
-                accel=0.15;
-                turnSpeed=1.5;
+                indexcar=0;
+                accel=0.30;
+                turnSpeed=2.5;
                 fric=0.95;
                 power=pstart;
                 vx= cos(angle)*velocity;
                 vy= sin(angle)*velocity;
+                curvx=vx;
+                curvy=vy;
 
                 
         }
         public void draw(Graphics g){
-        		orig=GamePanel.cars[0];
+        		orig=GamePanel.cars[indexcar];
         		rotate();
                 super.draw(g);
                 orig=null;
@@ -62,8 +60,8 @@ public class PlayerCar extends GameObject implements Serializable {
         }
         public void move(){
                 vx *= fric;
-                vy *= fric;
-        
+                vy*=fric;
+
                 //Velocity cap
                 if (Math.sqrt(vx*vx+vy*vy)>pcap){
                         vx = curvx;
@@ -79,16 +77,6 @@ public class PlayerCar extends GameObject implements Serializable {
                 
                 xpos += vx;
                 ypos += vy;
-                
-        		//temp fix to make the map not small while waiting for scroll
-        		//disable when scroll done
-        	/*	if (xpos>MainLoop.ScreenWidth || xpos<0 ||  ypos>MainLoop.ScreenHeight || ypos<0){
-        			vx=-vx;
-        			vy=-vy;
-        			angle=180+angle;
-        		}*/
-                
-              //  System.out.println(vx+ " "+ vy);
         }
         
         public void moveforward(){
@@ -98,8 +86,13 @@ public class PlayerCar extends GameObject implements Serializable {
                 vx = cos(angle) * power;
                 vy = sin(angle) * power;
                 if (power>pcap)power=pcap;
-                
         }
+        public void movebackward(){
+        	moveforward();
+        	vx=-vx;
+        	vy=-vy;
+    }
+        
         
         public double sin(double deg){
                 return Math.sin(Math.toRadians(deg));
@@ -109,7 +102,7 @@ public class PlayerCar extends GameObject implements Serializable {
         }
         
         public void stop(){
-        	vx=vy=0;
+        	//vx=vy=0;
             power=pstart;
         }
         
@@ -157,11 +150,11 @@ public class PlayerCar extends GameObject implements Serializable {
         }
         
         public double getVX() {
-        	return vx;
+        	return curvx;
         }
         
         public double getVY() {
-        	return vy;
+        	return curvy;
         }
         
         //more look

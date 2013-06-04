@@ -109,7 +109,7 @@ public class GameServer {
 	}
 
 	public static Socket detectserver() {
-		for (int i = 1; i < 255; i++) {
+		for (int i = 1; i < 2; i++) {
 			try {
 				String myip = InetAddress.getLocalHost().getHostAddress();
 

@@ -7,7 +7,6 @@ ICS4U
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,6 +17,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements   ActionListener, KeyListener, MouseListener, MouseMotionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3204711335077901765L;
 	public boolean dir=true;
 	public boolean running;
 	private BitSet keysPressed = new BitSet(256);
@@ -35,15 +38,11 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 	
 	ArrayList<Bullets> BulletList;
 	
-	private int counter=0;
-    private long start = 0;
-    boolean opponentalive=false;
 	
 	/*Keybits here is a bitset that takes into account the various input keys that can be
 	 * pressed. When they are pressed, the bit is set as true, and when let go it is set as 
 	 * false. Allows for checking if multiple keys are held at same time
 	 * */
-	private int fps=170;
 	
 	public GamePanel() {
 		this.addMouseListener(this);
@@ -55,6 +54,9 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		AI=new ArrayList<PlayerCar>();
 		AICar temp=new AICar();
 		AI.add((AICar)temp);
+		
+		//initializes different types of cars, useful for when there are multiple over server, as saves
+		//the need to transmit images
 		
 		BufferedImage orig = null;
 		try {
@@ -144,6 +146,9 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 				if (i==KeyEvent.VK_UP){
 					Test.moveforward();
 				}
+				if (i==KeyEvent.VK_DOWN){
+					Test.movebackward();
+				}
 				if (i==KeyEvent.VK_RIGHT){
 					Test.turnclock();
 				}
@@ -167,19 +172,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 		
 	}
 	
-	public void fpscap() {
-	    double wait=1000.0/fps;
-	    double used = System.currentTimeMillis() - start;
-	    //System.out.println(used);
-	    if (used < wait) {
-	        try{
-	        	Thread.sleep((long) (wait-used));
-	        	System.out.println("waiting");
-	        }
-	        catch(Exception e){}
-	    }
-	    start = System.currentTimeMillis();
-	}
 	
 	public synchronized static void setcar(PlayerCar othercar0){
 		Opponent = othercar0;
@@ -207,15 +199,6 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			Test.draw(g);
 			Test.move();
 			
-			//Opponent=GameServer.getcar();
-			//System.out.println("myclce");
-			
-		/*	if (Opponent!=null){
-				//System.out.println("their cycle");
-				Opponent.draw(g);
-				//Opponent.move();
-			}*/
-			
 			updatecar(g);
 
 			
@@ -227,7 +210,7 @@ public class GamePanel extends JPanel implements   ActionListener, KeyListener, 
 			}
 			for (int i=0;i<AI.size();i++){
 				((AICar)(AI.get(i))).update();
-				//((AICar)(AI.get(i))).draw(g);
+				((AICar)(AI.get(i))).draw(g);
 			}
 			
 			
