@@ -24,6 +24,7 @@ public class GameMap {
 	private Graphics g;
 	private double vx, vy; //Map scrolling
 	private int mapX, mapY;
+	private boolean move;
 	
 	public GameMap() {
 		
@@ -80,6 +81,7 @@ public class GameMap {
 		mapX = mapY = 0;
 		vx = vy = 0.0;
 		map = currentMap(mapX,mapY);
+		move = true;
 	}
 	
 	//Clipping a portion of the map
@@ -153,34 +155,53 @@ public class GameMap {
 	
 	public void draw(Graphics g) {
 		this.g = g;
-		vx+=GamePanel.Test.getX()-MainLoop.ScreenWidth/2;
-		vy+=GamePanel.Test.getY()-MainLoop.ScreenHeight/2;
-		if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2<0&&mapY<1) vx = 0;
-		else if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2>0&&mapY>=textArray[0].length-9) vx = 0;
-		else GamePanel.Test.setX(MainLoop.ScreenWidth/2.0);
-		if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2<0&&mapX<1) vy = 0;
-		else if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2>0&&mapX>=textArray.length-7) vy = 0;
-		else GamePanel.Test.setY(MainLoop.ScreenHeight/2.0);
+		if (move) {
+			vx+=GamePanel.Test.getX()-MainLoop.ScreenWidth/2;
+			vy+=GamePanel.Test.getY()-MainLoop.ScreenHeight/2;
+		}
+		if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2<0&&mapY<1) {
+			while (vx<-200) vx+=200;
+			move = false;
+		}
+		else if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2>0&&mapY>=textArray[0].length-9) {
+			while (vx>200) vx-=200;
+			move = false;
+		}
+		else {
+			GamePanel.Test.setX(MainLoop.ScreenWidth/2.0);
+			move = true;
+		}
+		if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2<0&&mapX<1) {
+			while (vy<-200) vy+=200;
+			move = false;
+		}
+		else if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2>0&&mapX>=textArray.length-7) {
+			while (vy>200) vy-=200;
+			move = false;
+		}
+		else {
+			GamePanel.Test.setY(MainLoop.ScreenHeight/2.0);
+			move = true;
+		}
 		System.out.println(vx+", "+vy);
 		if (vx>200) {
-			vx=0+(vx-200);
+			vx-=200;
 			mapY++;
 		}
 		else if (vx<-200) {
-			vx=0-(vx+200);
+			vx+=200;
 			mapY--;
 		}
 		if (vy>200) {
-			vy=0+(vy-200);
+			vy-=200;
 			mapX++;
 		}
 		else if (vy<-200) {
-			vy=0-(vy+200);
+			vy+=200;
 			mapX--;
 		}
 		mapConvert(findX(0),findX(1));
 		String[][] map = currentMap(mapX,mapY);
-		
 		drawCurrentMap(map, vx, vy);
 	}
 }
