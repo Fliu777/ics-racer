@@ -170,6 +170,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 					Test.restart();
 					keysReleased.clear(i);
 				}
+				if (i == KeyEvent.VK_DOWN) {
+					System.out.println("released back");
+					Test.restart();
+					keysReleased.clear(i);
+				}
 			}
 		}
 

@@ -24,7 +24,7 @@ public class GameMap {
 	private Graphics g;
 	private double vx, vy; //Map scrolling
 	private int mapX, mapY;
-	private boolean move;
+	private boolean moveX, moveY;
 	
 	public GameMap() {
 		
@@ -81,7 +81,7 @@ public class GameMap {
 		mapX = mapY = 0;
 		vx = vy = 0.0;
 		map = currentMap(mapX,mapY);
-		move = true;
+		moveX = moveY = true;
 	}
 	
 	//Clipping a portion of the map
@@ -155,33 +155,31 @@ public class GameMap {
 	
 	public void draw(Graphics g) {
 		this.g = g;
-		if (move) {
-			vx+=GamePanel.Test.getX()-MainLoop.ScreenWidth/2;
-			vy+=GamePanel.Test.getY()-MainLoop.ScreenHeight/2;
-		}
+		if (moveX) vx+=GamePanel.Test.getX()-MainLoop.ScreenWidth/2;
+		if (moveY) vy+=GamePanel.Test.getY()-MainLoop.ScreenHeight/2;
 		if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2<0&&mapY<1) {
 			while (vx<-200) vx+=200;
-			move = false;
+			moveX = false;
 		}
 		else if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2>0&&mapY>=textArray[0].length-9) {
 			while (vx>200) vx-=200;
-			move = false;
+			moveX = false;
 		}
 		else {
 			GamePanel.Test.setX(MainLoop.ScreenWidth/2.0);
-			move = true;
+			moveX = true;
 		}
 		if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2<0&&mapX<1) {
 			while (vy<-200) vy+=200;
-			move = false;
+			moveY = false;
 		}
 		else if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2>0&&mapX>=textArray.length-7) {
 			while (vy>200) vy-=200;
-			move = false;
+			moveY = false;
 		}
 		else {
 			GamePanel.Test.setY(MainLoop.ScreenHeight/2.0);
-			move = true;
+			moveY = true;
 		}
 		System.out.println(vx+", "+vy);
 		if (vx>200) {
