@@ -28,7 +28,7 @@ public class GameServer {
 	static boolean isserver = true;
 	static int port = 13254;
 
-	public static void main(String[] args) {
+	public static void GameServer() {
 
 		Socket ipad = detectserver();
 

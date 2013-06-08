@@ -15,7 +15,8 @@ public class MainLoop extends JFrame {
 	static int ScreenWidth;
 	static int ScreenHeight;
 
-	public MainLoop() {
+	public static void main(String[] args) {
+
 		ScreenWidth = java.awt.GraphicsEnvironment
 				.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 		ScreenHeight = java.awt.GraphicsEnvironment
@@ -46,27 +47,36 @@ public class MainLoop extends JFrame {
 				System.exit(0);
 			}
 		});
-
-		GamePanel game = new GamePanel();
-		game.setFocusable(true);
-		GameFrame.add(game);
-
-		/*
-		 * MenuScreen game=new MenuScreen(); game.setFocusable(true);
-		 * GameFrame.ad
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * d(game);
-		 */
-
+		
+		//menu
+		MenuScreen menu=new MenuScreen();
+		menu.setFocusable(true);	
+		GameFrame.setSize(menu.getimgx(),menu.getimgy());
+		GameFrame.add(menu);
+		
 		GameFrame.setVisible(true);
-		GameFrame.setResizable(true);
+		int temp=menu.returnstate();
+		while (temp==-1)temp=menu.returnstate();
+		
+		if (temp==1){
+			System.out.println("here?");
+			menu.setFocusable(false);
+			GameFrame.remove(menu);
+			
+			
+			
+			GamePanel game = new GamePanel();
+			game.setFocusable(true);
+
+			GameFrame.add(game);
+			GameFrame.setVisible(true);
+			GameFrame.setResizable(false);
+			game.requestFocusInWindow();
+		}
+
+
+
+
 
 	}
 
