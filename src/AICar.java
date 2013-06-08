@@ -21,7 +21,7 @@ public class AICar extends PlayerCar{
 			turnclock();
 		}
 		moveforward();
-		move();
+		//move();
 	}
 	
 	public void follow(PlayerCar temp){

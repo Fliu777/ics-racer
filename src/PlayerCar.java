@@ -46,6 +46,7 @@ public class PlayerCar extends GameObject implements Serializable {
 		vy = sin(angle) * velocity;
 		curvx = vx;
 		curvy = vy;
+		xpos=ypos=400;
 
 	}
 
@@ -59,7 +60,7 @@ public class PlayerCar extends GameObject implements Serializable {
 				(int) (ypos + Math.sin(Math.toRadians(angle)) * 25));
 	}
 
-	public void move() {
+	public void move(GameMap map) {
 		vx *= fric;
 		vy *= fric;
 
@@ -76,11 +77,14 @@ public class PlayerCar extends GameObject implements Serializable {
 			vy = 0;
 		}
 
-		xpos += vx;
-		ypos += vy;
+		//if (map.inboundary(xpos +vx,ypos+vy)){
+			xpos += vx;
+			ypos += vy;
+		//}
 	}
 
 	public void moveforward() {
+		
 		power += accel;
 		curvx = vx;
 		curvy = vy;
@@ -110,11 +114,13 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 
 	public void turnclock() {
-		angle += turnSpeed;
+		if (vx!=0 ||vy!=0)
+			angle += turnSpeed;
 	}
 
 	public void turncounterclock() {
-		angle -= turnSpeed;
+		if (vx!=0 ||vy!=0)
+			angle -= turnSpeed;
 	}
 
 	public void restart() {

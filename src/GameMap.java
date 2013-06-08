@@ -26,7 +26,11 @@ public class GameMap {
 	private int mapX, mapY;
 	private boolean moveX, moveY;
 	
+	private int screenh,screenw;
+	
 	public GameMap() {
+		screenh=MainLoop.ScreenHeight;
+		screenw=MainLoop.ScreenWidth;
 		
 		//Try/Catch used for image reading
 		try {
@@ -153,35 +157,57 @@ public class GameMap {
 		}
 	}
 	
+	public boolean inboundary(double xpos, double ypos){
+		//System.out.println(screenh);
+		int xplace=0,yplace = 0;
+		for (int i=0;i<=screenh;i+=screenh/9){
+			if (ypos<i){
+				yplace=i/(screenh/9);
+				break;
+			}
+		}
+		for (int i=0;i<=screenw;i+=screenw/7){
+			if (xpos<i){
+				xplace=i/(screenw/7);
+				break;
+			}
+		}
+		System.out.println(xplace+" "+yplace);
+		if (map[yplace][xplace].equals(".")){
+			return false;
+		}
+		return true;
+	}
+	
 	public void draw(Graphics g) {
 		this.g = g;
-		if (moveX) vx+=GamePanel.Test.getX()-MainLoop.ScreenWidth/2;
-		if (moveY) vy+=GamePanel.Test.getY()-MainLoop.ScreenHeight/2;
-		if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2<0&&mapY<1) {
+		if (moveX) vx+=GamePanel.Test.getX()-screenw/2;
+		if (moveY) vy+=GamePanel.Test.getY()-screenh/2;
+		if (GamePanel.Test.getX()-screenw/2<0&&mapY<1) {
 			while (vx<-200) vx+=200;
 			moveX = false;
 		}
-		else if (GamePanel.Test.getX()-MainLoop.ScreenWidth/2>0&&mapY>=textArray[0].length-9) {
+		else if (GamePanel.Test.getX()-screenw/2>0&&mapY>=textArray[0].length-9) {
 			while (vx>200) vx-=200;
 			moveX = false;
 		}
 		else {
-			GamePanel.Test.setX(MainLoop.ScreenWidth/2.0);
+			GamePanel.Test.setX(screenw/2.0);
 			moveX = true;
 		}
-		if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2<0&&mapX<1) {
+		if (GamePanel.Test.getY()-screenh/2<0&&mapX<1) {
 			while (vy<-200) vy+=200;
 			moveY = false;
 		}
-		else if (GamePanel.Test.getY()-MainLoop.ScreenHeight/2>0&&mapX>=textArray.length-7) {
+		else if (GamePanel.Test.getY()-screenh/2>0&&mapX>=textArray.length-7) {
 			while (vy>200) vy-=200;
 			moveY = false;
 		}
 		else {
-			GamePanel.Test.setY(MainLoop.ScreenHeight/2.0);
+			GamePanel.Test.setY(screenh/2.0);
 			moveY = true;
 		}
-		System.out.println(vx+", "+vy);
+		//System.out.println(vx+", "+vy);
 		if (vx>200) {
 			vx-=200;
 			mapY++;
@@ -199,7 +225,7 @@ public class GameMap {
 			mapX--;
 		}
 		mapConvert(findX(0),findX(1));
-		String[][] map = currentMap(mapX,mapY);
+		map = currentMap(mapX,mapY);
 		drawCurrentMap(map, vx, vy);
 	}
 }
