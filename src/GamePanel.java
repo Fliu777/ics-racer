@@ -5,8 +5,10 @@ Physics Racing Game
 ICS4U
  */
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Robot;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,6 +40,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	ArrayList<PlayerCar> AI;
 
 	ArrayList<Bullets> BulletList;
+	
+	Robot robot;
 
 	/*
 	 * Keybits here is a bitset that takes into account the various input keys
@@ -68,6 +72,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 			e.printStackTrace();
 		}
 		cars[0] = orig;
+		
+		
+		 try {
+	             robot = new Robot();
+
+
+	        } catch (AWTException e) {
+	            e.printStackTrace();
+	        }
+
 
 		Thread myrunnable = new Thread(new starthere());
 		myrunnable.start();
@@ -193,17 +207,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	}
 
 	public void paintComponent(Graphics g) {
-
-		long temp = System.currentTimeMillis();
 		keyinput();
 		// g.setColor(Color.green);
 		// g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+		
+		
 
 		map.draw(g);
 
+
 		g.setColor(Color.black);
 		Test.draw(g);
-		Test.move();
+		Test.move(map);
 
 		updatecar(g);
 
