@@ -7,6 +7,7 @@ ICS4U
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.event.*;
@@ -41,7 +42,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 
 	ArrayList<Bullets> BulletList;
 	
-	Robot robot;
+	private int setting=-1;
 
 	/*
 	 * Keybits here is a bitset that takes into account the various input keys
@@ -72,20 +73,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 			e.printStackTrace();
 		}
 		cars[0] = orig;
-		
-		
-		 try {
-	             robot = new Robot();
-
-
-	        } catch (AWTException e) {
-	            e.printStackTrace();
-	        }
-
 
 		Thread myrunnable = new Thread(new starthere());
 		myrunnable.start();
 
+	}
+	public void changesetting(int set){
+		setting=set;
 	}
 
 	@Override
@@ -210,55 +204,68 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	}
 
 	public void paintComponent(Graphics g) {
-		keyinput();
-		// g.setColor(Color.green);
-		// g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
 		
-		
-
-		map.draw(g);
-
-
-		g.setColor(Color.black);
-
-		Test.draw(g);
-		Test.move(map);
-
-		updatecar(g);
-		g.setColor(Color.red);
-		g.drawString(Double.toString(Test.getvelocity()), 200, 200);
-		
-		for (int i = 0; i < BulletList.size(); i++) {
-			if (BulletList.get(i).dead()) {
-				BulletList.remove(i);
+		if (running){
+			keyinput();
+			// g.setColor(Color.green);
+			// g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
+			
+	
+			
+			map.draw(g);
+	
+	
+			g.setColor(Color.black);
+	
+			Test.draw(g);
+			Test.move(map);
+	
+			updatecar(g);
+			g.setColor(Color.red);
+			Font F = new Font("plain",Font.BOLD,35);
+			this.setFont(F);
+	
+	
+			g.drawString(Double.toString(Test.getvelocity()), 200, 200);
+			
+			if (setting==3){
+				g.drawString(Double.toString(Test.getvelocity()), 0, 0);
+				
 			}
-		}
-		for (int i = 0; i < AI.size(); i++) {
-			((AICar) (AI.get(i))).update();
-			((AICar) (AI.get(i))).draw(g);
-		}
-
-		for (int i = 0; i < AI.size(); i++) {
-			if (AI.get(i).dead()) {
-				AI.remove(i);
-			}
-		}
-
-		for (int i = 0; i < AI.size(); i++) {
-			for (int j = 0; j < BulletList.size(); j++) {
-				if (AI.get(i).collision(BulletList.get(j))) {
-					AI.get(i).loselife();
-					BulletList.get(j).kill();
+			
+			for (int i = 0; i < BulletList.size(); i++) {
+				if (BulletList.get(i).dead()) {
+					BulletList.remove(i);
 				}
 			}
+			for (int i = 0; i < AI.size(); i++) {
+				((AICar) (AI.get(i))).update();
+				((AICar) (AI.get(i))).draw(g);
+			}
+	
+			for (int i = 0; i < AI.size(); i++) {
+				if (AI.get(i).dead()) {
+					AI.remove(i);
+				}
+			}
+	
+			for (int i = 0; i < AI.size(); i++) {
+				for (int j = 0; j < BulletList.size(); j++) {
+					if (AI.get(i).collision(BulletList.get(j))) {
+						AI.get(i).loselife();
+						BulletList.get(j).kill();
+					}
+				}
+			}
+	
+			for (int i = 0; i < BulletList.size(); i++) {
+				BulletList.get(i).check();
+				BulletList.get(i).move();
+				BulletList.get(i).draw(g);
+			}
+			running = false;
 		}
 
-		for (int i = 0; i < BulletList.size(); i++) {
-			BulletList.get(i).check();
-			BulletList.get(i).move();
-			BulletList.get(i).draw(g);
-		}
-		running = false;
 
 		
 
@@ -269,6 +276,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 			// if (GameServer.isready()){
 			System.out.println("GOOGGOOG");
 			while (true) {
+				System.out.println("hi");
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
