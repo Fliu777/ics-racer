@@ -52,25 +52,27 @@ public class MainLoop extends JFrame {
 		MenuScreen menu=new MenuScreen();
 		menu.setFocusable(true);	
 		GameFrame.setSize(menu.getimgx(),menu.getimgy());
+		GameFrame.setLocationRelativeTo(null);
+
 		GameFrame.add(menu);
 		
 		GameFrame.setVisible(true);
 		int temp=menu.returnstate();
 		while (temp==-1)temp=menu.returnstate();
+		menu.setFocusable(false);
+		GameFrame.remove(menu);
+		GameFrame.setSize(ScreenWidth, ScreenHeight);
+
 		
+		//menu choice one
 		if (temp==1){
 			System.out.println("here?");
-			menu.setFocusable(false);
-			GameFrame.remove(menu);
-			
-			
-			
+	
 			GamePanel game = new GamePanel();
 			game.setFocusable(true);
-
 			GameFrame.add(game);
 			GameFrame.setVisible(true);
-			GameFrame.setResizable(false);
+			GameFrame.setResizable(true);
 			game.requestFocusInWindow();
 		}
 

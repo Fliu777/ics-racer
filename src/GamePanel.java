@@ -217,11 +217,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 
 
 		g.setColor(Color.black);
+
 		Test.draw(g);
 		Test.move(map);
 
 		updatecar(g);
-
+		g.setColor(Color.red);
+		g.drawString(Double.toString(Test.getvelocity()), 200, 200);
+		
 		for (int i = 0; i < BulletList.size(); i++) {
 			if (BulletList.get(i).dead()) {
 				BulletList.remove(i);
@@ -253,12 +256,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 			BulletList.get(i).draw(g);
 		}
 		running = false;
-		// System.out.println(System.currentTimeMillis()-temp);
 
-		// repaint();
-		// fpscap();
-
-		// System.out.println("hi");
+		
 
 	}
 
