@@ -38,7 +38,7 @@ public class PlayerCar extends GameObject implements Serializable {
 		pcap = 20.5;
 		pstart = 1;
 		indexcar = 0;
-		accel = 0.30;
+		accel = 0.40;
 		turnSpeed = 2.5;
 		fric = 0.95;
 		power = pstart;
@@ -65,10 +65,12 @@ public class PlayerCar extends GameObject implements Serializable {
 		vy *= fric;
 
 		// Velocity cap
-		if (Math.sqrt(vx * vx + vy * vy) > pcap) {
+		double velact=Math.sqrt(vx * vx + vy * vy);
+		if (velact> pcap) {
 			vx = curvx;
 			vy = curvy;
 		}
+		turnSpeed=velact/3;
 
 		// has stopped
 		if (Math.abs(vx) < 0.1 && Math.abs(vy) < 0.1) {
@@ -114,13 +116,11 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 
 	public void turnclock() {
-		if (vx!=0 ||vy!=0)
-			angle += turnSpeed;
+		angle += turnSpeed;
 	}
 
 	public void turncounterclock() {
-		if (vx!=0 ||vy!=0)
-			angle -= turnSpeed;
+		angle -= turnSpeed;
 	}
 
 	public void restart() {
