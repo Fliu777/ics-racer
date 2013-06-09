@@ -9,13 +9,8 @@ import java.io.*;
 import java.net.*;
 
 public class GameServer {
-
-	/**
-	 * @param args
-	 */
-
 	static boolean active = false;
-
+	
 	static ObjectInputStream SERVERreader = null;
 	static ObjectOutputStream SERVERwriter = null;
 	static ObjectInputStream CLIENTreader = null;
@@ -28,14 +23,9 @@ public class GameServer {
 	static boolean isserver = true;
 	static int port = 13254;
 
-	public static void GameServer() {
+	public GameServer() {
 
 		Socket ipad = detectserver();
-
-		//
-		System.out.println(":please?");
-		MainLoop menu = new MainLoop();
-		menu.setFocusable(true);
 
 		// port has not been used, just make streams for server
 		if (ipad == null) {
@@ -44,69 +34,66 @@ public class GameServer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			//waits for next client
 			while (true) {
 
-				System.out.println("i am server---------------------");
+				//System.out.println("i am server---------------------");
+				
+				//code should hang here until the client becomes connected with the server
 				try {
 					client = server.accept();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					// e.printStackTrace();
-					System.out.println("server closed please");
+					//server has closed, only possible exception
+					System.out.println("Server has closed. Goodbye!");
 					System.exit(0);
 				}
-				// hang until client is found.
-
+				
+				//client is found, only left to open reading and writing streams here;
 				try {
-					SERVERwriter = new ObjectOutputStream(
-							client.getOutputStream());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
+					SERVERwriter = new ObjectOutputStream(client.getOutputStream());
 					SERVERwriter.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				try {
 					SERVERreader = new ObjectInputStream(
 							client.getInputStream());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
-				// System.out.println("streams done");
+				// streams have finished being open 
+				//we can start now
 				active = true;
 
+				//create a thread to deal with the server communciation with client
 				Thread comma = new Thread(new CommunicationServer());
 				comma.start();
 			}
 		}
 
-		// port is already used, we assume the server did it, client starts
+		// if here, port is already used, we assume the server did it, client starts
 
 		else {
-			System.out.println("i am client---------------------");
-
+			//System.out.println("Client here");
 			try {
+				//it is not a server
 				isserver = false;
+				
+				//client is the socket now
 				client = ipad;
-
-				System.out.println("It be alive::" + ipad);
-
+				
+				
+				//open streams for reading and writing
 				CLIENTwriter = new ObjectOutputStream(client.getOutputStream());
 				CLIENTwriter.flush();
 				CLIENTreader = new ObjectInputStream(client.getInputStream());
+				
+				//can start
 				active = true;
-
-				System.out.println("finished?");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				// bad things happened
 				e.printStackTrace();
-				System.out.println("PLEASE--");
 			}
-
+			
+			//start thread for communication
 			Thread comm = new Thread(new CommunicationClient());
 			comm.start();
 		}
@@ -114,8 +101,13 @@ public class GameServer {
 	}
 
 	public static Socket detectserver() {
+		
+		//looks through all ports to detect an existing server
 		for (int i = 1; i < 2; i++) {
 			try {
+				
+				//attempts to connect to it, with a time out of 30 ms if it fails
+				
 				String myip = InetAddress.getLocalHost().getHostAddress();
 
 				String temp = myip.substring(0, myip.lastIndexOf('.') + 1)
@@ -128,8 +120,10 @@ public class GameServer {
 				return c1;
 
 			} catch (Exception e) {
+				//failed, keep on trying, i dont want anything printed here since itd be nasty
 			}
 		}
+		//nothing must become server
 		return null;
 	}
 
@@ -157,11 +151,13 @@ public class GameServer {
 	}
 
 	public synchronized static void setcar(PlayerCar othercar0) {
-
+		//synchronization stuff
 		othercar = othercar0;
 	}
 
 	public static void clientcleanup() {
+		
+		//close client, have to delete a bunch of stuff
 		active = false;
 		System.out.println("closed from client");
 		try {
