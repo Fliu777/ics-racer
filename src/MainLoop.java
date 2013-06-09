@@ -62,6 +62,8 @@ public class MainLoop extends JFrame {
 		menu.setFocusable(false);
 		GameFrame.remove(menu);
 		GameFrame.setSize(ScreenWidth, ScreenHeight);
+		GameFrame.setLocationRelativeTo(null);
+
 
 		
 		//menu choice one

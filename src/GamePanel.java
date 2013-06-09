@@ -165,14 +165,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 				if (i == KeyEvent.VK_UP) {
 					Test.moveforward();
 				}
-				if (i == KeyEvent.VK_DOWN) {
+				else if (i == KeyEvent.VK_DOWN) {
 					Test.movebackward();
 				}
-				if (i == KeyEvent.VK_RIGHT) {
+				else  if (i == KeyEvent.VK_RIGHT) {
 					Test.turnclock();
 				}
-				if (i == KeyEvent.VK_LEFT) {
+				else  if (i == KeyEvent.VK_LEFT) {
 					Test.turncounterclock();
+				}
+				else if (i == KeyEvent.VK_SPACE) {
+					Test.restart();
 				}
 			}
 		}
@@ -184,7 +187,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 					Test.restart();
 					keysReleased.clear(i);
 				}
-				if (i == KeyEvent.VK_DOWN) {
+				else if (i == KeyEvent.VK_DOWN) {
 					System.out.println("released back");
 					Test.restart();
 					keysReleased.clear(i);

@@ -54,7 +54,7 @@ public class GameMap {
 		
 		//Adding new Levels
 		fileMapArray = new ArrayList<File>();
-		fileMapArray.add(new File("src/Levels/TextMap"));
+		fileMapArray.add(new File("src/Levels/Drift YOLO"));
 		
 		//Reading current level
 		try {
