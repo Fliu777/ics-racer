@@ -1,4 +1,5 @@
 /*
+
 Frank Liu & Michael Zhang
 Window/Frame handling
 Physics Racing Game
@@ -67,9 +68,19 @@ public class MainLoop extends JFrame {
 
 		
 		//menu choice one
-		if (temp==1){
+		if (temp==2){
 			System.out.println("here?");
 	
+			GamePanel game = new GamePanel();
+			game.setFocusable(true);
+			GameFrame.add(game);
+			GameFrame.setVisible(true);
+			GameFrame.setResizable(true);
+			game.requestFocusInWindow();
+		}
+		
+		else if (temp==3){
+
 			GamePanel game = new GamePanel();
 			game.setFocusable(true);
 			GameFrame.add(game);
