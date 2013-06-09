@@ -37,10 +37,10 @@ public class PlayerCar extends GameObject implements Serializable {
 		velocity = 0;
 		angle = 0;
 		pcap = 20;
-		pstart = 1.5;
+		pstart = 1.7;
 		indexcar = 0;
 		turnSpeed = 2.5;
-		fric = 0.9;
+		fric = 0.92;
 		power = pstart;
 		vx = cos(angle) * velocity;
 		vy = sin(angle) * velocity;
@@ -100,9 +100,14 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 
 	public void movebackward() {
-		moveforward();
-		vx = -vx;
-		vy = -vy;
+		vx -= cos(angle) * power;
+		vy -= sin(angle) * power;
+		velact=Math.sqrt(vx * vx + vy * vy);
+
+		if (velact <- pcap){
+			curvx = vx;
+			curvy = vy;
+		}
 	}
 	
 	public double getvelocity(){
@@ -132,6 +137,8 @@ public class PlayerCar extends GameObject implements Serializable {
 
 	public void restart() {
 		power = pstart;
+		vx/=1.5;
+		vy/=1.5;
 	}
 
 	public void loselife() {
