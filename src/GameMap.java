@@ -84,7 +84,7 @@ public class GameMap {
 		//Map scrolling
 		mapX = mapY = 0;
 		vx = vy = 0.0;
-		map = currentMap(mapX,mapY);
+		map = currentMap(mapX,mapY,0);
 		moveX = moveY = true;
 	}
 	
@@ -93,10 +93,10 @@ public class GameMap {
 	}
 	
 	//Clipping a portion of the map
-	 public String[][] currentMap(int x, int y) {
-		String[][] newMap = new String[7][9];
-		for (int i = 0; i<7; i++) {
-			for (int j = 0; j<9; j++) {
+	public String[][] currentMap(int x, int y, int call) {
+		String[][] newMap = new String[8-call][10-call];
+		for (int i = 0; i<newMap.length; i++) {
+			for (int j = 0; j<newMap[0].length; j++) {
 				newMap[i][j] = textArray[x+i][y+j];
 			}
 		}
@@ -123,6 +123,8 @@ public class GameMap {
 		else if (down&&right) textArray[x][y] = "2"; //2 is SE
 		else if (down&&left) textArray[x][y] = "3"; //3 is SW
 		else if (up&&left) textArray[x][y] = "4"; //4 is NW
+		else if (up||down) textArray[x][y] = "|"; //NS block
+		else if (left||right) textArray[x][y] = "-"; //SW block
 		
 		//Base case return if all 4 sides do not have modifiable paths
 		if (!(textArray[x-1][y].equals("X"))&&!(textArray[x+1][y].equals("X"))&&!(textArray[x][y-1].equals("X"))&&!(textArray[x][y+1].equals("X"))) return;
@@ -162,7 +164,12 @@ public class GameMap {
 	}
 	
 	public boolean onRoad(double xpos, double ypos, String[][] map) {
-		return false;
+		int arrX, arrY;
+		arrX=arrY=0;
+		arrY = (int)xpos/200;
+		arrX = (int)ypos/200;
+		if (map[arrX][arrY].equals(".")) return false;
+		else return true;
 	}
 	
 	/*public boolean inboundary(double xpos, double ypos){
@@ -195,7 +202,7 @@ public class GameMap {
 			while (vx<-200) vx+=200;
 			moveX = false;
 		}
-		else if (GamePanel.Test.getX()-screenw/2>0&&mapY>=textArray[0].length-9) {
+		else if (GamePanel.Test.getX()-screenw/2>0&&mapY>=textArray[0].length-10) {
 			while (vx>200) vx-=200;
 			moveX = false;
 		}
@@ -207,7 +214,7 @@ public class GameMap {
 			while (vy<-200) vy+=200;
 			moveY = false;
 		}
-		else if (GamePanel.Test.getY()-screenh/2>0&&mapX>=textArray.length-7) {
+		else if (GamePanel.Test.getY()-screenh/2>0&&mapX>=textArray.length-8) {
 			while (vy>200) vy-=200;
 			moveY = false;
 		}
@@ -233,7 +240,8 @@ public class GameMap {
 			mapX--;
 		}
 		mapConvert(findX(0),findX(1));
-		map = currentMap(mapX,mapY);
+		map = currentMap(mapX,mapY,0);
 		drawCurrentMap(map, vx, vy);
+		System.out.println(onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), currentMap(mapX+1,mapY+1,1)));
 	}
 }
