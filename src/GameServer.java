@@ -5,8 +5,11 @@ Physics Racing Game
 ICS4U
  */
 
+import java.awt.Frame;
 import java.io.*;
 import java.net.*;
+
+import javax.swing.JFrame;
 
 public class GameServer {
 	static boolean active = false;
@@ -23,9 +26,17 @@ public class GameServer {
 	static boolean isserver = true;
 	static int port = 13254;
 
-	public GameServer() {
+	public GameServer(JFrame GameFrame) {
 
 		Socket ipad = detectserver();
+		
+		GamePanel game = new GamePanel();
+		game.changesetting(3);
+		game.setFocusable(true);
+		GameFrame.add(game);
+		GameFrame.setVisible(true);
+		GameFrame.setResizable(true);
+		game.requestFocusInWindow();
 
 		// port has not been used, just make streams for server
 		if (ipad == null) {
@@ -103,7 +114,7 @@ public class GameServer {
 	public static Socket detectserver() {
 		
 		//looks through all ports to detect an existing server
-		for (int i = 1; i < 2; i++) {
+		for (int i = 1; i < 255; i++) {
 			try {
 				
 				//attempts to connect to it, with a time out of 30 ms if it fails

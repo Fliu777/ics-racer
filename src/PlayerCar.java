@@ -36,10 +36,16 @@ public class PlayerCar extends GameObject implements Serializable {
 
 	public PlayerCar() {
 		super();
+		
+		//player statistics
+		
+		
+		
+		
 		velocity = 0;
 		angle = 0;
 		pcap = 20;
-		pstart = 1.7;
+		pstart = 2;
 		indexcar = 0;
 		turnSpeed = 2.5;
 		fric = 0.90;

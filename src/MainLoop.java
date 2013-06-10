@@ -40,7 +40,7 @@ public class MainLoop extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				System.out.println("FINAL CLOSING OPERATIONS");
+
 				if (GameServer.isserver() == true) {
 					// if (GameServer.active)
 					GameServer.servercleanup();
@@ -100,6 +100,10 @@ public class MainLoop extends JFrame {
 			GameFrame.setVisible(true);
 			GameFrame.setResizable(true);
 			game.requestFocusInWindow();
+		}
+		else if (temp==4){
+			GameServer server=new GameServer(GameFrame);
+			
 		}
 		//BottomPanel bot=new BottomPanel();
 		//GameFrame.add(bot);
