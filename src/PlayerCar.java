@@ -116,7 +116,7 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 	
 	public double getvelocity(){
-		return velact;
+		return Math.sqrt(vx * vx + vy * vy);
 	}
 
 	public double sin(double deg) {
