@@ -54,7 +54,7 @@ public class GameMap {
 		
 		//Adding new Levels
 		fileMapArray = new ArrayList<File>();
-		fileMapArray.add(new File("src/Levels/Drift YOLO"));
+		fileMapArray.add(new File("src/Levels/TextMap"));
 		
 		//Reading current level
 		try {
@@ -161,7 +161,11 @@ public class GameMap {
 		}
 	}
 	
-	public boolean inboundary(double xpos, double ypos){
+	public boolean onRoad(double xpos, double ypos, String[][] map) {
+		return false;
+	}
+	
+	/*public boolean inboundary(double xpos, double ypos){
 		//System.out.println(screenh);
 		int xplace=0,yplace = 0;
 		for (int i=0;i<=screenh;i+=screenh/9){
@@ -181,7 +185,7 @@ public class GameMap {
 			return false;
 		}
 		return true;
-	}
+	}*/
 	
 	public void draw(Graphics g) {
 		this.g = g;
