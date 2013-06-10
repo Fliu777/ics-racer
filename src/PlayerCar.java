@@ -31,6 +31,8 @@ public class PlayerCar extends GameObject implements Serializable {
 	double accel;
 	private int indexcar;
 	private double velact;
+	
+	private double abposx, abposy;
 
 	public PlayerCar() {
 		super();
@@ -46,7 +48,8 @@ public class PlayerCar extends GameObject implements Serializable {
 		vy = sin(angle) * velocity;
 		curvx = vx;
 		curvy = vy;
-		xpos=ypos=400;
+		
+		xpos=ypos=abposx=abposy=400;
 		velact=Math.sqrt(vx * vx + vy * vy);
 
 	}
@@ -83,12 +86,14 @@ public class PlayerCar extends GameObject implements Serializable {
 		//if (map.inboundary(xpos +vx,ypos+vy)){
 			xpos += vx;
 			ypos += vy;
+			
+			abposx+=vx;
+			abposy+=vy;
 		//}
 	}
 
 	public void moveforward() {
 		
-
 		vx += cos(angle) * power;
 		vy += sin(angle) * power;
 		velact=Math.sqrt(vx * vx + vy * vy);

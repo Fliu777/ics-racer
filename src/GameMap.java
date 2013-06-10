@@ -88,6 +88,10 @@ public class GameMap {
 		moveX = moveY = true;
 	}
 	
+	public int gettime(){
+		return 50;
+	}
+	
 	//Clipping a portion of the map
 	 public String[][] currentMap(int x, int y) {
 		String[][] newMap = new String[7][9];
