@@ -6,6 +6,9 @@ Physics Racing Game
 ICS4U
  */
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -22,6 +25,9 @@ public class MainLoop extends JFrame {
 				.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 		ScreenHeight = java.awt.GraphicsEnvironment
 				.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
+		
+		//ScreenWidth=500;
+		//ScreenHeight=500;
 		/*
 		 * Initialize Frame here
 		 */
@@ -54,6 +60,10 @@ public class MainLoop extends JFrame {
 		menu.setFocusable(true);	
 		GameFrame.setSize(menu.getimgx(),menu.getimgy());
 		GameFrame.setLocationRelativeTo(null);
+		
+		FlowLayout lay = new FlowLayout();
+		//GameFrame.setLayout(lay);
+
 
 		GameFrame.add(menu);
 		
@@ -64,6 +74,7 @@ public class MainLoop extends JFrame {
 		GameFrame.remove(menu);
 		GameFrame.setSize(ScreenWidth, ScreenHeight);
 		GameFrame.setLocationRelativeTo(null);
+		
 
 
 		
@@ -90,6 +101,8 @@ public class MainLoop extends JFrame {
 			GameFrame.setResizable(true);
 			game.requestFocusInWindow();
 		}
+		//BottomPanel bot=new BottomPanel();
+		//GameFrame.add(bot);
 
 
 
