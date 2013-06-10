@@ -75,11 +75,11 @@ public class MenuScreen extends JPanel implements MouseListener, MouseMotionList
 			resetstate();
 			return 1;
 		}
-		if (time){
+		if (race){
 			resetstate();
 			return 2;
 		}
-		if (race){
+		if (time){
 			resetstate();
 			return 3;
 		}

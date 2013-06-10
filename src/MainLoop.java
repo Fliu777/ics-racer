@@ -69,9 +69,11 @@ public class MainLoop extends JFrame {
 		
 		//menu choice one
 		if (temp==2){
+
 			System.out.println("here?");
 	
 			GamePanel game = new GamePanel();
+			game.changesetting(2);
 			game.setFocusable(true);
 			GameFrame.add(game);
 			GameFrame.setVisible(true);
@@ -80,8 +82,8 @@ public class MainLoop extends JFrame {
 		}
 		
 		else if (temp==3){
-
 			GamePanel game = new GamePanel();
+			game.changesetting(3);
 			game.setFocusable(true);
 			GameFrame.add(game);
 			GameFrame.setVisible(true);
@@ -93,6 +95,11 @@ public class MainLoop extends JFrame {
 
 
 
+	}
+
+	private static void changesetting(int i) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

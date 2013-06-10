@@ -43,6 +43,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	ArrayList<Bullets> BulletList;
 	
 	private int setting=-1;
+	
+	
+	long starttime;
 
 	/*
 	 * Keybits here is a bitset that takes into account the various input keys
@@ -79,6 +82,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 
 	}
 	public void changesetting(int set){
+		System.out.println("changed");
 		setting=set;
 	}
 
@@ -207,13 +211,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 		
 		if (running){
 			keyinput();
-			// g.setColor(Color.green);
-			// g.fillRect(0, 0, MainLoop.ScreenWidth, MainLoop.ScreenHeight);
-			
-	
-			
-			map.draw(g);
-	
+			map.draw(g);	
 	
 			g.setColor(Color.black);
 	
@@ -227,9 +225,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	
 	
 			g.drawString(Double.toString(Test.getvelocity()), 200, 200);
-			
+			//System.out.println(setting);
 			if (setting==3){
-				g.drawString(Double.toString(Test.getvelocity()), 0, 0);
+				//System.out.println("tinme");
+				int timegiven=map.gettime()*100;
+				long passed=System.currentTimeMillis()-starttime;
+				int passedsec=(int) (passed/10);
+				
+				g.drawString(Double.toString((timegiven-passedsec)/100.0), 50, 50);
 				
 			}
 			
@@ -273,10 +276,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 
 	class starthere implements Runnable {
 		public void run() {
+			starttime=System.currentTimeMillis();
 			// if (GameServer.isready()){
 			System.out.println("GOOGGOOG");
 			while (true) {
-				System.out.println("hi");
+				//System.out.println("hi");
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
