@@ -11,6 +11,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Scanner;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -75,15 +77,16 @@ public class MainLoop extends JFrame {
 		GameFrame.setSize(ScreenWidth, ScreenHeight);
 		GameFrame.setLocationRelativeTo(null);
 		
-
-
 		
+		Scanner sc=new Scanner(System.in);
+		//int type=sc.nextInt();
+		int type=2;		
 		//menu choice one
 		if (temp==2){
 
 			System.out.println("here?");
 	
-			GamePanel game = new GamePanel();
+			GamePanel game = new GamePanel(type,"bob");
 			game.changesetting(2);
 			game.setFocusable(true);
 			GameFrame.add(game);
@@ -93,7 +96,7 @@ public class MainLoop extends JFrame {
 		}
 		
 		else if (temp==3){
-			GamePanel game = new GamePanel();
+			GamePanel game = new GamePanel(type,"bob");
 			game.changesetting(3);
 			game.setFocusable(true);
 			GameFrame.add(game);
@@ -102,7 +105,7 @@ public class MainLoop extends JFrame {
 			game.requestFocusInWindow();
 		}
 		else if (temp==4){
-			GameServer server=new GameServer(GameFrame);
+			GameServer server=new GameServer(GameFrame,type,"bob");
 			
 		}
 		//BottomPanel bot=new BottomPanel();

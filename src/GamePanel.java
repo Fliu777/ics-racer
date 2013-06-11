@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	 * held at same time
 	 */
 
-	public GamePanel() {
+	public GamePanel(int cartype, String playername) {
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 
 		BufferedImage orig = null;
 		try {
-			orig = ImageIO.read(new File("src/Images/car1.png"));
+			orig = ImageIO.read(new File("src/Images/car"+cartype+".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
