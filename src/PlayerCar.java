@@ -89,13 +89,19 @@ public class PlayerCar extends GameObject implements Serializable {
 			vy = 0;
 		}
 
-		//if (map.inboundary(xpos +vx,ypos+vy)){
+		if (!(xpos+vx<5 ||xpos+vx>MainLoop.ScreenWidth-5 ||ypos+vy<5 ||ypos+vy>MainLoop.ScreenHeight-5)){
 			xpos += vx;
 			ypos += vy;
 			
 			abposx+=vx;
 			abposy+=vy;
-		//}
+		}
+		else{
+			vx=-vx;
+			vy=-vy;
+			vx/=1.5;
+			vy/=1.5;
+		}
 	}
 
 	public void moveforward() {
