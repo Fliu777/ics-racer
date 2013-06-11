@@ -26,11 +26,11 @@ public class GameServer {
 	static boolean isserver = true;
 	static int port = 13254;
 
-	public GameServer(JFrame GameFrame) {
+	public GameServer(JFrame GameFrame, int type, String name) {
 
 		Socket ipad = detectserver();
 		
-		GamePanel game = new GamePanel();
+		GamePanel game = new GamePanel(type,name);
 		game.changesetting(3);
 		game.setFocusable(true);
 		GameFrame.add(game);

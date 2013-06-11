@@ -183,6 +183,7 @@ public class GameMap {
 				}
 			}
 		}
+		g.fillRect((int)xpos, (int)ypos, 10, 10);
 		if (map[mapX][mapY].equals(".")) {
 			//g.drawString(mapX+", "+mapY, 20, 100);
 			return false;
@@ -194,30 +195,9 @@ public class GameMap {
 	}
 	
 	public boolean callOnRoad() {
-		return onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), map, vx, vy);
+		return onRoad(GamePanel.Test.getsizex(), GamePanel.Test.getsizey(), map, vx, vy);
 	}
 	
-	/*public boolean inboundary(double xpos, double ypos){
-		//System.out.println(screenh);
-		int xplace=0,yplace = 0;
-		for (int i=0;i<=screenh;i+=screenh/9){
-			if (ypos<i){
-				yplace=i/(screenh/9);
-				break;
-			}
-		}
-		for (int i=0;i<=screenw;i+=screenw/7){
-			if (xpos<i){
-				xplace=i/(screenw/7);
-				break;
-			}
-		}
-		System.out.println(xplace+" "+yplace);
-		if (map[yplace][xplace].equals(".")){
-			return false;
-		}
-		return true;
-	}*/
 	
 	public void draw(Graphics g) {
 		this.g = g;
@@ -267,7 +247,7 @@ public class GameMap {
 		}
 		mapConvert(findX(0),findX(1));
 		map = currentMap(mapX,mapY,0);
-		System.out.println("V: "+vx+" "+vy);
+		//System.out.println("V: "+vx+" "+vy);
 		drawCurrentMap(map, vx, vy);
 		if (onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), map, vx, vy)) g.drawString("True", 20, 50);
 		else {

@@ -89,6 +89,12 @@ public class PlayerCar extends GameObject implements Serializable {
 			vx = 0;
 			vy = 0;
 		}
+		if (GamePanel.map.callOnRoad()==false) {
+			vx=-vx;
+			vy=-vy;
+			vx/=2;
+			vy/=2;
+		}
 
 		if (!(xpos+vx<5 ||xpos+vx>MainLoop.ScreenWidth-5 ||ypos+vy<5 ||ypos+vy>MainLoop.ScreenHeight-5)){
 			xpos += vx;
@@ -103,12 +109,7 @@ public class PlayerCar extends GameObject implements Serializable {
 			vx/=1.5;
 			vy/=1.5;
 		}
-		if (!GamePanel.map.callOnRoad()) {
-			vx=-vx;
-			vy=-vy;
-			vx/=1.5;
-			vy/=1.5;
-		}
+
 	}
 
 	public void moveforward() {
@@ -186,10 +187,10 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 	
 	public double getsizex(){
-		return xpos;
+		return xpos+picture.getWidth()/2+vx;
 	}
 	public double getsizey(){
-		return ypos;
+		return ypos+picture.getHeight()/2+vy;
 	}
 
 	public void moveright() {
