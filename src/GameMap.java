@@ -94,7 +94,7 @@ public class GameMap {
 	
 	//Clipping a portion of the map
 	public String[][] currentMap(int x, int y, int call) {
-		String[][] newMap = new String[8-call][10-call];
+		String[][] newMap = new String[7-call][10-call];
 		for (int i = 0; i<newMap.length; i++) {
 			for (int j = 0; j<newMap[0].length; j++) {
 				newMap[i][j] = textArray[x+i][y+j];
@@ -223,7 +223,7 @@ public class GameMap {
 			while (vy<-200) vy+=200;
 			moveY = false;
 		}
-		else if (GamePanel.Test.getY()-screenh/2>0&&mapX>=textArray.length-8) {
+		else if (GamePanel.Test.getY()-screenh/2>0&&mapX>=textArray.length-7) {
 			while (vy>200) vy-=200;
 			moveY = false;
 		}
