@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 
 	public static BufferedImage[] cars = new BufferedImage[1];
 
-	GameMap map = new GameMap();
+	static GameMap map = new GameMap();
 
 	static PlayerCar Test = new PlayerCar();
 
