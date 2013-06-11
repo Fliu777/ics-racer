@@ -177,6 +177,13 @@ public class PlayerCar extends GameObject implements Serializable {
 				AffineTransformOp.TYPE_BILINEAR);
 		picture = op.filter(orig, null);
 	}
+	
+	public double getsizex(){
+		return picture.getWidth() / 2;
+	}
+	public double getsizey(){
+		return picture.getHeight() / 2;
+	}
 
 	public void moveright() {
 		xpos += velocity;
