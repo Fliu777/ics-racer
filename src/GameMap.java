@@ -161,13 +161,13 @@ public class GameMap {
 				else if (map[i][j].equals(".")) g.drawImage(roadArray[7], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
 			}
 		}
-		g.setColor(Color.black);
+		/*g.setColor(Color.black);
 		for (int i = 0; i<map.length; i++) {
 			for (int j = 0; j<map[0].length; j++) {
 				g.drawRect((int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), 200,200);
 				g.drawString(i+","+j, (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy+50));
 			}
-		}
+		}*/
 	}
 	
 	public boolean onRoad(double xpos, double ypos, String[][] map, double vx, double vy) {
@@ -184,11 +184,11 @@ public class GameMap {
 			}
 		}
 		if (map[mapX][mapY].equals(".")) {
-			g.drawString(mapX+", "+mapY, 20, 100);
+			//g.drawString(mapX+", "+mapY, 20, 100);
 			return false;
 		}
 		else {
-			g.drawString(mapX+", "+mapY, 20, 100);
+			//g.drawString(mapX+", "+mapY, 20, 100);
 			return true;
 		}
 	}
@@ -267,7 +267,7 @@ public class GameMap {
 		drawCurrentMap(map, vx, vy);
 		if (onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), map, vx, vy)) g.drawString("True", 20, 50);
 		else {
-			g.drawString(Double.toString(GamePanel.Test.getY()),500,500);
+			//g.drawString(Double.toString(GamePanel.Test.getY()),500,500);
 			g.drawString("False", 20, 50);
 		}
 	}

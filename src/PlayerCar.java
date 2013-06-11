@@ -55,7 +55,8 @@ public class PlayerCar extends GameObject implements Serializable {
 		curvx = vx;
 		curvy = vy;
 		
-		xpos=ypos=abposx=abposy=400;
+		xpos=abposx=650;
+		ypos=abposy=475;
 		velact=Math.sqrt(vx * vx + vy * vy);
 
 	}
