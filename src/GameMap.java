@@ -165,6 +165,7 @@ public class GameMap {
 		for (int i = 0; i<map.length; i++) {
 			for (int j = 0; j<map[0].length; j++) {
 				g.drawRect((int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), 200,200);
+				System.out.println(i+" "+j+" "+(int)Math.round((j-1)*200-vx)+" "+(int)Math.round((i-1)*200-vy));
 			}
 		}
 	}
@@ -172,8 +173,8 @@ public class GameMap {
 	public boolean onRoad(double xpos, double ypos, String[][] map, double vx, double vy) {
 		int arrX, arrY;
 		arrX=arrY=0;
-		arrY = (int)(xpos-vx)/200;
-		arrX = (int)(ypos-vy)/200;
+		arrY = (int)(xpos+vx)/200;
+		arrX = (int)(ypos+vy)/200;
 		System.out.println("pos:"+xpos+" "+ypos+"\nmap:"+arrX+" "+arrY);
 		if (map[arrX][arrY].equals(".")) return false;
 		else return true;
@@ -203,6 +204,7 @@ public class GameMap {
 	
 	public void draw(Graphics g) {
 		this.g = g;
+		//If map is allowed to move, change the velocity of the map scrolling in relation to car's displacement from the centre
 		if (moveX) vx+=GamePanel.Test.getX()-screenw/2;
 		if (moveY) vy+=GamePanel.Test.getY()-screenh/2;
 		if (GamePanel.Test.getX()-screenw/2<0&&mapY<1) {
@@ -248,6 +250,7 @@ public class GameMap {
 		}
 		mapConvert(findX(0),findX(1));
 		map = currentMap(mapX,mapY,0);
+		System.out.println("V: "+vx+" "+vy);
 		drawCurrentMap(map, vx, vy);
 		System.out.println(onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), currentMap(mapX,mapY,0), vx, vy)+" "+(mapX)+" "+(mapY));
 	}
