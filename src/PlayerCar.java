@@ -103,6 +103,12 @@ public class PlayerCar extends GameObject implements Serializable {
 			vx/=1.5;
 			vy/=1.5;
 		}
+		if (!GamePanel.map.callOnRoad()) {
+			vx=-vx;
+			vy=-vy;
+			vx/=1.5;
+			vy/=1.5;
+		}
 	}
 
 	public void moveforward() {

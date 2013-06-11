@@ -193,6 +193,10 @@ public class GameMap {
 		}
 	}
 	
+	public boolean callOnRoad() {
+		return onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), map, vx, vy);
+	}
+	
 	/*public boolean inboundary(double xpos, double ypos){
 		//System.out.println(screenh);
 		int xplace=0,yplace = 0;
