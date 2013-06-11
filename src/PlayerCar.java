@@ -179,10 +179,10 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 	
 	public double getsizex(){
-		return picture.getWidth() / 2;
+		return xpos;
 	}
 	public double getsizey(){
-		return picture.getHeight() / 2;
+		return ypos;
 	}
 
 	public void moveright() {

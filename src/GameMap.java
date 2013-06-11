@@ -165,19 +165,32 @@ public class GameMap {
 		for (int i = 0; i<map.length; i++) {
 			for (int j = 0; j<map[0].length; j++) {
 				g.drawRect((int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), 200,200);
-				System.out.println(i+" "+j+" "+(int)Math.round((j-1)*200-vx)+" "+(int)Math.round((i-1)*200-vy));
+				g.drawString(i+","+j, (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy+50));
 			}
 		}
 	}
 	
 	public boolean onRoad(double xpos, double ypos, String[][] map, double vx, double vy) {
-		int arrX, arrY;
-		arrX=arrY=0;
-		arrY = (int)(xpos+vx)/200;
-		arrX = (int)(ypos+vy)/200;
-		System.out.println("pos:"+xpos+" "+ypos+"\nmap:"+arrX+" "+arrY);
-		if (map[arrX][arrY].equals(".")) return false;
-		else return true;
+		Rectangle carRect = new Rectangle((int)Math.round(xpos), (int)Math.round(ypos), 1, 1);
+		int mapX, mapY;
+		mapX=mapY=0;
+		for (int i = 0; i<map.length; i++) {
+			for (int j = 0; j<map[0].length; j++) {
+				Rectangle newRect = new Rectangle((int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), 200,200);
+				if (carRect.intersects(newRect)) {
+					mapX = i;
+					mapY = j;
+				}
+			}
+		}
+		if (map[mapX][mapY].equals(".")) {
+			g.drawString(mapX+", "+mapY, 20, 100);
+			return false;
+		}
+		else {
+			g.drawString(mapX+", "+mapY, 20, 100);
+			return true;
+		}
 	}
 	
 	/*public boolean inboundary(double xpos, double ypos){
@@ -252,6 +265,10 @@ public class GameMap {
 		map = currentMap(mapX,mapY,0);
 		System.out.println("V: "+vx+" "+vy);
 		drawCurrentMap(map, vx, vy);
-		System.out.println(onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), currentMap(mapX,mapY,0), vx, vy)+" "+(mapX)+" "+(mapY));
+		if (onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), map, vx, vy)) g.drawString("True", 20, 50);
+		else {
+			g.drawString(Double.toString(GamePanel.Test.getY()),500,500);
+			g.drawString("False", 20, 50);
+		}
 	}
 }
