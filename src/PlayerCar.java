@@ -70,6 +70,15 @@ public class PlayerCar extends GameObject implements Serializable {
 				(int) (xpos + Math.cos(Math.toRadians(angle)) * 25),
 				(int) (ypos + Math.sin(Math.toRadians(angle)) * 25));
 	}
+	
+	public void drawrel(Graphics g, PlayerCar other) {
+		orig = GamePanel.cars[indexcar];
+		rotate();
+		g.drawImage(picture, (int)(this.abposx-other.abposx), (int)(this.abposx-other.abposx), null);
+		orig = null;
+		
+	}
+
 
 	public void move(GameMap map) {
 		vx *= fric;
