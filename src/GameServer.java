@@ -217,20 +217,12 @@ public class GameServer {
 	public static void servertoclient() {
 		try {
 			SERVERwriter = new ObjectOutputStream(client.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
 			SERVERwriter.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
 			SERVERreader = new ObjectInputStream(client.getInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 
 		// System.out.println("starting this part a");
 		try {
@@ -260,7 +252,7 @@ public class GameServer {
 		@Override
 		public void run() {
 
-			System.out.println("hai=server");
+			//System.out.println("hai=server");
 			while (active) {
 
 				long starttime = System.currentTimeMillis();
@@ -268,13 +260,13 @@ public class GameServer {
 				System.out.println(System.currentTimeMillis() - starttime);
 
 				try {
-					Thread.sleep(10);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			System.out.println("Exited from active-=server");
+			//System.out.println("Exited from active-=server");
 		}
 
 	}
@@ -284,18 +276,18 @@ public class GameServer {
 		@Override
 		public void run() {
 
-			System.out.println("hai=client");
+			//System.out.println("hai=client");
 			while (active) {
 				clienttoserver();
 
 				try {
-					Thread.sleep(10);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			System.out.println("Exited from active-=client");
+			//System.out.println("Exited from active-=client");
 
 		}
 
