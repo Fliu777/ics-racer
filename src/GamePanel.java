@@ -202,7 +202,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	public synchronized static void updatecar(Graphics g) {
 		if (Opponent != null) {
 			// System.out.println("their cycle");
-			Opponent.draw(g);
+			Opponent.drawrel(g,Test);
 			// Opponent.move();
 		}
 	}
@@ -241,7 +241,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 					BulletList.remove(i);
 				}
 			}
-			for (int i = 0; i < AI.size(); i++) {
+			/*for (int i = 0; i < AI.size(); i++) {
 				((AICar) (AI.get(i))).update();
 				((AICar) (AI.get(i))).draw(g);
 			}
@@ -250,7 +250,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 				if (AI.get(i).dead()) {
 					AI.remove(i);
 				}
-			}
+			}*/
 	
 			for (int i = 0; i < AI.size(); i++) {
 				for (int j = 0; j < BulletList.size(); j++) {
