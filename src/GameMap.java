@@ -249,10 +249,5 @@ public class GameMap {
 		map = currentMap(mapX,mapY,0);
 		//System.out.println("V: "+vx+" "+vy);
 		drawCurrentMap(map, vx, vy);
-		if (onRoad(GamePanel.Test.getX(), GamePanel.Test.getY(), map, vx, vy)) g.drawString("True", 20, 50);
-		else {
-			//g.drawString(Double.toString(GamePanel.Test.getY()),500,500);
-			g.drawString("False", 20, 50);
-		}
 	}
 }
