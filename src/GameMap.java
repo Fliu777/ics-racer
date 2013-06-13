@@ -188,7 +188,7 @@ public class GameMap {
 				}
 			}
 		}
-		g.fillRect((int)xpos, (int)ypos, 10, 10);
+		//g.fillRect((int)xpos, (int)ypos, 10, 10);
 		if (map[mapX][mapY].equals(".")) {
 			//g.drawString(mapX+", "+mapY, 20, 100);
 			return false;
