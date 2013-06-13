@@ -275,8 +275,10 @@ public class GameMap {
 		g.setColor(Color.white);
 		if (lap<2) g.drawString("Lap: "+(lap+1)+"/2", 50, 100);
 		if (state == 1) {
-			if (checkPoint(map, vx, vy, mapX, mapY, GamePanel.Test.getX(), GamePanel.Test.getY(), state) == 0) lap++;
-			state = 0;
+			if (checkPoint(map, vx, vy, mapX, mapY, GamePanel.Test.getX(), GamePanel.Test.getY(), state) == 0) {
+				lap++;
+				state = 0;
+			}
 		}
 		if (state == 0)
 			state = checkPoint(map, vx, vy, mapX, mapY, GamePanel.Test.getX(), GamePanel.Test.getY(), state);
