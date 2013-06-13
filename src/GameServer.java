@@ -144,6 +144,7 @@ public class GameServer {
 
 	public static void clienttoserver() {
 		PlayerCar othercar0;
+		//communication
 		try {
 			CLIENTwriter = new ObjectOutputStream(client.getOutputStream());
 			CLIENTwriter.flush();
