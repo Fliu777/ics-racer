@@ -66,9 +66,9 @@ public class PlayerCar extends GameObject implements Serializable {
 		rotate();
 		super.draw(g);
 		orig = null;
-		g.drawLine((int) xpos, (int) ypos,
-				(int) (xpos + Math.cos(Math.toRadians(angle)) * 25),
-				(int) (ypos + Math.sin(Math.toRadians(angle)) * 25));
+		//g.drawLine((int) xpos, (int) ypos,
+		//		(int) (xpos + Math.cos(Math.toRadians(angle)) * 25),
+		//		(int) (ypos + Math.sin(Math.toRadians(angle)) * 25));
 	}
 	
 	public void drawrel(Graphics g, PlayerCar other) {
