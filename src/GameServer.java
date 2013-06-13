@@ -30,8 +30,9 @@ public class GameServer {
 
 		Socket ipad = detectserver();
 		
+		//creates game
 		GamePanel game = new GamePanel(type,name);
-		game.changesetting(3);
+		game.changesetting(2);
 		game.setFocusable(true);
 		GameFrame.add(game);
 		GameFrame.setVisible(true);

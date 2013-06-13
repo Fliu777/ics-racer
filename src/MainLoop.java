@@ -89,6 +89,8 @@ public class MainLoop extends JFrame {
 	//		
 		//}
 		
+		
+		//quick play
 		 if (temp==2){
 
 			System.out.println("here?");
@@ -102,6 +104,7 @@ public class MainLoop extends JFrame {
 			game.requestFocusInWindow();
 		}
 		
+		 //time trial
 		else if (temp==3){
 			GamePanel game = new GamePanel(type,"bob");
 			game.changesetting(3);
@@ -111,6 +114,8 @@ public class MainLoop extends JFrame {
 			GameFrame.setResizable(true);
 			game.requestFocusInWindow();
 		}
+		 
+		 //multiplayer
 		else if (temp==4){
 			GameServer server=new GameServer(GameFrame,type,"bob");
 			
