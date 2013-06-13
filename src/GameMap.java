@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 public class GameMap {
 	
+	private int lap, state;
 	private ArrayList<File> fileMapArray; //Used for reading multiple map level designs
 	private FileReader fileMapStream;
 	private BufferedReader mapData;
@@ -54,7 +55,7 @@ public class GameMap {
 		
 		//Adding new Levels
 		fileMapArray = new ArrayList<File>();
-		fileMapArray.add(new File("src/Levels/TextMap"));
+		fileMapArray.add(new File("src/Levels/Drift YOLO"));
 		
 		//Reading current level
 		try {
@@ -86,6 +87,8 @@ public class GameMap {
 		vx = vy = 0.0;
 		map = currentMap(mapX,mapY,0);
 		moveX = moveY = true;
+		
+		lap =state=0;
 	}
 	
 	public int gettime(){
@@ -199,11 +202,16 @@ public class GameMap {
 	public int checkPoint(String[][] map, double vx, double vy, int mapx, int mapy, double xpos, double ypos, int state) {
 		Rectangle carRect = new Rectangle((int)Math.round(xpos), (int)Math.round(ypos), 1, 1);
 		Rectangle start;
+		Rectangle checkPoint;
 		for (int i = 0; i<map.length; i++) {
 			for (int j = 0; j<map[0].length; j++) {
 				if (i+mapx==3&&j+mapy==3) {
 					start = new Rectangle((int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), 200,200);
 					if (carRect.intersects(start)&&state==1) state = 0;
+				}
+				if (i+mapx==textArray.length-4&&j+mapy==textArray[0].length-4) {
+					checkPoint = new Rectangle((int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), 200,200);
+					if (carRect.intersects(checkPoint)&&state==0) state = 1;
 				}
 			}
 		}
@@ -264,5 +272,15 @@ public class GameMap {
 		map = currentMap(mapX,mapY,0);
 		//System.out.println("V: "+vx+" "+vy);
 		drawCurrentMap(map, vx, vy, mapX, mapY);
+		g.setColor(Color.white);
+		if (lap<2) g.drawString("Lap: "+(lap+1)+"/2", 50, 100);
+		if (state == 1) {
+			if (checkPoint(map, vx, vy, mapX, mapY, GamePanel.Test.getX(), GamePanel.Test.getY(), state) == 0) lap++;
+			state = 0;
+		}
+		if (state == 0)
+			state = checkPoint(map, vx, vy, mapX, mapY, GamePanel.Test.getX(), GamePanel.Test.getY(), state);
+		g.drawString(""+state, 50, 150);
+		if (lap==2) g.drawString("FINISHED", 50, 100);
 	}
 }
