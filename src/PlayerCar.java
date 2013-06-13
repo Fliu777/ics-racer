@@ -72,6 +72,7 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 	
 	public void drawrel(Graphics g, PlayerCar other) {
+		//get the drawing relative to the car
 		orig = GamePanel.cars[indexcar];
 		rotate();
 		g.drawImage(picture, (int)(this.abposx-other.abposx+other.xpos), (int)(this.abposy-other.abposy+other.ypos), null);
@@ -81,6 +82,7 @@ public class PlayerCar extends GameObject implements Serializable {
 
 
 	public void move(GameMap map) {
+		//apply friction
 		vx *= fric;
 		vy *= fric;
 
@@ -98,6 +100,8 @@ public class PlayerCar extends GameObject implements Serializable {
 			vx = 0;
 			vy = 0;
 		}
+		
+		//reversed direction if bump
 		if (GamePanel.map.callOnRoad()==false) {
 			vx=-vx;
 			vy=-vy;
@@ -105,6 +109,7 @@ public class PlayerCar extends GameObject implements Serializable {
 			vy/=2;
 		}
 
+		//same as above
 		if (!(xpos+vx<5 ||xpos+vx>MainLoop.ScreenWidth-5 ||ypos+vy<5 ||ypos+vy>MainLoop.ScreenHeight-5)){
 			xpos += vx;
 			ypos += vy;
@@ -122,7 +127,7 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 
 	public void moveforward() {
-		
+		//incrase amount of vx/vy
 		vx += cos(angle) * power;
 		vy += sin(angle) * power;
 		velact=Math.sqrt(vx * vx + vy * vy);
@@ -134,6 +139,7 @@ public class PlayerCar extends GameObject implements Serializable {
 	}
 
 	public void movebackward() {
+		//backward
 		vx -= cos(angle) * power;
 		vy -= sin(angle) * power;
 		velact=Math.sqrt(vx * vx + vy * vy);
