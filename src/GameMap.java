@@ -148,7 +148,8 @@ public class GameMap {
 	}
 	
 	//Drawing the current map
-	public void drawCurrentMap(String[][] map, double vx, double vy) {
+	public void drawCurrentMap(String[][] map, double vx, double vy, int mapx, int mapy) {
+		g.setColor(Color.black);
 		for (int i = 0; i<map.length; i++) {
 			for (int j = 0; j<map[0].length; j++) {
 				if (map[i][j].equals("|")) g.drawImage(roadArray[0], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
@@ -159,6 +160,7 @@ public class GameMap {
 				else if (map[i][j].equals("4")) g.drawImage(roadArray[5], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
 				else if (map[i][j].equals("+")) g.drawImage(roadArray[6], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
 				else if (map[i][j].equals(".")) g.drawImage(roadArray[7], (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), null);
+				if (i+mapx==3&&j+mapy==3) g.drawString("START/FINISH", (int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy));
 			}
 		}
 		/*g.setColor(Color.black);
@@ -192,6 +194,20 @@ public class GameMap {
 			//g.drawString(mapX+", "+mapY, 20, 100);
 			return true;
 		}
+	}
+	
+	public int checkPoint(String[][] map, double vx, double vy, int mapx, int mapy, double xpos, double ypos, int state) {
+		Rectangle carRect = new Rectangle((int)Math.round(xpos), (int)Math.round(ypos), 1, 1);
+		Rectangle start;
+		for (int i = 0; i<map.length; i++) {
+			for (int j = 0; j<map[0].length; j++) {
+				if (i+mapx==3&&j+mapy==3) {
+					start = new Rectangle((int)Math.round((j-1)*200-vx), (int)Math.round((i-1)*200-vy), 200,200);
+					if (carRect.intersects(start)&&state==1) state = 0;
+				}
+			}
+		}
+		return state;
 	}
 	
 	public boolean callOnRoad() {
@@ -245,9 +261,8 @@ public class GameMap {
 			vy+=200;
 			mapX--;
 		}
-		mapConvert(findX(0),findX(1));
 		map = currentMap(mapX,mapY,0);
 		//System.out.println("V: "+vx+" "+vy);
-		drawCurrentMap(map, vx, vy);
+		drawCurrentMap(map, vx, vy, mapX, mapY);
 	}
 }
