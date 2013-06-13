@@ -76,6 +76,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 			e.printStackTrace();
 		}
 		cars[0] = orig;
+		
+		map.mapConvert(map.findX(0),map.findX(1));
 
 		Thread myrunnable = new Thread(new starthere());
 		myrunnable.start();
