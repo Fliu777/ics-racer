@@ -1,3 +1,6 @@
+//useless class
+//ignore
+
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
