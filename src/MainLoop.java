@@ -62,7 +62,7 @@ public class MainLoop extends JFrame {
 		menu.setFocusable(true);	
 		GameFrame.setSize(menu.getimgx(),menu.getimgy());
 		GameFrame.setLocationRelativeTo(null);
-		
+		GameFrame.setTitle("Racing Game?");
 		FlowLayout lay = new FlowLayout();
 		//GameFrame.setLayout(lay);
 
@@ -71,7 +71,10 @@ public class MainLoop extends JFrame {
 		
 		GameFrame.setVisible(true);
 		int temp=menu.returnstate();
-		while (temp==-1)temp=menu.returnstate();
+		while (temp==-1 || temp==1){
+			//menu choice one is disabled
+			temp=menu.returnstate();
+		}
 		menu.setFocusable(false);
 		GameFrame.remove(menu);
 		GameFrame.setSize(ScreenWidth, ScreenHeight);
@@ -81,8 +84,12 @@ public class MainLoop extends JFrame {
 		Scanner sc=new Scanner(System.in);
 		//int type=sc.nextInt();
 		int type=2;		
-		//menu choice one
-		if (temp==2){
+		//menu choice one- not completed, would of been an upgrade screen
+		//if (temp==1){
+	//		
+		//}
+		
+		 if (temp==2){
 
 			System.out.println("here?");
 	

@@ -27,8 +27,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	private static final long serialVersionUID = -3204711335077901765L;
 	public boolean dir = true;
 	public boolean running;
-	private BitSet keysPressed = new BitSet(256);
-	private BitSet keysReleased = new BitSet(256);
+
 
 	public static BufferedImage[] cars = new BufferedImage[1];
 
@@ -46,9 +45,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	
 	
 	long starttime;
+	
+	private BitSet keysPressed = new BitSet(256);
+	private BitSet keysReleased = new BitSet(256);
 
 	/*
-	 * Keybits here is a bitset that takes into account the various input keys
+	 * keysPressed/keysReleased here is a bitset that takes into account the various input keys
 	 * that can be pressed. When they are pressed, the bit is set as true, and
 	 * when let go it is set as false. Allows for checking if multiple keys are
 	 * held at same time
@@ -183,12 +185,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 		for (int i = 0; i < 255; i++) {
 			if (isKeyReleased(i)) {
 				if (i == KeyEvent.VK_UP) {
-					System.out.println("released");
+					//System.out.println("released");
 					Test.restart();
 					keysReleased.clear(i);
 				}
 				else if (i == KeyEvent.VK_DOWN) {
-					System.out.println("released back");
+					//System.out.println("released back");
 					Test.restart();
 					keysReleased.clear(i);
 				}
@@ -202,8 +204,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 	}
 
 	public synchronized static void updatecar(Graphics g) {
+		
+		//checks if opponent exists, if not, then nothing happens
+		//if it does, it draw the opponent relative to player
 		if (Opponent != null) {
 			// System.out.println("their cycle");
+			Opponent.move(map);
 			Opponent.drawrel(g,Test);
 			// Opponent.move();
 		}
@@ -211,30 +217,40 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 
 	public void paintComponent(Graphics g) {
 		
+		//the thread uses running to control the speed, so this is only painted every 50 ms
+		
 		if (running){
 			keyinput();
 			map.draw(g);	
 	
 			g.setColor(Color.black);
 	
+			//drawing and moving your car
 			Test.draw(g);
 			Test.move(map);
-	
+			
+			
+	//opponents car
 			updatecar(g);
-			g.setColor(Color.red);
-			Font F = new Font("plain",Font.BOLD,35);
+			g.setColor(Color.black);
+			Font F = new Font("plain",Font.BOLD,30);
 			this.setFont(F);
 	
-	
-			g.drawString(Double.toString(Test.getvelocity()), 200, 200);
+			
+			
+			g.drawString("Speed is: "+ Integer.toString(   (int) (Test.getvelocity()*10) )+"km/h", MainLoop.ScreenWidth-300, 50);
 			//System.out.println(setting);
+			
+			//display time
 			if (setting==3){
 				//System.out.println("tinme");
 				int timegiven=map.gettime()*100;
 				long passed=System.currentTimeMillis()-starttime;
 				int passedsec=(int) (passed/10);
-				
-				g.drawString(Double.toString((timegiven-passedsec)/100.0), 50, 50);
+				if ((timegiven-passedsec)/100.0>0)g.drawString(Double.toString((timegiven-passedsec)/100.0), 50, 50);
+				else{
+					g.drawString("Out of time", 50, 50);
+				}
 				
 			}
 			
@@ -243,6 +259,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 					BulletList.remove(i);
 				}
 			}
+			
+			//AI code 
 			/*for (int i = 0; i < AI.size(); i++) {
 				((AICar) (AI.get(i))).update();
 				((AICar) (AI.get(i))).draw(g);
@@ -252,7 +270,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 				if (AI.get(i).dead()) {
 					AI.remove(i);
 				}
-			}*/
+			}
 	
 			for (int i = 0; i < AI.size(); i++) {
 				for (int j = 0; j < BulletList.size(); j++) {
@@ -261,13 +279,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 						BulletList.get(j).kill();
 					}
 				}
-			}
+			}*/
 	
 			for (int i = 0; i < BulletList.size(); i++) {
 				BulletList.get(i).check();
 				BulletList.get(i).move();
 				BulletList.get(i).draw(g);
 			}
+			//lets thread take control again
 			running = false;
 		}
 
@@ -289,6 +308,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener,
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				//controls speed of paint
 				running = true;
 				repaint();
 			}
